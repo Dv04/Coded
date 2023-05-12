@@ -1,0 +1,9 @@
+
+
+1. Pearson Correlation
+
+    x, y variable. n, number of observations.
+
+2. Spearman Correlation
+
+    x, y variable. n, number of observations.
