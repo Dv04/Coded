@@ -1,0 +1,10 @@
+cat
+head
+tail
+sort
+uniq
+wc
+grep
+tac
+sed
+nl

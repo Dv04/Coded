@@ -1,0 +1,6 @@
+Algortihm
+
+Take strin x = "Luka Modric" and y = "EpizOotiOlogies"
+run a for loop to get the number of null character in x and store it in variable nu
+get the index of first lower case letter of y and use it do divide variable nu
+printf the number

@@ -1,0 +1,1 @@
+sqrt((float)d)
