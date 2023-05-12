@@ -1,0 +1,27 @@
+Hashing:
+	Static Hashing:
+        A bucket is a unit of storage containing one or more records (a bucket is typically a disk block).
+        In a hash file organization, we obtain the bucket of a record directly from its search key value using a hash function.
+        Hash function h is a function from the set of all search key values K to the set of all bucket addresses B.
+        A hash function is used to locate records for access, insertion as well as deletion.
+        Records with different search-key values may be mapped to the same bucket; thus entire bucket has to be searched sequentially in the same order.
+        The hash function is usually defined as h(k) = k mod m, where m is the number of buckets.
+        
+    Hash function:
+        The worst hash function maps all key values to the same bucket. This makes access time proportional to the number of search key values in the hash file.
+        An ideal hash function is uniform, i.e., each bucket is assigned the same number of search key values from the set of all possible values.
+        An ideal hash function is random, so each bucket will have the same number of records assigned to it irrespective of the actual distribution of search key values in the file.
+        A typical hash function performs computation on the internal binary representation of the search key.
+           Eg: The binary representation of all characters in the string could be the representations of all characters in the string that could be added and the sun modulo the number of buckets could be returned.
+        
+    Bucket Overflow:
+        This can occur due to an insufficient number of buckets.
+        This can occur also due to skew in the distribution of records. This can occur due to two reasons:
+            Multiple records have the same search-key value.
+            Chosen hash function produces a non-uniform distribution of search-key values.
+        Although the probability of bucket overflow can be reduced, it cannot be eliminated. it is handled using overflow buckets.
+        Overflow buckets are used to store records that cannot be stored in the primary bucket.
+        Overflow buckets are linked together using a pointer field.
+        The pointer field is usually placed in the first record of the overflow bucket.
+        The pointer field points to the next overflow bucket.
+        The last overflow bucket in the chain is pointed to by a null pointer.

@@ -1,0 +1,27 @@
+Enhanced er model - generalization specialization and aggregation
+
+As the complexity increased, it became difficult to use traditional er models. Hence improvements were made to these three things.
+
+Generalization:
+    Bottom-up approach
+    in which two lower levels of entities combine to form a higher-level entity. In this, the higher level entity can also combine with other lower level.
+    super calls and sub-class system. 
+
+Specialization:
+    Top-down approach
+    in which a higher-level entity is divided into two or more lower-level entities. In this, lower-level entities can also combine with other higher-level entities.
+    opposite to generalization a higher entity may not have any lower-level entity sets.
+
+Aggregation:
+    where the relationship between two entities is treated as a single entity.
+    it is commonly used to connect different entity types based on a common relationship.
+    used to depict the operational line execution elements or functional behaviors of a similar type of common attributes.
+    "has-a" "is-part-of" relationship
+
+BCNF
+    boyle's code normal form
+    a normal form that is used to normalize a relation in a database.
+    it is a 3rd normal form
+   
+    1. every determinant must be a candidate key.
+    2. every non-prime attribute must be fully functionally dependent on the candidate key.

@@ -1,0 +1,86 @@
+Indices:
+	Ordered indices:
+        In an Ordered index, the values are stored in the order of the index.
+        This is the default index type.
+        The index is ordered by the values of the column or columns that are specified in the index definition.
+
+    Unordered indices:
+        In an Unordered index, the values are stored in an arbitrary order.
+    
+    Dense indices:
+        In a Dense index, an index record appears for every search-key value in the file.
+        Eg. index on ID attribute in an instructor relation. 
+    
+    Sparse indices:
+        In a Sparse index, an index record appears only for those search-key values that are present in the file.
+        applicable when records are sequentially ordered on search-key values.
+        Eg. index on name attribute in an instructor relation.
+        To locate with search key value K:
+            1. Find the index record with the largest search-key value < K
+            2. search file sequentially starting at the record to which index record points.
+    
+    Multilevel index:
+        If the primary index does not fit in memory, access becomes expensive.
+        To reduce the cost of access, we can use a multilevel index.
+        Solution:
+            Treat the primary index kept on disk as a sequential file and construct a sparse index on it.
+                Outer index - a sparse index of the primary index
+                Inner index - the primary index
+        If even the outer index is too large to fit in memory, we can use a multilevel index on the outer index.
+
+Index update: Insertion
+    Single-level index insertion:
+        Perform a lookup using the search -key value appearing in the record to be inserted.
+        Dense index - If the search key value does not appear in the index, insert it.
+    
+Secondary Indices:
+    Frequently, one wants to find all the records whose value in a certain field (which is not the search key of the primary index) satisfies some condition.
+    We can have a secondary index for that.
+
+
+B+ tree Index files:
+    Alternative to indexed sequential files.
+    Disadvantages of indexed sequential files:
+        Performance degrades as the file grows since many overflows generate.
+        Periodic reorganization of the entire file is required.
+
+    Advantages of B+ tree index files:
+        Performance is independent of file size.
+        Automatically reorganizes itself as the file grows.
+        reorganization is not required to maintain performance.
+        B+ tree index files are more flexible than indexed sequential files.
+        Used extensively.
+
+    Disadvantages of B+ tree index files:
+        extra insertion and deletion overhead, and space overhead.
+    
+    Properties:
+        All paths from the root to the leaf are of the same length.
+        Each node that is not a root or a leaf node has between [n/2] and n children.
+        A leaf node has between [(n-1)/2] and n-1 values.
+
+        Special cases:
+            If the root is not a leaf, it has at least 2 children.
+            If the root is a leaf, then it can have between 0 to (n-1) values.
+
+        Leaf node:
+            Contains the search-key values and the pointers to the records.
+            The search-key values are ordered.
+            The pointers to the records are ordered in the same way as the search-key values.
+
+        Other:
+            For a non-leaf node with m pointers - 
+            All search keys in the subtree to which p1 points are less than k1.
+            All search keys in the subtree to which pm points are greater than or equal to km.
+
+    Structure:
+        [p1|K1|P2|K2|P3|......|Kn-1|Pn|]
+
+    Observation: 
+        Since the inter-node connections are done by pointers, logically close blocks need not be physically close.
+        the none leaf levels of the B+ tree for a hierarchy of sparse indices.
+        The B+ tree contains a relatively small number of levels:
+            The level below the root has at least 2*[n/2] values.
+            The next level has at least 2*[n/2]^2 values.
+            If there are K search-key values in the file, the tree height is no more than [log [K] base [n/2]].
+            Insertion and deletion to the main file can be handled efficiently, as the index can be restructured in logarithmic times.

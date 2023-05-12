@@ -1,0 +1,14 @@
+Aggregate functions are functions that operate on a set of values and return a single value. The following table lists the aggregate functions that are supported by the SQL Server 2005 Analysis Services engine.
+
+Function Description AVG Returns the average of a set of values.
+COUNT Returns the number of rows in a set of values. 
+COUNTROWS Returns the number of rows in a set of values. 
+MAX Returns the maximum value in a set of values. 
+MIN Returns the minimum value in a set of values. 
+STDEV Returns the standard deviation of a set of values. 
+SUM Returns the sum of a set of values. 
+VAR Returns the variance of a set of values.
+
+The following example shows how to use the SUM function to return the total sales for each product category.
+SELECT SUM(Sales) from Company;
+

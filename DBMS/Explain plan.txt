@@ -1,0 +1,24 @@
+An explain plan is a presentation of the access path that is taken when a query is executed within Oracle.
+
+The explain plan statement displays execution plans chosen by the oracle optimizer for SELECT, UPDATE, INSERT, and DELETE statements. A statement's execution plan is the sequence of operations Oracle performs to run the statement.
+
+The row source tree is the core of the execution plan. It shows the following information:
+
+    An ordering of the tables referenced by the statement.
+    An access method for each table is mentioned in the statement.
+    A join method for tables affected by oil operations in the statement data operations like filter, sort, and aggregation.
+    In addition to the row source tree, the plan table contains information about the following:
+        Optimization, such as the cost and cardinality of each operation.
+        Partitioning, such as the set of accessed partitions.
+        Parallel execution such as the distribution method of join inputs.
+
+What is the cost?
+    The oracle optimizer is cost-based. the execution plan selected for a SQL statement is just one of the many alternative execution plans considered by the optimizer. The optimizer selects the execution plan with the lowest cost, where cost represents the estimated resource usage for that plan.
+
+7 phases:
+    1) synthetic: Check the syntax of the query.
+    2) semantic: Check the semantics of the query. all objects exist and are accessible.
+    3) View Merging: Rewrites query as join on base tables as opposed to using views.
+    4) Statement transformation: Rewqrites query transforming some complex constructs into simpler ones where appropriate.
+    5) Optimization: Determines the optimal access path for the query to take. With the rule-based optimizer, it uses a set of heuristics to
+

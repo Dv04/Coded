@@ -1,0 +1,15 @@
+The set of allowed values of each attribute is called the domain of the attribute. The domain of the attribute is the set of all possible values of the attribute. Attribute values are normally required to be atomic or indivisible. The special value null must be avoided at all times. The special value null is used to indicate that the value of an attribute is unknown. 
+
+A relation is a set of n-tuples where all tuples are subsets of relation values. 
+
+Any key can be told to be a super key of the R relation if values for K are sufficient to identify a unique tuple of each possible relation.
+
+The super key is the candidate key if it is minimal. One of the candidate keys is selected to be the primary key. The foreign key contains the primary key of another relation. It is a key between referencing and referenced relation...
+
+Example: In the table of the instructor, {ID} and {ID, Name} are superkeys of the relation. {ID} is a candidate key. {ID, Name} is not a candidate key because it is not minimal. {ID} is the primary key as it is the only candidate key. {Dept_name} is a foreign key that is referenced to the table of departments.
+
+A relation is in 1NF if it is in 2NF and all attributes are atomic. A relation is in 2NF if it is in 3NF and all non-prime attributes are fully functionally dependent on the primary key. A relation is in 3NF if it is in BCNF and all non-prime attributes are transitively dependent on the primary key. A relation is in BCNF if it is in 3NF and all non-prime attributes are functionally dependent on the primary key.
+
+
+In the cartesian Product of two relations, The total number of products is equal to the multiplication of the total number of products in both relations.
+

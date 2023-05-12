@@ -1,0 +1,35 @@
+Any two relational expressions are said to be equivalent if both expressions generate the same set of records. when two expressions are equivalent we can use them interchangeably. i.e. we can use either of the expression whichever gives better performance.
+We can have different equivalent expressions for different types of operations. The equivalence Rule defines how to write an equivalence expression for each of the operators.
+
+Selection Operations:
+ * When we have multiple selection operations looping one inside another on the table, then we can write them in any order. That is,
+    * (σ)θ1 * (σ)θ2(T) = (σ)θ2 * (σ)θ1(T), Where T is the table and θ is the filter condition. This implies that in a selection operation order of (θ1) and (θ2) does not affect the results. It can be used in any order.
+    * For example:
+      Select * from (Select * from Student where age = 18) where class_id = 'Design';
+      is equal to
+      Select * from (Select * from Student where class_id = 'Design') where age = 18;
+
+Conjunctive Selection:
+ * When we have a selection operation with multiple filter conditions, then we can split them into a sequence of selection operations. That is,
+    * (σ)(theta 1) AND (theta 2) (T) = (σ)(theta 1)((σ)(Theta 2)(T))
+    * For example:
+         Select * from Student where age = 18 and class_id = 'Design';
+         is equal to
+         Select * from (Select * from Student where age = 18) where class_id = 'Design';         
+         
+The sequence of projection operation:
+ * When there is a sequence of projection operations, only the last projection is required and the rest of the projection can be ignored. In terms of relational expression, it can be written as below.
+      * (π)A1 ((π)A2(T)) = (π)A1(T)
+      * For example:
+            Select name, age from (Select name, age, class_id from Student);
+            is equal to
+            Select name, age from Student;
+ * That means a final set of columns that we are going to select is only required rather than the selection of all sets of different columns through the query.
+
+Selection with cartesian product and Join:
+ * When we have the cartesian product on two tables and a selection condition on the results, then we can replace it with a natural join with a filter condition.
+      * (σ)θ (T1 * T2) = (T1 * T2) NATURAL JOIN (σ)θ (T1 * T2)
+      * For example:
+            Select * from Student, Class where Student.class_id = Class.class_id;
+            is equal to
+            Select * from Student NATURAL JOIN Class;

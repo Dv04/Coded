@@ -1,0 +1,25 @@
+Shadow paging is one of the techniques that is used to recover from failure. We all know that recovery means getting back the information, which is lost. It helps maintain database consistency in case of failure.
+
+Concept:
+    Step 1:
+        Page is a segment of the memory page table and is an index of pages. Each table entry points to a page on the disk.
+    Step 2:
+        Two-page tables are used during the life of a transaction: The current page table and the shadow page table. The shadow page table is a copy of the current page table.
+    Step 3:
+        When a transaction starts, both the tables look identical, and the current tab;e is updated for each writes operation.
+    Step 4:
+        The shadow page is never changed during the life of the transactions.
+    Step 5:
+        When the current transaction is committed the shadow page entry becomes a copy of the current page table entry and the disk block with the old data is released.
+    Step 6:
+        The shadow page is stored in nonvolatile memory. if the system crash occurs, then the shadow page table is copied to the current page table.
+    
+Advantages:
+    No need for log records.
+    No Undo / Redo algorithm.
+    Recovery is faster.
+
+Disadvantages:
+    Data is fragmented or scattered.
+
+

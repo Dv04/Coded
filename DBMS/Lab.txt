@@ -1,0 +1,131 @@
+DML statements include the following:
+
+    SELECT - select records from a table
+    INSERT - insert new records
+    UPDATE - update/Modify existing records 
+    DELETE - delete existing records
+
+    MYSQL statements for SELECT:
+
+    statement to view everything:
+    SELECT * FROM table_name;
+
+    statement to view specific columns:
+    SELECT (column1, column2, column3...) FROM table_name;
+    
+    statement to view specific columns with the specified data:
+    SELECT (column1, column2, column3...) FROM table_name WHERE column1 = 'data';
+    
+    statement to view specific columns with the specified date and order by:
+    SELECT (column1, column2, column3...) FROM table_name WHERE column1 = 'data' AND column2 = 'data' ORDER BY (column_name) ASC/DESC;
+
+    statement to view all columns of specific data:
+    SELECT * FROM table_name WHERE column1 = 'data';
+
+    statement with LIKE:
+    SELECT * FROM table_name WHERE column1 LIKE 'data';
+    
+    statement with NOT LIKE:
+    SELECT * FROM table_name WHERE column1 NOT LIKE 'data';
+
+    statement with BETWEEN:
+    SELECT * FROM table_name WHERE column1 BETWEEN 'data' AND 'data';
+
+    statement with NOT BETWEEN:
+    SELECT * FROM table_name WHERE column1 NOT BETWEEN 'data' AND 'data';
+
+    statement with the union:
+    SELECT * FROM table_name WHERE column1 = 'data' UNION (SELECT * FROM table_name WHERE column2 = 'data');
+
+    statement with NOT IN:
+    SELECT * FROM table_name WHERE column1 NOT IN ('data', 'data', 'data');
+
+    statement with MIN/MAX:
+    SELECT * FROM table_name WHERE column1 = (SELECT MIN(column1) FROM table_name);
+
+    statement with NOT:
+    SELECT * FROM table_name WHERE column1 = 'data' AND NOT column2 = 'data';
+
+    statement with %:
+    SELECT * FROM table_name WHERE column1 = '%d_t_%';
+
+    statement with IS NULL:
+    SELECT * FROM table_name WHERE column1 IS NULL;
+
+    statement with SUM:
+    SELECT SUM(column1) FROM table_name;
+
+    statement with COUNT:
+    SELECT COUNT(DISTINCT column1) FROM table_name;
+
+    
+
+
+    The following example shows how to use the INSERT statement to insert data into a table:
+    INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
+
+    The following example shows how to use the UPDATE statement to update data in a table:
+    UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;
+
+    The following example shows how to use the DELETE statement to delete data from a table:
+    DELETE FROM table_name WHERE condition;
+
+    The following example shows how to use the CREATE TABLE statement to create a table:
+    CREATE TABLE table_name (column1 datatype, column2 datatype, column3 datatype, ...);
+
+ALTER TABLE statements:
+
+    The following example shows how to use the ALTER TABLE statement to add a column to a table:
+    ALTER TABLE table_name ADD column_name datatype;
+
+    The following example shows how to use the ALTER TABLE statement to modify a column in a table:
+    ALTER TABLE table_name MODIFY column_name datatype;
+
+    The following example shows how to use the ALTER TABLE statement to drop a column from a table:
+    ALTER TABLE table_name DROP COLUMN column_name;
+
+    The following example shows how to use the DROP TABLE statement to drop a table:
+    DROP TABLE table_name;
+    
+    The following example shows how to use the ALTER TABLE statement to add a constraint to a table:
+    -ALTER TABLE table_name ADD CONSTRAINT column_name constraint_type (column_name);
+    -ALTER TABLE table_name ADD CONSTRAINT column_name FOREIGN KEY (column_name) REFERENCES table_name (column_name);
+    -ALTER TABLE table_name ADD CONSTRAINT column_name UNIQUE (column_name);
+
+    The following example shows how to use the ALTER TABLE statement to drop a constraint from a table:
+    -ALTER TABLE table_name DROP CONSTRAINT column_name;
+    -ALTER TABLE table_name ADD CONSTRAINT column_name FOREIGN KEY (column_name) REFERENCES table_name (column_name);
+    -ALTER TABLE table_name ADD CONSTRAINT column_name UNIQUE (column_name);
+    
+    Alter statement to change the names of tables, columns, and constraints:
+    -ALTER TABLE table_name RENAME TO new_table_name;
+    -ALTER TABLE table_name RENAME COLUMN column_name TO new_column_name;
+    -ALTER TABLE table_name RENAME CONSTRAINT constraint_name TO new_constraint_name;
+    
+    Alter statement to change the data type of a column:
+    -ALTER TABLE table_name ALTER COLUMN column_name TYPE datatype;
+    -ALTER TABLE table_name ALTER COLUMN column_name SET NOT NULL;
+    -ALTER TABLE table_name ALTER COLUMN column_name DROP NOT NULL;
+    -ALTER TABLE table_name ALTER COLUMN column_name SET DEFAULT expression;
+    -ALTER TABLE table_name ALTER COLUMN column_name DROP DEFAULT;
+    -ALTER TABLE table_name ALTER COLUMN column_name SET STATISTICS integer;
+    -ALTER TABLE table_name ALTER COLUMN column_name SET (attribute_option = value);
+    -ALTER TABLE table_name ALTER COLUMN column_name RESET (attribute_option);
+    -ALTER TABLE table_name ALTER COLUMN column_name SET STORAGE PLAIN|EXTERNAL|EXTENDED|MAIN;
+    
+    Alter statement to 
+    
+    # The following example shows how to use the CREATE INDEX statement to create an index:
+    # CREATE INDEX index_name ON table_name (column1, column2, ...);
+    
+    # The following example shows how to use the DROP INDEX statement to drop an index:
+    # DROP INDEX index_name ON table_name;
+
+The following example shows how to add foreign key constraints to a table:
+    ALTER TABLE table_name ADD CONSTRAINT column_name FOREIGN KEY (column_name) REFERENCES table_name (column_name);
+
+the following example shows how to add foreign key constraints to a table at the time of creation:
+    CREATE TABLE table_name (column1 datatype, column2 datatype, column3 datatype, ..., FOREIGN KEY (column_name) REFERENCES table_name (column_name));
+
+The following example shows how to disable a unique key constraint:
+    ALTER TABLE table_name disable constraint column_name;

@@ -1,0 +1,60 @@
+Transaction:
+    An executing program that includes one or more database access operations.
+
+    A transaction may be:
+        A stand-alone, specified in a high-level language like SQL submitted interactively, or
+        consist of database operations embedded within a program.
+    
+    Boundaries:
+        Begin and end transactions.
+        An application program may contain several transactions separated by beginning and End transaction Boundaries.
+
+    Transaction processing system:
+        Large multi-user database systems supporting thousands of concurrent transactions per minute
+    
+    Two modes of concurrency:
+        Interleaved processing: Concurrent execution of processes is interleaved in a single CPU.
+        Parallel processing: processes are concurrently executed in multiple CPUs.
+        Basic transaction processing theory assumes interleaved concurrency.
+
+    A database is a collection of named data items.
+    Granularity is a field or a record or a whole disk block, the smallest unit of data.
+    TP concepts are independent of the granularity of the data items.
+    Basic operations:
+        Read_item(X): reads the database item named X into a program variable. to simplify our notation we assume that the program is also named X.
+        Write_item(X): writes the value of the program variable X into the database item named X.
+        Read and write:
+            The basic unit of data transfer from the disk to the computer's main memory is one disk block or page. A data item X will usually be the field of some record in the database although it may be a larger unit such as a whole record or even a whole block.
+            read_item includes Finding the address of the disk, copying the disk block into a buffer in the main memory, copy item X from the buffer to the program variable X.
+            write_item includes Finding the address of the disk, copying the disk block into a buffer in the main memory, copying item X from the program variable X to the buffer, and writing the buffer back to the disk.
+            The read and write operations are the basic operations of the transaction processing system.
+    
+    Notation:
+        can be written as:
+            - T1: b1; r1(X); w1(X); r1(Y); w1(Y); e1;
+            - T2: b2: r2(Y); w2(Y); e2;
+        where:
+            - b1, b2: begin transaction
+            - r1, r2: read_item
+            - w1, w2: write_item
+            - e1, e2: end transaction
+
+        The notation is a sequence of operations, each of which is a transaction.
+
+        bi and ei specify transaction boundaries.
+        ri and wi specify read and write operations.
+        i specifies a unique transaction identifier.
+    Need for concurrency control:
+        Without it problems like:
+            Lost update Problem:
+                Occurs when two transactions update the same data item and the last transaction to commit overwrites the changes made by the first transaction.
+                Both read the same original problem.
+            The temporary update or dirty read problem:
+                This occurs when one transaction T1 updates a database item X which is accessed by another transaction. T1 failed for some reason X was read by T2 before its value changed back to the original after T1 failure.
+            The wrong summary problem:
+                This occurs when two transactions T1 and T2 both read the same database item X and then T1 updates X. T2 updates X with a value based on the original value of X. The final value of X is the result of the two updates.
+            The unrepeatable read problem:
+                In a transaction T1 may read an item, later, T1 may read the same item again and get a different value because T2 has updated the item between the two reads
+        
+
+    

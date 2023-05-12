@@ -1,0 +1,133 @@
+RAID technology:
+    Overview:
+        RAID is a technique that is used to combine multiple disks for more efficient storage of data across the disks. Some RAID techniques can also be used to reconstruct data if it is lost.
+        It stands for the Redundancy array of the independent disk.
+        It is a way to combine multiple disk storage for increased performance, data redundancy and disk reliability.
+        Problems:
+            No backup disk: If a single disk failure occurs, the whole system fails to perform.
+            Performance
+        
+        Raid levels:
+            Raid 0:
+                Implements data striping. data blocks are placed in multiple disks without redundancy.
+                None of the disks are used for data redundancy so if one disk fails then all the data in the array is lost.
+                It is used for high-performance applications.
+                Example:
+                    4 disks of 100GB each are used to create a 400GB array. The data is striped across the disks. 
+                    disk 1 has data 1,2,3,4.
+                    disk 2 has data 5,6,7,8.
+                    disk 3 has data 9,10,11,12.
+                    disk 4 has data 13,14,15,16.
+                    No data block is being repeated on any disk.
+                    As given in the example, similar blocks are placed in similar disks and different blocks are placed in further disks.
+
+                Advantaged:
+                    High performance
+                    All disk space is utilized
+                    Data requests are available on multiple disks. Thus, improving the thought.
+
+                Disadvantages:
+                    Failure of one disk can lead to complete data loss in the respective array.
+                    No data redundancy thus one disk failure can lead to system failure.
+                
+            Raid 1:
+                Implements mirroring. means one disk is replicated in another disk. helps prevent system failure as if one disk fails then the redundant disk takes over.
+
+                Example:
+                    2 disks of 100GB each are used to create a 100GB array. The data is mirrored across the disks.
+                    disk 1 has data 1,2,3,4.
+                    disk 2 has data 1,2,3,4.
+                    Data is being mirrored on both disks.
+                    As given in the example, similar blocks are placed in similar disks and different blocks are placed in further disks.
+
+                Advantages:
+                    Failure of one disk can be compensated by the other disk.
+
+                Disadvantages:
+                    Only half of the disk space is utilized.
+                    Performance is reduced as the data is mirrored on both disks.
+
+            Raid 2:
+                It is used when an error in data has to be checked at a bit level, which uses a Hamming code detection method. two disks are used, one to store a bit of each word in the disk and another to store error code correction (parity bits) The structure of this raid is complex so not used commonly.
+
+                Example:
+                    2 disks of 100GB each are used to create a 100GB array. The data is mirrored across the disks.
+                    disk 1 has data 1,2,3,4.
+                    disk 2 has data P(1),P(2),P(3),P(4).
+                
+                Advantages:
+                    It checks errors at a bit level for every data word.
+                    One full disk is used for parity bits.
+
+                Disadvantages:
+                    Large extra space is used for parity bit exchange
+                
+            Raid 3:
+                Implements the byte-level striping of data.
+
+                Example:
+                    4 disks of 100GB each are used to create a 300GB array. The data is striped across the disks.
+                    disk 1 has data 1,2,3,4.
+                    disk 2 has data 5,6,7,8.
+                    disk 3 has data 9,10,11,12.
+                    disk 4 has data P(1,5,9), P(2,6,10), P(3,7,11), P(4,8,12).
+
+                Advantages:
+                    Can be recovered easily.
+                
+                Disadvantages:
+                    Extra space
+
+            Raid 4:
+                Implements block-level striping with a dedicated parity drive. if only one piece of data is lost, it can be recovered from the parity drive.
+                Data is stored using XOR operations over each data disk block.
+
+                Example:
+                    4 disks of 100GB each are used to create a 300GB array. The data is striped across the disks.
+                    disk 1 has data 0,1.
+                    disk 2 has data 1,1.
+                    disk 3 has data 0,0.
+                    disk 4 has data P0, P1.
+
+                Advantages:
+                    Can be recovered easily. Helps reconstruct data.
+                    If one disk fails, the data can be recovered from the parity drive.
+                    
+                    Disadvantages:
+                    Extra space.
+
+            Raid 5:
+                The parity rotates among disks.
+
+                Example:
+                    4 disks of 100GB each are used to create a 300GB array. The data is striped across the disks.
+                    disk 1 has data 0, 1, 1, P3.
+                    disk 2 has data 1, 1, P2, 1.
+                    disk 3 has data 0, P1, 0, 0.
+                    disk 4 has data P0, 0, 1, 0.
+
+                Advantages:
+                    Distributed data.
+                    Performance better.
+                    data can be reconstructed.
+
+                Disadvantages:
+                    useful only when data is lost in most one disk.
+                    extra space.
+
+            Raid 6:
+                Implements two parity bits in each array.
+
+                Example:
+                    4 disks of 100GB each are used to create a 300GB array. The data is striped across the disks.
+                    disk 1 has data 0, 1, 1, P3, Q4.
+                    disk 2 has data 1, 1, P2, 1, Q5.
+                    disk 3 has data 0, Q1, 0, 0, P6.
+                    disk 4 has data P0, 0, 1, 0, Q7.
+
+                Advantages:
+                    More parity helps in reconstructing at most 2 disk data.
+
+                Disadvantages:
+                    Extra Space
+                    More than 2 disk failures cannot be corrected.
