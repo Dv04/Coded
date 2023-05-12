@@ -1,0 +1,7 @@
+import json
+
+my_array = ['a', '2', 'b', '2', 'c', '3']
+json_string = json.dumps(my_array)
+new_array = json.loads(json.dumps(my_array))
+
+print(new_array)
