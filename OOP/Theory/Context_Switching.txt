@@ -1,0 +1,16 @@
+Synchronization:
+
+    The thread may share data structure and need to communicate too
+        
+        - For example, prevent one thread from writing data while another thread is in the middle of reading it.
+
+    A control mechanism in JAVA is used to protect a shared asset from being manipulated by more than one thread at a time.
+
+JAVA Monitors:
+
+    Each object has its implicit Monitors that are automatically entered when one of the synchronized methods is called.
+
+    Once a thread is inside a synchronized method, no other thread can call any other synchronized method on the same spot
+
+Thread and runnable
+    JAVA multithreading system is built on the thread class and its methods.

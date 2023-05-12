@@ -1,0 +1,60 @@
+Exception handling:
+
+    An exception is an abnormal condition that arises in a code sequence at run time. it is a runtime error.
+    Java exception is an object that describes an exceptional condition in the code
+    
+    Process:
+        
+        problem occurs -> create exception -> throw exception -> handle exception
+
+    When an exceptional condition arises, an object representing that exception is created and thrown in the method that caused the error. A method may choose to handle the exception itself or pass it on. The exception is said to be caught and processed.
+
+    The exception can be handled by the Java run-time system. They are fundamental errors that violate the rules of the Java language or the constraints of the Java execution environment.
+    Manually generated exceptions are typically used to report some error condition to the caller of a method.
+
+    Throwable Types:
+    
+        Errors:
+
+            StackOverflow error
+            Virtual Machine error
+            Out-of-memory error
+
+        Exception:
+
+            IOException
+            SQL exception
+            ClassNotFoundException
+            Runtime exception:
+
+                ArithmeticException
+                NullPointerException
+                NumberFormatException
+                IndexOutOfBoundsException:
+
+                    Array IndexOutOfBoundsException
+                    String IndexOutOfBoundsException
+
+Checked exception vs Unchecked exception:
+
+    RuntimeException, error and their subclasses are known as unchecked exceptions.
+    All other exceptions are known as checked exceptions meaning that the compiler forces the programmer to check this.
+
+    Checked:
+
+        ClassNotFoundException
+        InterruptedException
+        IOException
+        InstantiationException
+        SQLException
+        FileNotFoundException
+
+    Unchecked:
+
+        ArithmeticException
+        ArrayIndexOutOfBoundsException
+        ClassCastException
+        NullPointerException
+        NumberFormatException
+        IllegalArgumentException
+        IllegalStateException
