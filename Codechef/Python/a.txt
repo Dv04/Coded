@@ -1,0 +1,25 @@
+Give me python3 answer to this problem with the least possible time complexity:
+
+Problem:
+There are N dungeons in a row. The ith dungeon is guarded by a monster with strength Si.
+
+Saber has a sword with D damage points. To defeat a monster of strength Si, Saber's sword must have at least Si damage points:
+
+If D<Si, Saber loses the fight.
+
+If D=Si, Saber defeats the monster but has a close call and her sword loses exactly one damage point (D=D-1).
+If D>Si, Saber defeats the monster with no change in the damage points of her sword.
+You are given Q queries of the following type:
+
+Given L and R, find the minimum damage points D required by Saber to make it through dungeons S(L), S(L+1),..., S(R) defeating all monsters in them in the same order.
+
+Input Format:
+
+The first line of the input contains T, the number of test cases. The description of each test case follows.
+The first line of each test case contains two integers N and Q, the number of dungeons and the number of queries.
+The second line of each test case contains N space-separated integers S1, S2, …, SN, the strengths of the monsters in each of the dungeons.
+
+The next Q lines each contain two integers Li and Ri, The description of the queries.
+
+Output Format
+For each test case, print Q lines, each with a single integer, the answer to the query.
