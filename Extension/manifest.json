@@ -1,0 +1,16 @@
+{
+    "name": "ChatGPT Extension",
+    "version": "1.0",
+    "description": "An extension that allows you to use ChatGPT with Google Search",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.google.com/*"
+            ],
+            "js": [
+                "contentscript.js"
+            ]
+        }
+    ]
+}
