@@ -1,0 +1,30 @@
+<html>
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Test</title>
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    </head>
+
+<body>
+    <h2>Hello world!</h2>
+    <py-script>
+        class Solution:
+        def isStrictlyPalindromic(self, n: int):
+    
+            number_list = list(str(n))
+            number_list.reverse()
+            print("Reversed Number is: " + ''.join(number_list))
+    
+    
+    print(Solution().isStrictlyPalindromic(32))
+
+    
+    </py-script>
+</body>
+
+</html>
