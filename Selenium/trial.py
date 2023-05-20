@@ -1,23 +1,25 @@
-import selenium
 from selenium import webdriver
 
-# Create a WebDriver object
+# Create a new instance of the Chrome driver
 driver = webdriver.Chrome()
 
-# Navigate to the admin page
-driver.get("https://www.example.com/admin")
+# Navigate to the Google homepage
+driver.get("https://www.google.com")
 
-# Find the buttons that you want to click
-button_1 = driver.find_element_by_id("button_1")
-button_2 = driver.find_element_by_id("button_2")
+# Find the search input box
+search_box = driver.find_element_by_name("q")
 
-# Click on the buttons
-button_1.click()
-button_2.click()
+# Enter the search term
+search_box.send_keys("Selenium")
 
-# Verify that the content of the page has changed
-assert driver.find_element_by_id("content_1").text == "This is the content for button 1."
-assert driver.find_element_by_id("content_2").text == "This is the content for button 2."
+# Click the search button
+search_box.submit()
+
+# Wait for the search results to load
+driver.implicitly_wait(10)
+
+# Print the title of the first search result
+print(driver.find_element_by_xpath("//h3[@class='LC20lb']/a").text)
 
 # Close the browser
 driver.quit()
