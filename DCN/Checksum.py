@@ -1,6 +1,6 @@
 # Checksum Code
 
-n = input("Enter the code to be sent: ")
+n = input("\n\nEnter the code to be sent: ")
 k = input("Enter the block size: ")
 
 def ReceiveCheck(ans, k):
@@ -21,18 +21,26 @@ def ReceiveCheck(ans, k):
     if carry != 0:
         result = str(carry) + result[1:]
         
-    print(result)
+    print("Summation of the Received code with block size ",k," is: ",result)
+    print("\n------------------------------------------------------------\n")
+    print("As the summation is not zero, there is no error in the code.\n")
+    
     
 
 def SentCheck(n, k):
+    print("\n------------------------------------------------------------\n")    
     ans = "0"*(int(k)-(len(n)%int(k)))
     ans+=n
-    print("\n\nEntering the Sending Mode with the code: ", ans)
+    print("Entering the Sending Mode with the code: ", ans)
+    print("\n------------------------------------------------------------\n")
 
+    print("The code is divided in to parts of size ",k," as follows: ")
     arr = []
     for i in range(0, len(ans), int(k)):
+        print(ans[i:i+int(k)])
         arr.append(ans[i:i+int(k)])
 
+    print("\n------------------------------------------------------------")
     result = "0" * int(k)
     for block in arr:
         carry = 0
@@ -44,18 +52,18 @@ def SentCheck(n, k):
     if carry != 0:
         result = str(carry) + result[1:]
 
-    print("Summation of binary blocks (with carry):", result)
-
-    print("The Code to be sent is: ",ans+result)
-    ans+=result
+    print("\nSummation of binary blocks (with carry):", result)
     
     ans1 = ""
-    for i in range(len(ans)):
-        if ans[i] == '0':
+    for i in range(len(result)):
+        if result[i] == '0':
             ans1 += '1'
         else:
             ans1 += '0'
             
-    ReceiveCheck(ans1,k)
+    print("Checksum of the entered code is: ", ans1)
+    print("Sending the code with the checksum: ", ans+ans1,"")
+    
+    ReceiveCheck(ans+ans1,k)
 
 SentCheck(n, k)
