@@ -12,21 +12,24 @@ public class TwoTwoTwo {
                 System.out.print("Enter an integer: ");
                 array[i] = input.nextInt();
             }
-            System.out.println("The smallest integer in the array is " + smallest(array));
+            System.out.println("The smallest integer in the array is " + smallestInteger(array, 0));
         }
 
     }
 
-    public static int smallest(int[] array) {
-
-        int smallest = array[0];
-        for (int i = 1; i < array.length; i++) {
-            if (array[i] < smallest) {
-                smallest = array[i];
-            }
+    public static int smallestInteger(int[] array, int startIndex) {
+        // base case: the size of the array equals the start index
+        if (startIndex == array.length) {
+            return 100000;
         }
-
-        return smallest;
+        // get the smallest integer from the remaining elements
+        int smallest = smallestInteger(array, startIndex + 1);
+        // compare it to the current element and return the smaller one
+        if (array[startIndex] < smallest) {
+            return array[startIndex];
+        } else {
+            return smallest;
+        }
     }
 
 }
