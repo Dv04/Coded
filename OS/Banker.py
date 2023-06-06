@@ -1,36 +1,39 @@
 # Banker's Algorithm in Python
 
 # Number of processes
-P = 5
+P = int(input("Enter the number of processes: "))
 
 # Number of resources
-R = 3
+R = int(input("Enter the number of resources: "))
+print("\n")
 
 # Available instances of resources
-avail = [3, 3, 2]
+avail = []
+for i in range(R):
+    avail.append(int(input("Enter the available instance of resource {}: ".format(i+1))))
 
 # Maximum resource matrix
-maxm = [
-    [7, 5, 3],
-    [3, 2, 2],
-    [9, 0, 2],
-    [2, 2, 2],
-    [4, 3, 3]
-]
+maxm = []
+for i in range(P):
+    maxm.append([])
+    print("\n")
+    for j in range(R):
+        maxm[i].append(int(input("Enter the maximum instance of resource {} for process {}: ".format(j+1, i+1))))
 
 # Allocated resource matrix
-alloc = [
-    [0, 1, 0],
-    [2, 0, 0],
-    [3, 0, 2],
-    [2, 1, 1],
-    [0, 0, 2]
-]
+alloc = []
+for i in range(P):
+    alloc.append([])
+    print("\n")
+    for j in range(R):
+        alloc[i].append(int(input("Enter the allocated instance of resource {} for process {}: ".format(j+1, i+1))))
+print("\n")
 
 # Function to find the need of each process
 def calculateNeed(need, maxm, alloc):
     for i in range(P):
         need.append([])
+        
         for j in range(R):
             # Need of instance = maxm instance - allocated instance
             need[i].append(maxm[i][j] - alloc[i][j])
@@ -77,7 +80,7 @@ def isSafe(processes, avail, maxm, alloc):
             print("System is not in safe state")
             return False
 
-    print("System is in safe state.\nSafe sequence is: ", end=" ")
+    print("\n\nSystem is in safe state.\nSafe sequence is: ", end=" ")
     print(*safeSeq)
     return True
 
@@ -85,7 +88,7 @@ def main():
     isSafeStatus = isSafe(P, avail, maxm, alloc)
     
     if isSafeStatus:
-        print("Allocated resources:")
+        print("\nAllocated resources:")
         for i in range(P):
             for j in range(R):
                 print(alloc[i][j], end=" ")
