@@ -6,8 +6,7 @@ def check(id):
     if check <= 127: A(id)
     elif check <= 191: B(id)
     elif check <= 223: C(id)
-    elif check <= 239:
-        print("Class D id found. It is reserved for Multicasting","\nInvalid host or network ID")
-    elif check <= 255:
-        print("Class E id found. It is reserved for Research","\nInvalid host or network ID")
+    elif check <= 239: print("Class D id found. It is reserved for Multicasting","\nInvalid host or network ID")
+    elif check <= 255: print("Class E id found. It is reserved for Research","\nInvalid host or network ID")
+    else: print("Invalid ID")
 for _ in range(5): check(input("\nEnter your id: "))
