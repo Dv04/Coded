@@ -1,6 +1,6 @@
 def A(id): print("Class A id found","\nNetwork id is: ", id[0:3],"\nHost id is: ", id[4:])
 def B(id): print("Class B id found","\nNetwork id is: ", id[0:7],"\nHost id is: ", id[8:])
-def C(id): print("Class C id found","\nNetwork id is: ", id,"\nInvalid host ID")
+def C(id): print("Class C id found","\nNetwork id is: ", id[0:11],"\nHost id is: ", id[12:])
 def check(id):
     check = int(id[0:3])
     if check <= 127: A(id)
