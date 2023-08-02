@@ -1,0 +1,27 @@
+import itertools
+
+
+def find_combinations(n, s):
+    all_numbers = list(range(1, 7))
+    possible_combinations = list(itertools.combinations(all_numbers, s))
+    
+    valid_combinations = []
+    for combination in possible_combinations:
+        if sum(combination) == n:
+            valid_combinations.append(combination)
+            
+    return set(valid_combinations)
+
+while True: # This will create an infinite loop
+    n_input = input("Enter the result (or type 'stop'): ")
+    if n_input.lower() == 'stop':
+        break
+    n = int(n_input)
+    
+    s_input = input("Enter the size (or type 'stop'): ")
+    if s_input.lower() == 'stop':
+        break
+    s = int(s_input)
+
+    result = find_combinations(n, s)
+    print(result)

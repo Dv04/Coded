@@ -1,28 +1,35 @@
-<!DOCTYPE html>
-<html>
+{% extends 'Base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block extrafiles %}
 
-<head>
-    <link rel="stylesheet" href="/static/css/index.css" />
-    <title>Directorate of Higher Education Alumni Network</title>
-</head>
+<link rel="stylesheet" href="index.css" />
 
-<body>
-    <div class="container">
-        <header>
-            <h1 class="title">Directorate of Higher Education Alumni Network</h1>
-        </header>
-        <div class="content">
-            <p>
-                The Directorate of Higher Education presents a unified platform for our alumni. Here, you can reconnect
-                with your cohorts, update your details, and stay connected with our colleges. Register today and be a
-                part of our growing network.
-            </p>
-            <div class="buttons">
-                <button class="register">Register</button>
-                <button class="login">Login</button>
-            </div>
-        </div>
+{% endblock extrafiles %}
+
+{% block content %}
+<div class="container">
+    <h2>User Details</h2>
+    <div class="user-details">
+        <label for="name">Name:</label>
+        <span id="name">John Doe</span>
     </div>
-</body>
+    <div class="user-details">
+        <label for="email">Email:</label>
+        <span id="email">johndoe@example.com</span>
+    </div>
+    <div class="user-details">
+        <label for="college">College:</label>
+        <span id="college">Adani University</span>
+    </div>
+    <div class="user-details">
+        <label for="year">Year of Graduation:</label>
+        <span id="year">2021</span>
+    </div>
+    <button id="update-details-btn">Forgot Password</button>
+    <a href="forgot-password.html">Update Details</a>
+</div>
 
-</html>
+<script src="path/to/your/js/firebase.js"></script>
+<script src="path/to/your/js/user-page.js"></script>
+
+{% endblock content %}
