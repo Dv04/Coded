@@ -25,8 +25,8 @@ def extract_frames_with_timestamp(video_path, output_folder):
             break
 
         frame_count += 1
-        if frame_count % 21 == 0:
-            frame_filename = f"frame_{frame_count:05d}.jpg"
+        if frame_count % 21 == 1:
+            frame_filename = f"frame_{int((frame_count-1)/21):05d}.jpg"
             frame_filepath = os.path.join(output_folder, frame_filename)
 
             # Get the timestamp of the current frame (in milliseconds)
@@ -37,8 +37,8 @@ def extract_frames_with_timestamp(video_path, output_folder):
 
             # Save the frame with the timestamp information
             cv2.imwrite(frame_filepath, frame)
-            _, text = detect_red_box(frame)
-            print(frame_filename, text)
+            # _, text = detect_red_box(frame)
+            # print(frame_filename, text)
 
     video_capture.release()
 
@@ -46,6 +46,6 @@ if __name__ == "__main__":
     output_folder = "/Users/apple/Downloads/Frames"
 
     empty_frames_folder(output_folder)
-    # for i in range(1,10):
-    video_file_path = f"/Users/apple/Downloads/ocr/Trial.mp4" 
-    extract_frames_with_timestamp(video_file_path, output_folder)
+    for i in range(1,10):
+        video_file_path = f"/Users/apple/Downloads/ocr/{i}.mp4" 
+        extract_frames_with_timestamp(video_file_path, output_folder)
