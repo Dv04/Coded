@@ -1,72 +1,44 @@
 import cv2
-import easyocr
+import os
 
-def initialize_tracker(frame, bbox):
-    # Initialize the KCF tracker
-    tracker = cv2.TrackerKCF_create()
-    # Initialize the tracker with the bounding box
-    tracker.init(frame, bbox)
-    return tracker
+def empty_frames_folder(output_folder):
+    # Get a list of all files in the frames folder
+    file_list = os.listdir(output_folder)
 
-# Assuming you have a function detect_color_box(frame, color_range) that returns the bounding box (bbox) of the detected box
-# ...
+    # Remove each file in the frames folder
+    for filename in file_list:
+        file_path = os.path.join(output_folder, filename)
+        os.remove(file_path)
 
-def detect_red_box(frame, color_range):
-    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    lower_color = color_range[0]
-    upper_color = color_range[1]
-    mask = cv2.inRange(hsv_frame, lower_color, upper_color)
-    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+def extract_frames_with_timestamp(video_path, output_folder):
+    # Empty the frames folder before starting extraction
+    empty_frames_folder(output_folder)
 
-    if len(contours) > 0:
-        largest_contour = max(contours, key=cv2.contourArea)
-        x, y, w, h = cv2.boundingRect(largest_contour)
-        cropped_image = frame[y:y+h, x:x+w]
-        reader = easyocr.Reader(['en'])
-        text = reader.readtext(cropped_image, detail=0)
-        return [x, y, w, h], text
+    video_capture = cv2.VideoCapture(video_path)
+    frame_count = 0
 
-    return None
+    while True:
+        success, frame = video_capture.read()
+        if not success:
+            break
 
+        frame_count += 1
+        frame_filename = f"frame_{frame_count:05d}.jpg"
+        frame_filepath = os.path.join(output_folder, frame_filename)
 
+        # Get the timestamp of the current frame (in milliseconds)
+        timestamp_ms = video_capture.get(cv2.CAP_PROP_POS_MSEC)
 
-# Initialize your video capture (use your preferred method for reading video frames)
-video_capture = cv2.VideoCapture(0)  # Change 0 to the video file path if using a file
+        # Convert the timestamp to a more human-readable format (optional)
+        timestamp_sec = timestamp_ms / 1000.0
 
-# Read the first frame
-ret, frame = video_capture.read()
-if not ret:
-    raise Exception("Error reading video stream")
+        # Save the frame with the timestamp information
+        cv2.imwrite(frame_filepath, frame)
 
-# Detect the initial bounding box of the red box
-color_range = [(0, 120, 70), (10, 255, 255)]  # Change this to the appropriate range for red color
-bbox, _ = detect_red_box(frame, color_range)
+    video_capture.release()
 
-# Initialize the tracker
-tracker = initialize_tracker(frame, tuple(bbox))
+if __name__ == "__main__":
+    video_file_path = "/Users/apple/Downloads/ocr/1.mp4"
+    output_folder = "/Users/apple/Coded/ComputerVision/frames"
 
-# Start the video loop
-while True:
-    # Read a new frame
-    ret, frame = video_capture.read()
-    if not ret:
-        break
-
-    # Update the tracker with the new frame
-    success, bbox = tracker.update(frame)
-
-    if success:
-        # Draw the tracked bounding box on the frame
-        x, y, w, h = [int(coord) for coord in bbox]
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-    # Show the frame with the tracked bounding box
-    cv2.imshow("Tracking", frame)
-
-    # Exit the loop when 'q' key is pressed
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
-
-# Release the video capture and close all windows
-video_capture.release()
-cv2.destroyAllWindows()
+    extract_frames_with_timestamp(video_file_path, output_folder)
