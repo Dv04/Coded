@@ -28,7 +28,7 @@ def detect_red_box(frame):
         # Return the bounding box coordinates [x, y, width, height]
         return [x, y, w, h], text
 
-    return None
+    return [], "Nothing Detected"
 
 # Test the red box detection on a single image
 if __name__ == "__main__":
