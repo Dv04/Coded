@@ -1,0 +1,53 @@
+import cv2
+import easyocr
+
+def initialize_tracker(frame, bbox):
+    # Initialize the KCF tracker
+    tracker = cv2.TrackerKCF_create()
+    # Initialize the tracker with the bounding box
+    tracker.init(frame, bbox)
+    return tracker
+
+# Assuming you have a function detect_color_box(frame, color_range) that returns the bounding box (bbox) of the detected box
+# ...
+
+# Initialize your video capture (use your preferred method for reading video frames)
+video_capture = cv2.VideoCapture(0)  # Change 0 to the video file path if using a file
+
+# Read the first frame
+ret, frame = video_capture.read()
+if not ret:
+    raise Exception("Error reading video stream")
+
+# Detect the initial bounding box of the red box
+color_range = [(0, 120, 70), (10, 255, 255)]  # Change this to the appropriate range for red color
+bbox, _ = detect_color_box(frame, color_range)
+
+# Initialize the tracker
+tracker = initialize_tracker(frame, tuple(bbox))
+
+# Start the video loop
+while True:
+    # Read a new frame
+    ret, frame = video_capture.read()
+    if not ret:
+        break
+
+    # Update the tracker with the new frame
+    success, bbox = tracker.update(frame)
+
+    if success:
+        # Draw the tracked bounding box on the frame
+        x, y, w, h = [int(coord) for coord in bbox]
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+    # Show the frame with the tracked bounding box
+    cv2.imshow("Tracking", frame)
+
+    # Exit the loop when 'q' key is pressed
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+# Release the video capture and close all windows
+video_capture.release()
+cv2.destroyAllWindows()

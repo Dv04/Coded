@@ -22,7 +22,7 @@ def extract_text_from_video(video_path, output_file):
     video_capture.release()
 
 if __name__ == "__main__":
-    video_file_path = "/Users/apple/Downloads/ocr/1.mp4"
+    video_file_path = "/Users/apple/Downloads/ocr/5.mp4"
     output_text_file = "text.txt"
 
     extract_text_from_video(video_file_path, output_text_file)
