@@ -1,0 +1,6 @@
+Text -> Str
+Numeric -> int, float, complex
+Sequence -> list, tuple
+Mapping -> dict
+Set -> set, frozen set
+Boolean -> bool
