@@ -1,0 +1,13 @@
+Conditions:
+
+    - Start with a letter or underscore.
+    - cannot start with a number.
+    - Contains alphanumeric or underscore.
+    - Case-Sensitive.
+    - Cannot be a python keyword.
+
+For e.g.
+
+    a = 20
+    x = "CSE"
+    y = 10.5
