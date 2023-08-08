@@ -1,0 +1,40 @@
+Types of Operators:
+
+    1. Arithmetic Operators
+    2. Assignment Operators
+    3. Comparison Operators
+    4. Logical Operators
+    5. Identity Operators
+    6. Membership Operators
+    7. Bitwise Operators
+
+    Arithmetic Operators:
+
+        1. Addition (+)
+        2. Subtraction (-)
+        3. Multiplication (*)
+        4. Division (/)
+        5. Modulus (%)
+        6. Exponentiation (**)
+        7. Floor Division (//)
+
+    Assignment Operators:
+
+        1. Equal (=)
+        2. Add and Assign (+=)
+        3. Subtract and Assign (-=)
+        4. Multiply and Assign (*=)
+        5. Divide and Assign (/=)
+        6. Modulus and Assign (%=)
+        7. Exponent and Assign (**=)
+        8. Floor Division and Assign (//=)
+
+    Comparison Operators:
+
+        1. Equal to (==)
+        2. Not Equal to (!=)
+        3. Greater than (>)
+        4. Less than (<)
+        5. Greater than or Equal to (>=)
+        6. Less than or Equal to (<=)
+        
