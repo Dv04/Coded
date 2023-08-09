@@ -1,0 +1,38 @@
+Overview:
+
+    Learning: Process of gaining information through Observations.
+    Types:
+
+        Learning directly under expert guidance:
+            - Parents teach infants
+            - Professional mentors
+        
+            Learning guided by knowledge gained from experts:
+            - Learning happens with the knowledge which has been imparted by a teacher or mentor at some point in time in some other form or context
+
+        Self-Learning:
+            - Learning when we are left to learn on our own
+
+Preface:
+
+    Machine Learning: Teaching the Machine to think like a human from Past data to predict the future.
+    
+    or
+    
+    A computer program is said to learn from experience E concerning some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.
+
+Note:
+
+- A machine can be considered to learn if it is able to gather experiences by doing a certain task and improve its performance in doing similar tasks in the future.
+
+- Here, The past experience is past data which is input to the machine learning program or machine from other sources.
+
+How?
+
+    Data -> Abstraction -> Generalization
+
+    Data: Past data or information is utilized as a basis for future decision-making.
+
+    Abstraction: the input data is represented in a broader way through the underlying algorithm.
+
+    Generalization: The abstracted representation is generalized to form a framework for making decisions.
