@@ -1,0 +1,5 @@
+x, y = input().split()
+x, y = int(x), int(y)
+print("{0} + {1} = {2}".format(x, y, x+y))
+print("{0} * {1} = {2}".format(x, y, x*y))
+print("{0} - {1} = {2}".format(x, y, x-y))
