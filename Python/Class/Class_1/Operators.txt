@@ -38,3 +38,28 @@ Types of Operators:
         5. Greater than or Equal to (>=)
         6. Less than or Equal to (<=)
         
+    Logical Operators:
+
+        1. and
+        2. or
+        3. not
+
+    Identity Operators:
+
+        1. is
+        2. is not
+
+    Membership Operators:
+
+        1. in
+        2. not in
+
+    Bitwise Operators:
+
+        1. AND (&)
+        2. OR (|)
+        3. XOR (^)
+        4. NOT (~)
+        5. Left Shift (<<)
+        6. Right Shift (>>)
+        
