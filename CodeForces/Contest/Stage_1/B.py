@@ -1,3 +1,7 @@
 a,b,c,d,e = input().split()
 
-print(a,"\n",b,"\n",c,"\n",d,"\n",e)
+print(a)
+print(b)
+print(c)
+print(d)
+print(e)
