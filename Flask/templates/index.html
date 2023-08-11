@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Viewer</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function updateImage() {
+            $.get("/next_image", function(data, status) {
+                if (status === 'success') {
+                    // Append a timestamp to the URL to force the browser to reload the image
+                    var d = new Date();
+                    document.getElementById('dynamicImage').src = "/image?" + d.getTime();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section">
+            <div class="image-overlay" onclick="updateImage()">
+                <img id="dynamicImage" src="/image" alt="Dynamic Image" />
+                <button class="overlay-button">Next Image</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

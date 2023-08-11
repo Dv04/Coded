@@ -17,7 +17,7 @@ a,b = input().split()
 print("floor {} / {} = {}".format(a,b,int(a)//int(b)))
 print("ceil {} / {} = {}".format(a,b,(int(a)//int(b) + 1)))
 print(int(str(int(a)/int(b))[-1]))
-if int(str(int(a)/int(b))[-1])<5:
+if int(str(int(a)/int(b)).split(".")[-1])<5:
     print("round {} / {} = {}".format(a,b,round(int(a)/int(b))))
 else:
     print("round {} / {} = {}".format(a,b,round(int(a)/int(b))+1))
