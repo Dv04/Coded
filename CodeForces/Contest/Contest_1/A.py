@@ -1,2 +1,2 @@
 a, b = map(int, input().split())
-print("",(a*100)/(100-b))
+print("{0:.2f}".format((b * 100) / (100 - a)))
