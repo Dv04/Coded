@@ -1,0 +1,72 @@
+Different string methods:
+
+    1) upper():
+
+        This method returns the string completely in the uppercase.
+        E.g. "Trial" will become "TRIAL"
+
+    2) lower():
+
+        This method returns the string completely in the lowercase.
+        E.g. "Trial" will become "trial"
+    
+    3) strip():
+
+        This method returns the string after stripping all the whitespace from both the left and right sides of the string.
+        E.g. " Trial " will become "Trial"
+
+    4) lstrip():
+
+        This method returns the string after stripping all the whitespace from the left side.
+        E.g. " Trial " will become "Trial "
+
+    5) rstrip():
+
+        This method returns the string after stripping all the whitespace from the right side.
+        E.g. " Trial " will become " Trial"
+
+    6) replace(string a, string b):
+
+        This method will replace all occurrences of string a with string b in the string.
+        E.g. for a string "Hello", replace("l", "p") will change it to "Heppo"
+
+    7) title():
+
+        This method will capitalize all the first letters of every word in the string
+        E.g. "Hi My name is Dev" will become "Hi My Name Is Dev"
+    
+    8) capitalize():
+
+        This method will capitalize all the first letters of every word in the string
+        E.g. "hi My name is Dev" will become "Hi My name is Dev"
+
+    9) count(string a):
+
+        This method will count the occurrences of string 'a' in the original string.
+        E.g. "hi hi hi hi" with count('hi') will return 4
+
+    10) index(string a):
+    
+        This method
+
+
+String concatenation:
+
+    It is the technique of combining two strings.
+    Methods to do:
+
+        1> + operator:
+
+            writing a + b will concatenate the strings a and b together without any whitespace.
+
+        2> ' '.join(string a, string b):
+
+            writing this would result in the joining of a and b with whitespace.
+
+        3> , operator:
+
+            With the ',' operator, the string are printed one by one in the print statement separated by a whitespace
+
+        4> % operator:
+
+            using %s formatting, the string can be preinted as print("%s"%(string a))

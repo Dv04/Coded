@@ -1,12 +1,12 @@
 String:
 
-    A python string is the collection of the characters surrounded by 'single quotes' or "double quotes" or '''Triple quotes'''. 
+    A python string is a collection of characters surrounded by 'single quotes', "double quotes" or '''Triple quotes'''. 
     
-    Strings are collection of Unicode characters. 
+    Strings are a collection of Unicode characters. 
 
 Indexing: 
 
-    Indexing menas refering to an element by it's location or its position or index number.
+    Indexing means referring to an element by its location or its position or index number.
 
 
 Assignment: Explore Other ways to reverse a string.
