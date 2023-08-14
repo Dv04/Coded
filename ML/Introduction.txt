@@ -101,9 +101,9 @@ Supervised Learning:
             - K-nearest Neighbour
             - Support vector machine
 
-               ------------------------      ------------      ---------------------      -----------      ------------
-        Path: | Labelled training data | -> | Classifier | -> | Classifcation Model | -> | Test Data | -> | Prediction |
-               ------------------------      ------------      ---------------------      -----------      ------------    
+ ------------------------      ------------      ---------------------      -----------      ------------
+| Labelled training data | -> | Classifier | -> | Classifcation Model | -> | Test Data | -> | Prediction |
+ ------------------------      ------------      ---------------------      -----------      ------------    
 
         Example Data:
              ----------------------------------------------
@@ -142,3 +142,42 @@ Unsupervised Learning:
 
     Objective: To take a dataset as input and try to find natural groupings or patterns within the data elements or records.
     The process of unsupervised learning is referred to as pattern discovery or knowledge discovery
+
+           --------------------------      -----------------------------      ---------------
+    Path: | Unlabelled training data | -> | Unsupervised Learning Model | -> | Data Patterns |
+           --------------------------      -----------------------------      ---------------    
+    Clustering is the main type of unsupervised learning ( intends to group or organize similar objects together )
+
+    Clustering:
+        The process of grouping similar objects is known as clustering.
+        The objects are grouped based on the similarity of their attributes.
+        The similarity is measured using a distance metric.
+
+        Types:
+            * Hierarchical Clustering
+            * K-means Clustering
+            * Density-based Clustering
+
+        Examples:
+            * Customer segmentation
+            * Document clustering
+            * Image segmentation
+            * Anomaly detection
+    
+
+Reinforcement Learning:
+
+           ----------------      -------------      --------
+    Path: | Input Raw Data | -> | Environment | -> | Output |
+           ----------------      -------------      --------  
+                                       ||
+                                       \/
+       /   ----------------      -------------      ---------------------    \
+      (  | Reward / State | <-> | Best Action | <-> | Algorithm Selection |   )
+       \   ----------------      -------------      ---------------------    /
+
+    Example:
+
+        * Self-Driving Car
+           - The tasks that have to be taken care of are start/stop, accelerate/decelerate, turn to left/right, etc.
+           - Critical information that it needs to consider are speed and speed limit in different road segments, traffic conditions, road conditions, weather conditions, etc.
