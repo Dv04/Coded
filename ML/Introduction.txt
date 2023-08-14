@@ -138,6 +138,7 @@ Supervised Learning:
             * Skill demand forecast in the job market
 
 Unsupervised Learning:
+
     No labeled training data to learn from and no prediction to be made.
 
     Objective: To take a dataset as input and try to find natural groupings or patterns within the data elements or records.
@@ -172,9 +173,9 @@ Reinforcement Learning:
            ----------------      -------------      --------  
                                        ||
                                        \/
-       /   ----------------      -------------      ---------------------    \
-      (  | Reward / State | <-> | Best Action | <-> | Algorithm Selection |   )
-       \   ----------------      -------------      ---------------------    /
+           ----------------       -------------       ---------------------    
+          | Reward / State | <-> | Best Action | <-> | Algorithm Selection |   
+           ----------------       -------------       ---------------------    
 
     Example:
 
