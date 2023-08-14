@@ -21,34 +21,27 @@ Preface:
     A computer program is said to learn from experience E concerning some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E.
 
 Note:
-    - A machine can be considered to learn if it is able to gather experiences by doing a certain task and improve its performance in doing similar tasks in the future.
-
-    - Here, The past experience is past data which is input to the machine learning program or machine from other sources.
+    - A machine can be considered to learn if it can gather experiences by doing a certain task and improve its performance in doing similar tasks in the future.
+    - Here, The experience is past data which is input to the machine learning program or machine from other sources.
 
 How?
-
     Data -> Abstraction -> Generalization
-
+    
     Data: Past data or information is utilized as a basis for future decision-making.
-
     Abstraction: the input data is represented in a broader way through the underlying algorithm.
-
     Generalization: The abstracted representation is generalized to form a framework for making decisions.
 
 
 Abstraction:
-
     Helps in deriving a conceptual map based on the input data known as the machine learning paradigm (Summarized knowledge representation of the raw data)
 
     Data can be arranged in the form of:
-
         * Computational blocks like if/else rules
         * Mathematical equations
         * Specific data structures like trees and graphs
         * Logical grouping of similar observations
 
     Choice can be based on,
-
         * The type of problem to be solved
         * Nature of input Data
         * Domain of the problem
@@ -56,32 +49,96 @@ Abstraction:
     The next task is to fit the model based on the input data (known as training).
 
 Generalization:
-
-    A key part of ML is to tune up the abstracted knowledge to a form which can be used to take future decisions. It can be achieved by Generalization.
-
+    A key part of ML is to tune up the abstracted knowledge to a form that can be used to take future decisions. It can be achieved by Generalization.
     Quite difficult to achieve because the model is trained based on all finite sets of data which may possess a limited set of characteristics.
 
 When we apply the model to take decisions on test data, we encounter two problems:
-
     1. The trained model is aligned with the training data too much.
     2. The test data possess certain characteristics unknown to train data.
 
 Types of Machine Learning:
-
     1) Supervised Learning (Predictive Learning)
     2) Unsupervised Learning (Descriptive Learning)
     3) Reinforcement Learning
 
     Supervised Learning:
-
         A machine predicts the class of unknown objects based on prior class-related information of similar objects.
 
         Data: (x, y) -> x: input data, y: output label
         Goal: Learn the function to map, x to y.
 
-    Unsupervised Learning:
+        Types:
+            Classification
+            Regression
 
-        A machine finds patterns in unknown objects by grouping similar objects together.
+    Unsupervised Learning:
+        A machine finds patterns in unknown objects by grouping similar objects.
 
         Data: x
         Goal: Learn the hidden pattern of data.
+
+        Types:
+            Clustering
+            Association Analysis
+            
+Supervised Learning:
+    Major Motivation: To learn from past information.
+
+           ------------------------      ---------------------      ------------------      -----------      ------------
+    Path: | Labelled training data | -> | Supervised Learnign | -> | Prediction Model | -> | Test Data | -> | Prediction |
+           ------------------------      ---------------------      ------------------      -----------      ------------
+
+    Labeled Training Data: 
+        Contains past information, and comes as input.
+        Based on the training data the machine builds a predictive model that can be used on test data to assign a label for each record in the test data.
+    
+    Classification Problem:
+        When we are trying to predict a categorical or nominal variable, the problem is known as a classification problem.
+
+        Algorithms:
+            - Naïve Bayes
+            - Decision Tree
+            - K-nearest Neighbour
+            - Support vector machine
+
+               ------------------------      ------------      ---------------------      -----------      ------------
+        Path: | Labelled training data | -> | Classifier | -> | Classifcation Model | -> | Test Data | -> | Prediction |
+               ------------------------      ------------      ---------------------      -----------      ------------    
+
+        Example Data:
+             ----------------------------------------------
+            | Name    | Aptitude | Communication | Class   |
+            |----------------------------------------------|
+            | Dev     |    2     |       5       | Speaker |
+            | Madhur  |    5     |       3       | Intel   |
+            | Heet    |    2     |       6       | Speaker |
+            | Naimish |    6     |       2       | Intel   |
+             ----------------------------------------------
+
+        Examples:
+            * Image Classification
+            * Prediction of disease
+            * Win-Loss prediction of games
+            * Prediction of natural calamities like earthquakes, floods, etc.
+            * Recognition of Handwriting
+
+    Regression Problem:
+        Whereas when we are trying to predict a real-valued variable, the problem falls under the category of regression.
+        The objective is to predict numerical features like real estate or stock price temperature marks in an examination of sales revenue.
+        The underlying predictor variable and the target variable are continuous.
+
+        Types:
+            Simple Linear Regression: Only one predictor variable.
+            Multiple linear Regression: multiple predictor variables
+
+        Examples:
+            * Sales prediction for managers.
+            * price prediction in real estate.
+            * weather forecast
+            * Skill demand forecast in the job market
+
+Unsupervised Learning:
+    No labeled training data to learn from and no prediction to be made.
+
+    Objective: To take a dataset as input and try to find natural groupings or patterns within the data elements or records.
+    The process of unsupervised learning is referred to as pattern discovery or knowledge discovery
