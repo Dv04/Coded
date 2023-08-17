@@ -1,0 +1,59 @@
+Machine Learning Activities / Detailed Process of ML:
+
+        -------------------------
+    1> | Input Data              |
+        -------------------------
+                   ||
+                   \/
+        -------------------------
+    2> | Preparing to Model      |
+        -------------------------
+                   ||
+                   \/
+        -------------------------
+    3> | Learning                |
+        -------------------------
+                   ||
+                   \/
+        -------------------------
+    4> | Performance Evaluation  |
+        -------------------------
+                   ||
+                   \/
+        -------------------------
+    5> | Performance Improvement |
+        -------------------------
+                   ||
+                   \/
+        -------------------------
+    5> | Refined Data / OUtput   |
+        -------------------------
+    Preparing To Model:
+
+        Understand the type of data in the given input dataset
+        Explore the data to understand the data quality
+        Explore the relationship among data elements
+        Find Potential issues in the data
+        Remediate data if needed
+        Data Preprocessing (if needed):
+            - Dimensionality reduction
+                E.g. Principal Component Analysis (PCA)
+            - Feature subset selection
+
+    Learning:
+
+        Data Partitioning
+        Model Selection
+        Cross-validation
+
+    Performance Evaluation:
+
+        Examine the model performance
+        Visualize performance trade-offs using ROC curves
+
+    Performance Improvement:
+
+        Tuning the model
+        Ensembling
+        Bagging
+        Boosting
