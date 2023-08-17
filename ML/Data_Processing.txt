@@ -28,6 +28,7 @@ Machine Learning Activities / Detailed Process of ML:
         -------------------------
     5> | Refined Data / OUtput   |
         -------------------------
+
     Preparing To Model:
 
         Understand the type of data in the given input dataset
@@ -51,9 +52,78 @@ Machine Learning Activities / Detailed Process of ML:
         Examine the model performance
         Visualize performance trade-offs using ROC curves
 
+        Note: ROC is the Reciever Operating Characteristics curve. It allows a graphical representation of test data accuracy and allows the comparison of such tests.
+
     Performance Improvement:
 
         Tuning the model
         Ensembling
         Bagging
         Boosting
+
+        Note: Bagging is a way of combining prediction that belongs to the same types.
+              Boosting is a way of combining predictions that belongs to the different types
+
+    Types of Data:
+    |
+    |--- Qualitative Data:
+    |    |
+    |    |--- Nominal Data
+    |    |--- Ordinal Data
+    |   
+    |--- Quantitative Data:
+    |    |
+    |    |--- Interval Data
+    |    |--- Ratio Data
+
+Qualitative Data:
+
+    It provides information about the quality of an object or information which can not be measured
+
+    E.g. Quality of students (Good or Bad)
+         Name and roll number of students. (211310142006, Dev Sanghvi)
+
+    Can be subdivided as:
+
+        - Nominal Data
+        - Ordinal Data
+    
+    Nominal Data: 
+        One which has no numeric value but has a named value.
+        E.g. Blood Groups(A-, B+)
+            Nationalities (Indian, British, Australian, Americal, etc...)
+            Gender (Male or Female)
+
+        Can not perform mathematical operations like addition, subtraction, and multiplication. That's why also can not perform statistical operations.
+        The basic count is possible so mode, i.e. Most frequently occurring value can be identified for nominal data.
+
+    Ordinal Data: 
+        In addition to possessing the properties of nominal data, can also be arranged naturally
+        E.g. Customer Satisfaction (Happy, Normal, Bad)
+             Hardness of metal (Hard, Normal, Soft)
+
+        Basic counting is possible. So mode can be identified.
+        Ordering is possible so Median and quartiles are possible.
+
+Quantitative Data:
+
+    Relates to the information about the quantity of data.
+    E.g. Consider the attribute `marks`. It can be measured on a numeric scale.
+
+    Can be subdivided in:
+
+        - Interval Data
+        - Ratio Data
+
+    Interval Data: 
+        Not only value is known but also the exact difference b/w value is also known.
+        E.g. Temperature (Celsius, Fahrenheit)
+             Time (24-hour clock)
+
+        Mathematical operations are possible.
+        Mean, Median, Mode, and Standard Deviation are possible. 
+
+    Ratio Data:
+
+        Having the same properties as interval data, with an equal and definitive ratio between data.
+        E.g. Height, Weight, Distance, etc...
