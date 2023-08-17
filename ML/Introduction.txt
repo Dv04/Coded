@@ -101,9 +101,9 @@ Supervised Learning:
             - K-nearest Neighbour
             - Support vector machine
 
- ------------------------      ------------      ---------------------      -----------      ------------
-| Labelled training data | -> | Classifier | -> | Classifcation Model | -> | Test Data | -> | Prediction |
- ------------------------      ------------      ---------------------      -----------      ------------    
+         ------------------------      ------------      ---------------------      -----------      ------------
+        | Labelled training data | -> | Classifier | -> | Classifcation Model | -> | Test Data | -> | Prediction |
+         ------------------------      ------------      ---------------------      -----------      ------------    
 
         Example Data:
              ----------------------------------------------
@@ -182,3 +182,5 @@ Reinforcement Learning:
         * Self-Driving Car
            - The tasks that have to be taken care of are start/stop, accelerate/decelerate, turn to left/right, etc.
            - Critical information that it needs to consider are speed and speed limit in different road segments, traffic conditions, road conditions, weather conditions, etc.
+           
+           
