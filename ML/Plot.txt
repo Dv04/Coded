@@ -1,0 +1,134 @@
+Plotting and exploring numerical data
+
+Box PLot (also known as box and whisker plot):
+
+    The box plot is an extremely effective mechanism to get a one-shot view and understand the nature of the data
+    Gives a standard visualization of the five-number summary statistics of data: 
+        - Minimum 
+        - First Quartile (Q1)
+        - Median (Q2)
+        - Third Quartile (Q3)
+        - Maximum
+
+    The box indicates the range in which 50% of the data lies within.
+    The upper bound of the box indicates the Third quartile (Q3) and the lower bound of the box indicates the first quartile (Q1). This is also called the interquartile range (IQR), the width of IQR = Q3 - Q1.
+
+    The median is represented by the line or band within the box.
+
+    The upper and lower whiskers represent the scores outside the middle 50%.
+
+    The upper whisker extends for up to 1.5 times the interquartile range (IQR) from the upper bound of the box.
+    The lower whisker extends for up to 1.5 times the interquartile range (IQR) from the lower bound of the box.
+
+    Thus, Lower limit = Q1 - 1.5*IQR,
+          Upper limit = Q3 + 1.5*IQR
+        
+    The data values coming beyond the lower or upper whiskers are the ones which are of unusually low or high values respectively. These are the outliers.
+
+    Possible Questions:
+
+        Explain the 5-point summary of the numeric dataset using the visualization method.
+
+    Uses:
+
+        Box plots provide a visual summary of the data.
+        The median gives you the average values of the data.
+        Box plots show the skewness of the data. If the median is on the left or upper side, the data is positively skewed and if the median is on the right or lower side, the data is negatively skewed.
+        Dispersion or spread of data can be visualized by the minimum or maximum.
+        Outliers can be visualized by the dots outside the whiskers.
+
+    Note: There are different variants of box plots. the one above is the Tukey box plot. famous mathematician John Tukey invented the box plots.
+
+Histograms:
+
+    Helps in understanding the distribution of the numeric data into a series of intervals called 'bins'.
+    Different shapes depend on the nature of the data, e.g. skewness.
+
+    E.g.
+        If the data is of similar height, the nature is symmetric and uniform.
+            Bin 1: ******
+            Bin 2: ********
+            Bin 3: ******
+            Bin 4: **********
+            Bin 5: ********
+            Bin 6: **********
+            Bin 7: ********
+            Bin 8: ******
+            Bin 9: ****
+            Bin 10: ******
+
+        If the data is skewed to the left, the nature is negatively skewed.
+
+            Bin 1: *********************
+            Bin 2: *****************
+            Bin 3: ************
+            Bin 4: *********
+            Bin 5: *****
+            Bin 6: *****
+            Bin 7: ***
+            Bin 8: **
+            Bin 9: *
+            Bin 10: *
+
+        If the data is skewed to the right, the nature is positively skewed.
+
+            Bin 1: *
+            Bin 2: *
+            Bin 3: **
+            Bin 4: ***
+            Bin 5: *****
+            Bin 6: *****
+            Bin 7: ********
+            Bin 8: ************
+            Bin 9: *****************
+            Bin 10: *********************
+
+        if the data is skewed at the center, the nature is symmetric and unimodal.
+
+            Bin 1: *****
+            Bin 2: *****
+            Bin 3: *****
+            Bin 4: *******
+            Bin 5: **********
+            Bin 6: ********
+            Bin 7: *****
+            Bin 8: ***
+            Bin 9: ***
+            Bin 10: *
+
+        if there are exactly 2 high points in the graph, the nature is bimodal.
+
+            Bin 1: **
+            Bin 2: ****
+            Bin 3: ******
+            Bin 4: ********
+            Bin 5: **********
+            Bin 6: ********
+            Bin 7: ******
+            Bin 8: ********
+            Bin 9: **********
+            Bin 10: ********
+
+        if there are more than 2 high points in the graph, the nature is multimodal.
+
+            Bin 1: ***
+            Bin 2: ***
+            Bin 3: *****
+            Bin 4: *********
+            Bin 5: **********
+            Bin 6: *****
+            Bin 7: ********
+            Bin 8: ***
+            Bin 9: *****
+            Bin 10: **
+        
+
+    The height of the bar reflects the total count of data elements whose value falls within the specific bin value or the frequency.
+
+    A histogram represents:
+
+        Frequency of different data points in dataset.
+        location of center of data
+        spreading of data
+        skewness variance of data
+        presence of outliers in data.
