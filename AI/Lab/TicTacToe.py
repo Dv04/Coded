@@ -5,10 +5,12 @@ board = ["-", "-", "-",
 
 # Define a function to print the game board
 def print_board():
-  print("Welcome to Tic Tac Toe!\n")
-  print(board[0] + " | " + board[1] + " | " + board[2])
-  print(board[3] + " | " + board[4] + " | " + board[5])
-  print(board[6] + " | " + board[7] + " | " + board[8])
+    print("Welcome to Tic Tac Toe!\n")
+    print("+-----------+")
+    print("| " + board[0] + " | " + board[1] + " | " + board[2] + " |")
+    print("| " + board[3] + " | " + board[4] + " | " + board[5] + " |")
+    print("| " + board[6] + " | " + board[7] + " | " + board[8] + " |")
+    print("+-----------+")
 
 # Define a function to handle a player's turn
 def take_turn(player):
