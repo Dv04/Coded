@@ -1,3 +1,4 @@
 .tmp.driveupload
 .tmp.drivedownload
 MongoDB/myExpressApp/node_modules/*
+MongoDB/node_modules/*
