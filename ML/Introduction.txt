@@ -8,7 +8,7 @@ Overview:
             - Professional mentors
         
             Learning guided by knowledge gained from experts:
-            - Learning happens with the knowledge which has been imparted by a teacher or mentor at some point in time in some other form or context
+            - Learning happens with the knowledge that has been imparted by a teacher or mentor at some point in time in some other form or context
 
         Self-Learning:
             - Learning when we are left to learn on our own
@@ -28,7 +28,7 @@ How?
     Data -> Abstraction -> Generalization
     
     Data: Past data or information is utilized as a basis for future decision-making.
-    Abstraction: the input data is represented in a broader way through the underlying algorithm.
+    Abstraction: The input data is represented in a broader way through the underlying algorithm.
     Generalization: The abstracted representation is generalized to form a framework for making decisions.
 
 
@@ -49,10 +49,10 @@ Abstraction:
     The next task is to fit the model based on the input data (known as training).
 
 Generalization:
-    A key part of ML is to tune up the abstracted knowledge to a form that can be used to take future decisions. It can be achieved by Generalization.
+    A key part of ML is to tune up the abstracted knowledge to a form that can be used to make future decisions. It can be achieved by Generalization.
     Quite difficult to achieve because the model is trained based on all finite sets of data which may possess a limited set of characteristics.
 
-When we apply the model to take decisions on test data, we encounter two problems:
+When we apply the model to make decisions on test data, we encounter two problems:
     1. The trained model is aligned with the training data too much.
     2. The test data possess certain characteristics unknown to train data.
 
@@ -118,7 +118,7 @@ Supervised Learning:
         Examples:
             * Image Classification
             * Prediction of disease
-            * Win-Loss prediction of games
+            * Win-loss prediction of games
             * Prediction of natural calamities like earthquakes, floods, etc.
             * Recognition of Handwriting
 
@@ -133,7 +133,7 @@ Supervised Learning:
 
         Examples:
             * Sales prediction for managers.
-            * price prediction in real estate.
+            * Price prediction in real estate.
             * weather forecast
             * Skill demand forecast in the job market
 
