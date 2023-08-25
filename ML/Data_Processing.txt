@@ -62,7 +62,7 @@ Machine Learning Activities / Detailed Process of ML:
         Boosting
 
         Note: Bagging is a way of combining prediction that belongs to the same types.
-              Boosting is a way of combining predictions that belongs to the different types
+              Boosting is a way of combining predictions that belong to the different types
 
     Types of Data:
     |
@@ -83,7 +83,7 @@ Qualitative Data:
     E.g. Quality of students (Good or Bad)
          Name and roll number of students. (211310142006, Dev Sanghvi)
 
-    Can be subdivided as:
+    This can be subdivided into:
 
         - Nominal Data
         - Ordinal Data
@@ -110,13 +110,13 @@ Quantitative Data:
     Relates to the information about the quantity of data.
     E.g. Consider the attribute `marks`. It can be measured on a numeric scale.
 
-    Can be subdivided in:
+    Can be subdivided into:
 
         - Interval Data
         - Ratio Data
 
     Interval Data: 
-        Not only value is known but also the exact difference b/w value is also known.
+        Not only value is known but the exact difference b/w value is also known.
         E.g. Temperature (Celsius, Fahrenheit)
              Time (24-hour clock)
 
@@ -125,5 +125,5 @@ Quantitative Data:
 
     Ratio Data:
 
-        Having the same properties as interval data, with an equal and definitive ratio between data.
+        It has the same properties as interval data, with an equal and definitive ratio between data.
         E.g. Height, Weight, Distance, etc...

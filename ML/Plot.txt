@@ -2,7 +2,7 @@ Plotting and exploring numerical data
 
 Box PLot (also known as box and whisker plot):
 
-    The box plot is an extremely effective mechanism to get a one-shot view and understand the nature of the data
+    The box plot is an extremely effective mechanism for getting a one-shot view and understanding the nature of the data
     Gives a standard visualization of the five-number summary statistics of data: 
         - Minimum 
         - First Quartile (Q1)
@@ -23,7 +23,7 @@ Box PLot (also known as box and whisker plot):
     Thus, Lower limit = Q1 - 1.5*IQR,
           Upper limit = Q3 + 1.5*IQR
         
-    The data values coming beyond the lower or upper whiskers are the ones which are of unusually low or high values respectively. These are the outliers.
+    The data values coming beyond the lower or upper whiskers are the ones that are of unusually low or high values respectively. These are the outliers.
 
     Possible Questions:
 
@@ -37,7 +37,7 @@ Box PLot (also known as box and whisker plot):
         Dispersion or spread of data can be visualized by the minimum or maximum.
         Outliers can be visualized by the dots outside the whiskers.
 
-    Note: There are different variants of box plots. the one above is the Tukey box plot. famous mathematician John Tukey invented the box plots.
+    Note: There are different variants of box plots. The one above is the Tukey box plot. famous mathematician John Tukey invented the box plots.
 
 Histograms:
 
@@ -83,7 +83,7 @@ Histograms:
             Bin 9: *****************
             Bin 10: *********************
 
-        if the data is skewed at the center, the nature is symmetric and unimodal.
+        If the data is skewed at the center, the nature is symmetric and unimodal.
 
             Bin 1: *****
             Bin 2: *****
@@ -96,7 +96,7 @@ Histograms:
             Bin 9: ***
             Bin 10: *
 
-        if there are exactly 2 high points in the graph, the nature is bimodal.
+        If there are exactly 2 high points in the graph, the nature is bimodal.
 
             Bin 1: **
             Bin 2: ****
@@ -109,7 +109,7 @@ Histograms:
             Bin 9: **********
             Bin 10: ********
 
-        if there are more than 2 high points in the graph, the nature is multimodal.
+        If there are more than 2 high points in the graph, the nature is multimodal.
 
             Bin 1: ***
             Bin 2: ***
@@ -123,11 +123,11 @@ Histograms:
             Bin 10: **
         
 
-    The height of the bar reflects the total count of data elements whose value falls within the specific bin value or the frequency.
+    The height of the bar reflects the total count of data elements whose value falls within the specific bin value or frequency.
 
     A histogram represents:
 
-        Frequency of different data points in dataset.
+        Frequency of different data points in the dataset.
         location of center of data
         spreading of data
         skewness variance of data
