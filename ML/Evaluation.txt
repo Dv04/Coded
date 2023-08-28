@@ -25,7 +25,7 @@ Unsupervised learning:
 
 Selection:
 
-    ML is of 2 types Supervised (focused on solving predictive problems) and unsupervised ()
+    ML is of 2 types Supervised (focused on solving predictive problems) and unsupervised (Used to describe a data set or gain insight from a data set.)
 
     Supervised:
 
@@ -42,10 +42,38 @@ Selection:
     Unsupervised:
 
         Used to describe a data set or gain insight from a data set.
-        No target feature or single feature in this case.
-        Interesting patterns or insights are derived from the data set.
+        No target feature or single feature of interest in the case of unsupervised learning.
+        Based on the value of all features Interesting patterns or insights are derived from the data set.
         
         Descriptive models which group similar data instances are known as clustering models.
         E.g. K-means
 
+Training a mode:
+
+    Methods:
+        Holdout model
+        Cross-validation model
+        Leave-one-out 
+        K-fold 
         
+    Holdout Method:
+
+        In the case of supervised learning a model is trained using the labelled input data.
+        In general, 70%-80% of the input data is used for model training.
+        The remeaning is used as test data for validation of the performance of the model. Different proportion is also acceptable.
+
+        To make sure the data are similar, the division is done randomly.
+        Random numbers are used to assign data items into partitions.
+
+        This method of partitioning the input data into two parts - training and test data which is by holding back a part of input data for validating the trained model is known as the holdout model.
+        Once the model is trained using the training data, the labels of the test data are predicted using the model's target function.
+        The performance of the model is in general measured by the accuracy of the prediction of the label value.
+
+        Many times the input data is partitioned into three portions - training, testing and validation.
+
+        Problem: 
+        
+            The division of data into different classes may not be proportionate.
+            This can be addressed to some extent by applying stratified random sampling instead of sampling.
+
+    K-fold model:
