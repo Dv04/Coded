@@ -1,0 +1,51 @@
+Index:
+
+    Predictive model
+    descriptive model
+    training a model
+    overfitting
+    bias-variance
+    performance model
+
+Cost function:
+    Helps to measure the extent to which the model is going wrong in estimating the relationship between X and Y
+
+Loss function:
+    same as the cost function only difference is that it is usually a function defined on a data point while the cost function is for the entire training data set.
+
+Types of ml for resolving different types of problems
+
+Supervised learning:
+    Regression
+    Classification
+
+Unsupervised learning:
+    Clustering
+    Dimensionality reduction
+
+Selection:
+
+    ML is of 2 types Supervised (focused on solving predictive problems) and unsupervised ()
+
+    Supervised:
+
+        Attempts to establish a relation between the target feature i.e. the feature being predicted and the predictor features.
+
+        The models that are used for the prediction of target features of categorical value are known as Classification models.
+        E.g. KNN, Naïve Bayes, Decision tree
+
+        Predictive models may also be used to predict numerical values of target features based on categorical values. These are known as Regression models.
+        E.g. Linear regression, Logistic regression
+
+        SVM and Neural Networks are used for both.
+
+    Unsupervised:
+
+        Used to describe a data set or gain insight from a data set.
+        No target feature or single feature in this case.
+        Interesting patterns or insights are derived from the data set.
+        
+        Descriptive models which group similar data instances are known as clustering models.
+        E.g. K-means
+
+        
