@@ -1,3 +1,27 @@
 Exploring Categorical Data:
 
+    Scatter Plot:
+
+        Helps in visualizing bivariate relationship. i.e. the relationship between two variables.
+        It is a two-dimensional plot in which points or dots are drawn on coordinates.
+        The first variable is plotted on the x-axis and the second variable is plotted on the y-axis.
+
+    Two-way Cross-tabulations:
+
+        Gives the relationship of two categorical attributes concisely.
+        Matrix format that presents a summarized view of the relationship
+
+Pre-processing:
+
+    Dimensionality reduction:
+
+        High-dimensional data sets need a high amount of computational space and time features are not useful and may degrade the performance of machine learning algorithms.
+        Dimensionality reduction is the process of reducing the number of random variables under consideration by obtaining a set of principal variables.
+
+Feature Subset Selection:
+
+    Try to find out the optimal subset of the entire feature set which significantly reduces computational cost without major impact on learning accuracy
+    A feature is considered irrelevant if,
+        It plays an insignificant role in classifying or grouping...
+
     
