@@ -34,10 +34,10 @@ Selection:
         The models that are used for the prediction of target features of categorical value are known as Classification models.
         E.g. KNN, Naïve Bayes, Decision tree
 
-        Predictive models may also be used to predict numerical values of target features based on the predictive features. These are known as Regression models.
+        Predictive models may also be used to predict numerical values of target features based on the target predictive features of a data instance. These are known as Regression models.
         E.g. Linear regression, Logistic regression
 
-        SVM and Neural Networks are used for both.
+        Support Vector Machines and Neural Network models are used for both Classification and Regression.
 
     Unsupervised:
 
