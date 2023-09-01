@@ -55,6 +55,7 @@ Training a mode:
         Cross-validation model
         Leave-one-out 
         K-fold 
+        Bootstrap Sampling
         
     Holdout Method:
 
@@ -77,3 +78,20 @@ Training a mode:
             This can be addressed to some extent by applying stratified random sampling instead of sampling.
 
     K-fold model:
+
+        The holdout method employing a stratified random sampling approach still heads into issues in certain specific situations.
+        Repeated holdout is employed to ensure that the data is divided into training and test data in a proportionate manner.
+        high chances to contain representative data for training and testing.
+
+    Leave one out:
+
+        The holdout method is repeated n times where n is the number of data instances.
+        Each time one data instance is used for testing and the remaining data is used for training.
+        The performance of the model is measured by averaging the performance of the model in each of the n iterations.
+
+    Bootstrap Sampling:
+
+        Popular wat to identify training and test data sets from the inputs data set.
+        Uses the technique of simple random sampling with Replacement (SRSWR)
+        The data set is sampled with replacement to generate a training data set.
+        The final accuracy would be the average of all the iterations.
