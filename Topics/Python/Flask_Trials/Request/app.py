@@ -1,43 +1,56 @@
-from markupsafe import escape
-from flask import Flask, url_for, render_template, request
+from flask import Flask, url_for, render_template, request, session, redirect, flash
+import secrets
 
 app = Flask(__name__, static_folder="static")
 app.app_context().push()
-app.secret_key = "secret-tunnel"
+app.secret_key = secrets.token_hex()
 
 
 @app.route("/")
 def index():
-    return "Index Page"
+    # if "username" in session:
+    #     return f'Logged in as {session["username"]}'
+    # else:
+    return render_template("index.html")
 
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello(name=None):
-    return render_template("hello.html", name=name)
+# @app.route("/login", methods=["POST", "GET"])
+# def login():
+#     error = None
+
+#     if request.method == "POST":
+#         entered_username = request.form["username"]
+#         entered_password = request.form["password"]
+
+#         # check if the user details are valid
+#         if valid_login(entered_username, entered_password):
+#             session["username"] = request.form["username"]
+#             flash('You were successfully logged in')
+#             return redirect(url_for("index"))
+#         else:
+#             error = "Invalid username/password"
+
+#     # the code below is executed if the request method was GET or the credentials were invalid
+#     return render_template("login.html", error=error)
 
 
-@app.route("/about")
-def about():
-    return "The about page"
-
-
-@app.route("/login", methods=["POST", "GET"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
-
     if request.method == "POST":
-        entered_username = request.form["username"]
-        entered_password = request.form["password"]
-
-        # check if the user details are valid
-        if valid_login(entered_username, entered_password):
-            return log_the_user_in(entered_username)
+        if request.form["username"] != "admin" or request.form["password"] != "secret":
+            error = "Invalid credentials"
         else:
-            error = "Invalid username/password"
-
-    # the code below is executed if the request method was GET or the credentials were invalid
+            flash("You were successfully logged in")
+            return redirect(url_for("index"))
     return render_template("login.html", error=error)
+
+
+@app.route("/logout")
+def logout():
+    # remove the username from the session if it's there
+    session.pop("username", None)
+    return redirect(url_for("index"))
 
 
 # Function to validate the user entered details and log them in
