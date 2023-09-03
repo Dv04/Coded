@@ -1,7 +1,9 @@
 from markupsafe import escape
 from flask import Flask, url_for, render_template, request
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
+app.app_context().push()
+app.secret_key = "secret-tunnel"
 
 
 @app.route("/")
@@ -52,4 +54,4 @@ def log_the_user_in(username):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="127.0.0.1", port=5000, debug=True)
