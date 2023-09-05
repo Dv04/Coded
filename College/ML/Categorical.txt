@@ -2,7 +2,7 @@ Exploring Categorical Data:
 
     Scatter Plot:
 
-        Helps in visualizing bivariate relationship. i.e. the relationship between two variables.
+        Helps in visualizing bivariate relationships. i.e. the relationship between two variables.
         It is a two-dimensional plot in which points or dots are drawn on coordinates.
         The first variable is plotted on the x-axis and the second variable is plotted on the y-axis.
 
@@ -20,7 +20,7 @@ Pre-processing:
 
 Feature Subset Selection:
 
-    Try to find out the optimal subset of the entire feature set which significantly reduces computational cost without major impact on learning accuracy
+    Try to find out the optimal subset of the entire feature set that significantly reduces computational cost without a major impact on learning accuracy
     A feature is considered irrelevant if,
         It plays an insignificant role in classifying or grouping...
 
