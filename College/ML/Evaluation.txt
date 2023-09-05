@@ -134,3 +134,17 @@ Underfitting:
         4. Change the activation function
         5. Change the optimization function
         6. Change the regularization parameter
+
+Drawbacks:
+
+    Overfitting:
+
+        - Poor performance on new data: when a model is overfit it will perform poorly on the new data.
+        - Reduced predictive power: the model is less likely to make accurate predictions about future data.
+        - Increased complezity: Overfitting can also lead to increased complexity of the model.
+        - Increased computational cost
+
+    Underfitting:
+
+        - Increased Bias
+        - Same as above.
