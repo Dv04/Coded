@@ -6,3 +6,5 @@ My whole coding done ever (only the small projects of course. The big ones are o
 You can find 7 different languages here from common C, Python C++ to Go and Shell as well.
 
 Mostly every folder has been named as per the function or the type or the topic of the files it contains.
+
+![Visualization of this repo](./diagram.svg)
