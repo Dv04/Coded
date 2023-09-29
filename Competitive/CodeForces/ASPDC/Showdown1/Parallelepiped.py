@@ -1,0 +1,5 @@
+a,b,c = map(int,input().split())
+x = int((c*a/b)**0.5)
+y = int(a/x)
+z = int(c/x)
+print(4*(x+y+z))
