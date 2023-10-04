@@ -1,0 +1,48 @@
+CSS Flexbox:
+    They are used with different screen sizes and different display devices. 
+    It provides a more efficient way to layout, align and distribute space among items in the container.
+
+    Flex container: The flex container specifies the properties of the parent. It is declared by setting the display property of an element to either flex or inline flex.
+
+    Flex items: The flex items specify the properties of the children. It is declared by setting the display property of an element to flex.
+
+    Flex container properties:
+
+        flex-direction: [ "vertical" | "horizontal" ]
+        flex-wrap
+        flex-flow
+        justify-content
+        align-items
+        align-content
+
+Media Query:
+
+    The media query in CSS3 is used to create a responsive web design which means that the view of a web page differs from the view of the same web page on different devices based on screen or media types.
+
+    The most commonly used media feature is "width".
+
+    Syntax:
+
+        @media not | only MediaType and (expression) {
+            // Code content
+        }
+
+Wildcard Selectors:
+
+    Wildcard selector is used to select multiple elements simultaneously.
+
+    It selects a similar type of class name or attribute and uses CSS property. * wildcard also known as containing wildcard.
+
+    Syntax:
+
+        * {
+            // CSS property
+        }
+
+        [class* = "class_name"] {
+            // CSS property
+        }
+
+Bootstrap:
+
+    Bootstrap is a free and open-source tool collection for creating responsive websites and web applications. It is the most popular HTML, CSS and JS framework for developing responsive mobile-first websites. Nowadays, websites are perfect for all browsers and all sizes of screens.
