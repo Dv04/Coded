@@ -1,0 +1,14 @@
+Decision Tree:
+
+    - Can be used for classification and regression
+    - Similar to if-else (cascaded or ladder)
+    - The deeper the tree the more complex the decision rule and the fitter the model.
+
+    Advantages:
+
+        - Easy to interpret and visualize
+        - Requires little data preparation. Other techniques often require data normalization, dummy variables need to be created and blank values to be removed. 
+        - The cost of using the tree (i.e., predicting data) is logarithmic in the number of data points used to train the tree.
+        - Able to handle both multi-output problems and multi-class problems.
+        - Possible to validate a model using statistical tests. That makes it possible to account for the reliability of the model.
+        - Uses a white box model. If a given situation is observable in a model, the explanation for the condition is easily explained by Boolean logic. By contrast, in a black box model, the explanation for the results is typically difficult to understand, for example, in neural networks.
