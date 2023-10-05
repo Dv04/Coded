@@ -1,0 +1,8 @@
+Upto Chapter 5th
+MCQ - 15 marks
+Long Ans - 15 marks
+Time - 90 mins
+
+| Id | Question | A | B | C | D |
+|----|----------|---|---|---|---|
+| 1 | Where can we use trees | classification | regression | both | none |
