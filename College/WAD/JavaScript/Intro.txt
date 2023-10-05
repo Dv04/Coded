@@ -1,22 +1,22 @@
-Javascript is an object oriented scripting language which is lightweight and cross platform.
-All popular web browsers support JS as they provide built in execution environments.
-it is a case sensitive language.
-Java Script is supportable in several os including windows, MacOS and Linux.
+Javascript is an object-oriented scripting language that is lightweight and cross-platform.
+All popular web browsers support JS as they provide built-in execution environments.
+it is a case-sensitive language.
+Java Script is supportable in several OS including Windows, MacOS and Linux.
 It provides good control to the users over the web browsers.
 
 JS has three parts:
     Code: Includes operators, expressions, statements and subprograms
-    Client side: Collection of objects which can control over browser and user browser interactions is possible
-    Server side: Collections of objects using to access the database on the server.
+    Client-side: A collection of objects that can control browser and user-browser interactions is possible
+    Server-side: Collections of objects used to access the database on the server.
 
 JAVA vs JS:
 
     Java is a programming language while JS is a scripting language.
-    Java is an object oriented programming language while JS is an object based scripting language.
+    Java is an object-oriented programming language while JS is an object-based scripting language.
     Java is strongly typed, type checking is done at compiling time while JS is weakly typed, type checking is done dynamically.
     Java creates applications that run in a virtual machine or browser while JS code is run on a browser only.
-    Java code needs to be compiled while JS code are all in text.
-    Java is a class based programming language while JS is prototype based scripting language.
+    Java code needs to be compiled while JS code is all in text.
+    Java is a class-based programming language while JS is a prototype-based scripting language.
     Java is a compiled language while JS is an interpreted language.
     
 Where to put your script:
@@ -30,16 +30,16 @@ Where to put your script:
             <script type="text/javascript" src="filename.js"></script>
     
     JS source files:
-        Use src attribute of script tage to denote source of js statements:
-            browser will ignore any JS statements inside script tags if src attribute is used.
-            cannot include html tags in source files.
+        Use the src attribute of the script tag to denote the source of js statements:
+            The browser will ignore any JS statements inside script tags if the src attribute is used.
+            cannot include HTML tags in source files.
 
-    Unlike HTML, JS is case sensitive, so variable name month is different from Month.
+    Unlike HTML, JS is case sensitive, so the variable name month is different from Month.
     JS ignores spaces, tabs and newlines that appear in JS programs.
     JS statements are executed in the sequence they are written.
     JS statements are separated by semicolons.
-    JS statements can be grouped together using curly braces to form blocks.
-    JS statements can be commented using // or /* */.
+    JS statements can be grouped using curly braces to form blocks.
+    JS statements can be commented on using // or /* */.
     JS identifiers are names given to variables, functions, objects and labels.
 
     Reserved words:
@@ -66,7 +66,7 @@ Where to put your script:
         Undefined
         Null
 
-    No data type is required aat the time of declaration.
+    No data type is required at the time of declaration.
 
     Array:
         
