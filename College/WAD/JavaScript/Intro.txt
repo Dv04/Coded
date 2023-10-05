@@ -68,5 +68,3 @@ Where to put your script:
 
     No data type is required at the time of declaration.
 
-    Array:
-        
