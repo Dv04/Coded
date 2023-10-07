@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Website with Navbar</title>
+    <style>
+        /* Basic styling */
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            padding: 1em;
+            max-width: 100%;
+        }
+
+        /* Logo styles */
+
+        .navbar .logo-icon .circle {
+            width: 50px;
+            height: 50px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            border: 3px solid red;
+        }
+
+        .navbar .logo-icon .circle .logo-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        /* Center links styles */
+        .navbar .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navbar .nav-links a {
+            color: purple;
+            text-decoration: none;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: larger;
+        }
+
+        .navbar .nav-links a:hover {
+            color: red;
+        }
+
+        /* Login button styles */
+        .navbar .login-box {
+            background-color: red;
+            font-size: larger;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+
+        }
+
+        .navbar .login-box:hover {
+            background-color: black;
+            color: red;
+        }
+
+        /* Content styles */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content .left-text {
+            width: 50%;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 70px;
+        }
+
+        p {
+            color: gray !important;
+        }
+
+        .content .left-text button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .content .left-text button:hover {
+            background-color: black;
+        }
+
+        .content .phone-image {
+            width: 50%;
+            text-align: center;
+        }
+
+        .content .phone-image img {
+            border-radius: 5%;
+            max-width: 90%;
+            height: auto;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .navbar .nav-links {
+                display: none;
+            }
+
+            .content {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .content .left-text,
+            .content .phone-image {
+                width: 100%;
+            }
+
+            .content .phone-image img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <!-- Logo Icon -->
+        <div class="logo-icon">
+            <div class="circle">
+                <img class="logo-image" src="Camera.webp" alt="Logo" width="70" height="70">
+
+
+            </div>
+
+        </div>
+
+        <!-- Nav Links -->
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Service</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Blog</a>
+        </div>
+
+        <!-- Login Box -->
+        <div class="login-box">
+            Log In
+        </div>
+    </div>
+
+    <!-- Content area -->
+    <div class="content">
+        <!-- Left Text -->
+        <div class="left-text">
+            <a style="color: red;">#Get your 14 Days Free Trial</a>
+
+            <h1>Manage all of your stuff using TGB</h1>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam iure sed voluptatibus et consequatur
+                earum
+                cum eligendi nulla magnam exercitationem, quas a eius tempore eveniet maxime nihil, officia, recusandae
+                necessitatibus?</p>
+            <p>
+                <img src="1179329.webp" alt="User Icon" width="15" height="15"
+                    style="border: 2px solid red; border-radius: 50%">
+                <img src="male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.webp" alt="User Icon"
+                    width="15" height="15" style="border: 2px solid red; border-radius: 50%">
+                4m+ users
+            </p>
+
+            <button>Learn More</button>
+        </div>
+
+        <!-- Phone Image -->
+        <div class="phone-image">
+            <img src="Phone.jpeg" alt="Phone Image">
+        </div>
+    </div>
+
+</body>
+
+</html>
