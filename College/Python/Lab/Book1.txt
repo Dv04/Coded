@@ -1,1 +1,4 @@
-Name	Height	Marks	Class	CityABC	5	98	10	AhmXYZ	5.5	97	11	BarodaMNO	6	90	12	Bhavnagar
+Name,Height,Marks,Class,City
+ABC,5,98,10,Ahm
+XYZ,5.5,97,11,Baroda
+MNO,6,90,12,Bhavnagar
