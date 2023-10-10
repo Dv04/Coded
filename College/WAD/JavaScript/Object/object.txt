@@ -1,0 +1,70 @@
+Types of Browser objects:
+
+    Window object: represents the browser window
+    History: represents the browser history
+    Navigator: represents the browser navigator
+    Screen: represents the browser screen
+    Location: represents the browser location
+
+Types of Window objects:
+    Document: represents the HTML document
+    Element: represents an HTML element
+    HTMLCollection: represents a collection of HTML elements
+    NodeList: represents a collection of nodes
+
+
+
+
+    
+hmm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Types of Global objects:
+    
+#         String: represents a sequence of characters
+#         Number: represents a numeric value
+#         Boolean: represents a boolean value
+#         Date: represents a date and time
+#         Math: represents mathematical constants and functions
+#         RegExp: represents a regular expression
+#         JSON: represents JavaScript object as a string
+#         Array: represents an array of elements
+
+# Types of Data Transfer objects:
+    
+#         DataTransfer: represents a drag-and-drop operation
+#         DataTransferItem: represents an item in a drag-and-drop operation
+#         DataTransferItemList: represents a list of drag-and-drop operation items
+#         File: represents a file selected by the user
+
+# Types of Storage objects:
+        
+#         Storage: represents a local storage
+#         SessionStorage: represents a session storage
+#         LocalStorage: represents a local storage
+#         StorageEvent: represents a storage event
+
+

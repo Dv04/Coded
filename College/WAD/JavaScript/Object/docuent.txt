@@ -1,0 +1,35 @@
+Methods of Document object:
+
+    Write("string") - writes a string of text to a document
+    writeln("string") - writes a string of text to a document, followed by a newline character
+    getElementById("id") - returns the element that has the ID attribute with the specified value
+    getElementsByClassName("class") - returns a collection of all elements in the document with the specified class name, as a NodeList object
+    getElementsByTagName("tagname") - returns a collection of all elements in the document with the specified tag name, as a NodeList object
+    getElementsByName("name") - returns a collection of all elements in the document with the specified name attribute, as a NodeList object
+    innerHTML - To write dynamic HTML on HTML Document
+    querySelector("selector") - returns the first element that matches a specified CSS selector(s) in the document
+    querySelectorAll("selector") - returns a static NodeList containing all elements that matches a specified CSS selector(s) in the document
+    createElement("tagname") - creates an Element Node with the specified name
+    createTextNode("text") - creates a Text Node with the specified text
+    appendChild(node) - appends a new child node, to an element, as the last child node
+    removeChild(node) - removes a child node from an element
+    replaceChild(node) - replaces a child node in an element
+    insertBefore(node1, node2) - inserts a new child node before a specified, existing, child node
+    hasChildNodes() - returns true if a node has any child nodes, otherwise false
+    cloneNode() - clones an element
+    getAttribute("attribute") - returns the specified attribute value of an element node
+    setAttribute("attribute", "value") - sets or changes the specified attribute, to the specified value
+    removeAttribute("attribute") - removes the specified attribute from an element
+    document.URL - returns the complete URL of the document
+    document.domain - returns the domain name of the document server
+    document.title - returns the title of the document
+    document.images - returns all <img> elements in the document
+    document.forms - returns all <form> elements in the document
+    document.anchors - returns all <a> elements that have a name attribute in the document
+    document.links - returns all <a> elements with a specified name in the document
+    document.body - returns the <body> element
+    document.head - returns the <head> element
+    document.cookie - returns the document's cookie
+    document.doctype - returns the document's doctype
+    document.documentElement - returns the <html> element
+    document.documentMode - returns the mode used by the browser
