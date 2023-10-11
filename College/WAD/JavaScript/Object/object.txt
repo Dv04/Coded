@@ -8,63 +8,37 @@ Types of Browser objects:
 
 Types of Window objects:
     Document: represents the HTML document
+    PopupWindow: represents a popup window
     Element: represents an HTML element
     HTMLCollection: represents a collection of HTML elements
     NodeList: represents a collection of nodes
 
-
-
-
+Types of Global objects:
     
-hmm
+        String: represents a sequence of characters
+        Number: represents a numeric value
+        Boolean: represents a boolean value
+        Date: represents a date and time
+        Math: represents mathematical constants and functions
+        RegExp: represents a regular expression
+        JSON: represents JavaScript object as a string
+        Array: represents an array of elements
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Types of Global objects:
+Types of Data Transfer objects:
     
-#         String: represents a sequence of characters
-#         Number: represents a numeric value
-#         Boolean: represents a boolean value
-#         Date: represents a date and time
-#         Math: represents mathematical constants and functions
-#         RegExp: represents a regular expression
-#         JSON: represents JavaScript object as a string
-#         Array: represents an array of elements
+        DataTransfer: represents a drag-and-drop operation
+        DataTransferItem: represents an item in a drag-and-drop operation
+        DataTransferItemList: represents a list of drag-and-drop operation items
+        File: represents a file selected by the user
 
-# Types of Data Transfer objects:
-    
-#         DataTransfer: represents a drag-and-drop operation
-#         DataTransferItem: represents an item in a drag-and-drop operation
-#         DataTransferItemList: represents a list of drag-and-drop operation items
-#         File: represents a file selected by the user
-
-# Types of Storage objects:
+Types of Storage objects:
         
-#         Storage: represents a local storage
-#         SessionStorage: represents a session storage
-#         LocalStorage: represents a local storage
-#         StorageEvent: represents a storage event
+        Storage: represents a local storage
+        SessionStorage: represents a session storage
+        LocalStorage: represents a local storage
+        StorageEvent: represents a storage event
 
+Types of Document object:
 
+    Model: represents a model
+    
