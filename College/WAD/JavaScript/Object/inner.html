@@ -1,0 +1,75 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Object Document Method</title>
+</head>
+<body>
+    <h1>This is a Demo</h1>
+    <p id="demo"></p>
+    <script>
+        var x = document.getElementById("demo");
+        x.innerHTML = "Hello World!";
+    </script>
+</body>
+</html> 
+-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example Page</title>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">Welcome to my page!</h1>
+    <p class="red">This paragraph is red.</p>
+    <p class="blue">This paragraph is blue.</p>
+    <p class="green">This paragraph is green.</p>
+    <ul>
+        <li class="red">List item 1</li>
+        <li class="blue">List item 2</li>
+        <li class="green">List item 3</li>
+    </ul>
+    <button id="myButton">Click me!</button>
+    <script>
+        // Get the title element and change its text
+        var title = document.getElementById("title");
+        title.textContent = "Hello, world!";
+
+        // Get all paragraphs and change their text color
+        var paragraphs = document.getElementsByTagName("p");
+        for (var i = 0; i < paragraphs.length; i++) {
+            paragraphs[i].classList.add("bold");
+        }
+
+        // Get all list items and add a click event listener
+        var listItems = document.getElementsByTagName("li");
+        for (var i = 0; i < listItems.length; i++) {
+            listItems[i].addEventListener("click", function () {
+                alert("You clicked on a list item!");
+            });
+        }
+
+        // Get the button and add a click event listener
+        var button = document.getElementById("myButton");
+        button.onclick = function () {
+            alert("You clicked on the button!");
+        };
+    </script>
+</body>
+
+</html>
