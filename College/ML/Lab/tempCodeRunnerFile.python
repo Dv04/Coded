@@ -1,0 +1,48 @@
+import warnings
+warnings.filterwarnings('ignore')
+# Pandas for managing datasets
+import pandas as pd
+# Matplotlib for additional customization
+from matplotlib import pyplot as plt
+
+# Seaborn for plotting and styling
+import seaborn as sns
+
+# Read dataset
+df = pd.read_csv('Pokemon.csv', index_col=0, encoding='latin')
+
+# Recommended way
+sns.lmplot(x='Attack', y='Defense', data=df)
+
+# Scatterplot arguments
+sns.lmplot(x='Attack', y='Defense', data=df,
+           fit_reg=False, # No regression line
+           hue='Stage')   # Color by evolution stage
+
+# Plot using Seaborn
+sns.lmplot(x='Attack', y='Defense', data=df,
+           fit_reg=False, 
+           hue='Stage')
+ 
+# Tweak using Matplotlib
+plt.ylim(0, 200)
+plt.xlim(0, 160)
+plt.show()
+
+# Boxplot
+plt.figure(figsize=(9,6)) # Set plot dimensions
+sns.boxplot(data=df)
+plt.show()
+
+# Preprocess DataFrame
+stats_df = df.drop(['Total', 'Stage', 'Legendary'], axis=1)
+ 
+# New boxplot using stats_df
+plt.figure(figsize=(9,6)) # Set plot dimensions
+sns.boxplot(data=stats_df)
+plt.show()
+
+plt.figure(figsize=(9,6))
+sns.histplot(df, x='Attack',
+             kde=True) # Plot the density curve too
+plt.show()
