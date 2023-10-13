@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Inheritance Example</title>
+</head>
+
+<body>
+    <h1>Inheritance Example</h1>
+    <p>Click the button to create a new animal:</p>
+    <button id="createAnimalButton">Create Animal</button>
+    <ul id="animalList"></ul>
+    <script src="Inheritance.js"></script>
+    <script>
+        // Get the createAnimalButton and animalList elements
+        const createAnimalButton = document.getElementById("createAnimalButton");
+        const animalList = document.getElementById("animalList");
+
+        // Add a click event listener to the createAnimalButton
+        createAnimalButton.addEventListener("click", function () {
+            // Create a new animal and add it to the animalList
+            const animal = new Animal("Animal");
+            const animalItem = document.createElement("li");
+            animalItem.textContent = animal.name;
+            animal.speak();
+            animalList.appendChild(animalItem);
+        });
+    </script>
+</body>
+
+</html>
