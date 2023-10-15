@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        *{
+            margin-left: 15px;
+        }
+        /* Add your custom styles here */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"] {
+            width: 600px;
+            border: 1.5px solid rgba(0, 0, 202, 0.672);
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(236, 236, 236);
+            border: 2px solid black;
+            color: rgb(0, 0, 0);
+            padding: 10px 8px;
+            font-size: 22px;
+            cursor: pointer;
+            border-radius: 9px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="margin-bottom: 30px; margin-top: 50px;">Welcome to the best form on Internet!</h1>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" pattern="[A-Za-z]+" required>
+        <span class="error"></span><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span class="error"></span><br><br>
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+        <span class="error"></span><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <span class="error"></span><br><br>
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+        <span class="error"></span><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <script src="form.js"></script>
+</body>
+
+</html>
