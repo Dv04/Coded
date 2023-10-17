@@ -1,0 +1,6 @@
+JSON stands for JavaScript Object Notation.
+it is a text format for storing and transporting date.
+json is self-describing and easy to understand.
+
+json format is syntactically similar to the code for creating HS object, thus, it can sasily convert json data for jabascript.
+since the format is text onlu,it can be sent eaily beteween computers, can be used by any porgramming

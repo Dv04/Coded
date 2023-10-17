@@ -12,3 +12,5 @@ else {
     document.write("<br/>Your gender is female");
 }
 alert("Thank you for your information")
+
+clg
