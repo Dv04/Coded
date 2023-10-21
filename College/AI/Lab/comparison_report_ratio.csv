@@ -1,0 +1,7 @@
+Method,String 1,String 2,Similarity
+ratio,Dev,dev,67%
+ratio,dev,Dave,29%
+ratio,dev,dave,57%
+ratio,Dev,Dave,57%
+ratio,Dave,dave,75%
+ratio,Dev,dave,29%

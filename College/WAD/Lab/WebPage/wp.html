@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Education</title>
+    <link rel="stylesheet" type="text/css" href="wp.css">
+
+
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Sunflower.webp" alt="Logo" class="logo" width="50">
+        </div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact Us</a>
+        </nav>
+        <div class="search-container">
+            <input type="text" class="search" placeholder="Search">
+            <button class="search-button">Search</button> <!-- Added search button -->
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="centered-content"> <!-- New container for centering content vertically -->
+            <h1>The Future of Education is here</h1>
+            <div class="intro"> <!-- Container to hold the paragraph and image side by side -->
+                <p>In this world of 7 billion people, we need to educate all of them. This is the future of an educated
+                    world, and we are proud to say that the Future of Education is here.</p>
+                <img src="Sunflower.webp" alt="Image Description" class="content-img">
+                <!-- Added class for specific styling -->
+            </div>
+            <div class="buttons"> <!-- Container for buttons if further styling or positioning is required -->
+                <button>Subscribe</button>
+                <button>Watch Video</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Me Sections -->
+    <div class="about-section">
+        <div>
+            <h2>Lets Grow Together</h2>
+            <p>Education began in prehistory, as adults trained the young in the knowledge and skills deemed necessary
+                in their society...</p>
+        </div>
+        <div>
+            <img src="Sunflower.webp" alt="About Image Description">
+            <p>Some description related to the second about section...</p>
+        </div>
+    </div>
+
+    <div class="contact-section">
+        <h2>Contact Us</h2>
+        <form action="process-form.php" method="POST">
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+
+            <label for="phone">Enter your phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter Your Phone" required>
+
+            <label for="email">Enter your email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+
+            <label for="concern">Your Concern:</label>
+            <textarea id="concern" name="concern" rows="4" placeholder="Write your concern here..." required></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>©️ 2023 Online Education. All rights reserved.</p>
+    </footer>
+
+
+</body>
+
+</html>

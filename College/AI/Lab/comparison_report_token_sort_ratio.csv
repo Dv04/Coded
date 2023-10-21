@@ -1,0 +1,7 @@
+Method,String 1,String 2,Similarity
+token_sort_ratio,Dev,Dave,57%
+token_sort_ratio,Dave,dave,100%
+token_sort_ratio,dev,Dave,57%
+token_sort_ratio,Dev,dave,57%
+token_sort_ratio,dev,dave,57%
+token_sort_ratio,Dev,dev,100%
