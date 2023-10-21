@@ -1,0 +1,172 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2C2C2C;
+    color: white;
+    /* margin and padding are now reset above */
+}
+
+header {
+    background-color: rgba(26, 26, 26, 0.7);
+    /* added transparency */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    /* makes navbar stay on top */
+    top: 0; /* Ensures the header is at the very top */
+    width: 100%;
+    z-index: 100;
+    margin: 0; 
+    /* ensures navbar is above all content */
+}
+
+nav {
+    display: flex;
+    gap: 40px;
+    margin-left: 40px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.logo {
+    border-radius: 45%;
+    border: 3px solid white; /* increased border thickness */
+    margin: 0 50px; /* reduced margin on the sides for the logo */
+    height: 35px;
+}
+
+.search-container {
+    display: flex; /* ensures search bar and button are on the same row */
+    margin-left: auto; /* pushes the search to the right */
+}
+
+.search {
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    /* rounded search bar */
+    outline: none;
+}
+
+.search-button {
+    padding: 5px 15px;
+    border: 2px solid white;
+    border-radius: 10px; /* consistent with the search input style */
+    cursor: pointer;
+    margin-left: 10px; /* space between search input and button */
+    color: white;
+    background-color: rgba(26, 26, 26, 0.7);
+
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh; /* This makes the content take up the full height of the viewport */
+    padding-top: 60px; /* Adjusted space for the fixed navbar */
+}
+
+.intro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Adjust this value for desired spacing between paragraph and image */
+}
+
+
+.content p {
+    font-size: 1.2em;
+    margin: 20px; /* Adjust as necessary */
+}
+
+.content-img { /* New class for your content image */
+    width: 100px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 5px; /* Adjust if you want the image less rounded */
+}
+
+.buttons button {
+    padding: 10px 20px;
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    font-size: 1em;
+    margin-right: 20px; /* Space between buttons */
+    cursor: pointer;
+    border-radius: 5px; /* Reduced border-radius for buttons */
+}
+
+.content h1 {
+    font-size: 2.5em;
+}
+
+.content p {
+    max-width: 800px;
+}
+
+.about-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.about-section div {
+    width: 45%;
+    /* two about sections side by side */
+}
+
+.about-section img {
+    width: 100%;
+    border-radius: 10px;
+    /* rounded corners for the image */
+}
+
+.contact-section {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #333;
+}
+
+.contact-section form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-section label {
+    display: block;
+    margin-top: 15px;
+}
+
+.contact-section input,
+.contact-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+.contact-section input[type="submit"] {
+    background-color: #555;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+footer {
+    padding: 20px;
+    background-color: #222;
+    text-align: center;
+    font-size: 0.9em;
+}
