@@ -1,7 +1,0 @@
-Method,String 1,String 2,Similarity
-partial_ratio,Dev,dave,33%
-partial_ratio,Dev,dev,67%
-partial_ratio,dev,dave,67%
-partial_ratio,Dave,dave,75%
-partial_ratio,Dev,Dave,67%
-partial_ratio,dev,Dave,33%
