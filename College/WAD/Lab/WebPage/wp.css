@@ -15,7 +15,7 @@ header {
     position: fixed;
     /* makes navbar stay on top */
     top: 0; /* Ensures the header is at the very top */
-    width: 100%;
+    width: 97.5%;
     z-index: 100;
     margin: 0; 
     /* ensures navbar is above all content */
