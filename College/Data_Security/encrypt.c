@@ -10,7 +10,7 @@ int main()
     char a[37] = "ab1cde2fgh4ijk5 lm3nop6qr8st9uv7wx0yz";
     char b[37] = "pqow0lak9sieu8rj7dhf6yg5m4 t3nbv2cx1z";
     char str[100] = "hey there how are you Number is 9879200470";
-
+    int k = 10;
     int i, j;
     for (i = 0; i < strlen(str); i++)
     {
@@ -18,12 +18,13 @@ int main()
         {
             if (str[i] == a[j])
             {
-                str[i] = b[j];
+                printf("%d-%d ", j, j + k);
+                str[i] = b[(j + k) % 37];
                 break;
             }
         }
     }
-    printf("The encrypted string is: %s", str);
+    printf("\nThe encrypted string is: %s", str);
 
     for (int i = 0; i < strlen(str); i++)
     {
@@ -31,7 +32,7 @@ int main()
         {
             if (str[i] == b[j])
             {
-                str[i] = a[j];
+                str[i] = a[(j - k + 37) % 37];
                 break;
             }
         }
