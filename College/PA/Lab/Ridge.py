@@ -5,12 +5,13 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Create a label encoder object
 le = LabelEncoder()
 
 # Load dataset
-dataset = pd.read_csv("Life.csv")
+dataset = pd.read_csv("Advertising.csv")
 
 # Identify categorical columns
 categorical_cols = dataset.select_dtypes(include=["object"]).columns
@@ -19,9 +20,35 @@ categorical_cols = dataset.select_dtypes(include=["object"]).columns
 for col in categorical_cols:
     dataset[col] = le.fit_transform(dataset[col])
 
+# Compute the correlation matrix
+corr = dataset.corr()
+
+# Generate a mask for the upper triangle
+mask = np.triu(np.ones_like(corr, dtype=bool))
+
+# Set up the matplotlib figure
+f, ax = plt.subplots(figsize=(11, 9))
+
+# Generate a custom diverging colormap
+cmap = sns.diverging_palette(230, 20, as_cmap=True)
+
+# Draw the heatmap with the correct aspect ratio
+sns.heatmap(
+    corr,
+    cmap=cmap,
+    vmax=0.3,
+    center=0,
+    square=True,
+    linewidths=0.5,
+    cbar_kws={"shrink": 0.5},
+    annot=True,  # Add this
+)
+
+plt.show()
+
 # Define X and y
-X = dataset.drop("Life expectancy ", axis=1)
-y = dataset["Life expectancy "]
+X = dataset.drop("Sales", axis=1)
+y = dataset["Sales"]
 
 # Handle NaN values
 X = X.fillna(X.mean())
@@ -50,9 +77,3 @@ rmse = np.sqrt(mse)
 print("Mean Squared Error:", mse)
 print("Mean Absolute Error:", mae)
 print("Root Mean Squared Error:", rmse)
-
-
-plt.tight_layout()
-plt.plot(data["x"], y_pred)
-plt.plot(data["x"], data["y"], ".")
-plt.title("Plot for alpha: %.3g" % alpha)
