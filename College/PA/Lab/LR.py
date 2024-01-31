@@ -12,7 +12,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 le = LabelEncoder()
 
 # Load dataset
-dataset = pd.read_csv("Life.csv")
+dataset = pd.read_csv("Advertising.csv")
 
 # Identify categorical columns
 categorical_cols = dataset.select_dtypes(include=["object"]).columns
@@ -48,8 +48,8 @@ for col in categorical_cols:
 
 # plt.show()
 
-X = dataset["Schooling"].values.reshape(-1, 1)
-y = dataset["Life expectancy "].values.reshape(-1, 1)
+X = dataset["TV"].values.reshape(-1, 1)
+y = dataset["Sales"].values.reshape(-1, 1)
 
 X = pd.DataFrame(X)
 y = pd.DataFrame(y)
