@@ -52,7 +52,7 @@ text = "Hello everyone this is Dev"
 key = int(input("Enter the key: "))
 
 swap_encrypted = swap_encrypt(text)
-print("Swap Encrypted: ", swap_encrypted, "\n")
+print("\nSwap Encrypted: ", swap_encrypted, "\n")
 
 swap_decrypted = swap_decrypt(swap_encrypted)
 print("Swap Decrypted: ", swap_decrypted, "\n")
