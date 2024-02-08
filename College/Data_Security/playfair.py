@@ -9,6 +9,7 @@ alpha = list(alpha)
 
 def create_frequency_dict(inp):
     inp = inp.replace(" ", "")
+    inp = inp.replace(".", "")
     frequency_dict = {char: 0 for char in alpha}
     for char in inp:
         frequency_dict[char] += 1
@@ -21,6 +22,7 @@ print(frequency_dict)
 
 def create_matrix(inp):
     inp = inp.replace(" ", "")
+    inp = inp.replace(".", "")
     inp = list(inp)
     inp = list(dict.fromkeys(inp))
     for i in range(6):
