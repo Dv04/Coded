@@ -1,0 +1,11 @@
+List:
+    Variations of Caesar Cipher
+        1. Fixed Key
+        2. Variable Key
+        3. Monoalphabatic
+    Euclid GCD
+    Extended GCD
+    PlayFair Cypher
+    Hill Cypher
+    Simple Rail Fence
+    Columnar Transposition
