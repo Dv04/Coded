@@ -2,7 +2,7 @@
 
 inp = input("Enter the plain Text: ").lower()
 
-matrix = [[] for i in range(6)]
+matrix = [[] for i in range(5)]
 alpha = "abcdefghijklmnopqrstuvwxyz0123456789"
 alpha = list(alpha)
 
@@ -25,8 +25,8 @@ def create_matrix(inp):
     inp = inp.replace(".", "")
     inp = list(inp)
     inp = list(dict.fromkeys(inp))
-    for i in range(6):
-        for j in range(6):
+    for i in range(5):
+        for j in range(5):
             if len(inp) != 0:
                 if inp[0] not in matrix[i]:
                     matrix[i].append(inp[0])
@@ -38,7 +38,7 @@ def create_matrix(inp):
                     matrix[i].append(alpha[0])
                     alpha.remove(alpha[0])
 
-    for i in range(6):
+    for i in range(5):
         print(matrix[i])
 
 
