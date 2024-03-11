@@ -29,7 +29,6 @@ def generate_key_matrix(keyword):
     keyword = keyword.lower()
     keyword = keyword.replace(" ", "")
     keyword = list(keyword)
-    keyword_length = len(keyword)
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     alphabet = list(alphabet)
     for char in keyword:
