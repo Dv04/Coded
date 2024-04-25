@@ -1,0 +1,49 @@
+import random
+
+
+def mod_exp(base, exponent, modulus):
+    result = 1
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result = (result * base) % modulus
+        base = (base * base) % modulus
+        exponent //= 2
+    return result
+
+
+def generate_prime(bits):
+    while True:
+        p = random.getrandbits(bits)
+        if is_prime(p):
+            return p
+
+
+def is_prime(n, k=5):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    for _ in range(k):
+
+        a = random.randint(2, n - 2)
+        if pow(a, n - 1, n) != 1:
+            return False
+    return True
+
+
+def generate_keys(bits):
+    p = generate_prime(bits)
+    g = random.randint(2, p - 1)
+    a = random.randint(2, p - 1)
+    b = random.randint(2, p - 1)
+    A = mod_exp(g, a, p)
+    B = mod_exp(g, b, p)
+    s1 = mod_exp(B, a, p)
+    s2 = mod_exp(A, b, p)
+    assert s1 == s2
+    return s1
+
+
+bits = 8
+shared_key = generate_keys(bits)
+print("Shared symmetric key:", shared_key)

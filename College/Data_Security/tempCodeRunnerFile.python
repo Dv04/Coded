@@ -1,0 +1,19 @@
+def xor_substitution(data, key): 
+    if len(data) != len(key):
+        raise ValueError("Data and key must have the same length")
+    result = []
+    for i in range(len(data)):
+        data_byte = ord(data[i])
+        key_byte = ord(key[i])
+        result_byte = data_byte ^ key_byte 
+        result.append(result_byte)
+    return ''.join(chr(byte) for byte in result) 
+
+data = "Dev Sanghvi"
+key = "sdfsbfhsbda"
+encrypted_data = xor_substitution(data, key)
+decrypted_data = xor_substitution(encrypted_data, key) 
+
+print("Encrypted data:", encrypted_data)
+
+print("Decrypted data:", decrypted_data)
