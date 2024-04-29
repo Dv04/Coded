@@ -1,19 +1,45 @@
-def xor_substitution(data, key): 
-    if len(data) != len(key):
-        raise ValueError("Data and key must have the same length")
-    result = []
-    for i in range(len(data)):
-        data_byte = ord(data[i])
-        key_byte = ord(key[i])
-        result_byte = data_byte ^ key_byte 
-        result.append(result_byte)
-    return ''.join(chr(byte) for byte in result) 
+def xor(a, b):
+    print("\033[1;32mKey is:\033[0m", a)
+    print("\033[1;34mInput is:\033[0m", b)
+    # Convert input to binary
+    a = "".join(format(ord(i), "08b") for i in a)
+    b = "".join(format(ord(i), "08b") for i in b)
+    # Add keyto make it equal to input
+    key = a
+    while len(key) < len(b):
+        key += a
 
-data = "Dev Sanghvi"
-key = "sdfsbfhsbda"
-encrypted_data = xor_substitution(data, key)
-decrypted_data = xor_substitution(encrypted_data, key) 
+    print("\033[1;32m\nBinary of key :\033[0m", key)
+    print("\033[1;34mBinary of input:\033[0m", b)
+    # XOR operation
+    output = ""
 
-print("Encrypted data:", encrypted_data)
+    for i in range(len(b)):
+        if key[i] == b[i]:
+            output += "0"
+        else:
+            output += "1"
 
-print("Decrypted data:", decrypted_data)
+    print("\033[1;31mXORed output is:\033[0m", output)
+    # Convert binary to ascii
+    output = [int(output[i : i + 8], 2) for i in range(0, len(output), 8)]
+    # Convert ascii to characters
+    for i in range(len(output)):
+        if output[i] < 65:
+            output[i] += 65
+        elif output[i] > 122:
+            output[i] -= 5
+        elif output[i] > 90 and output[i] < 97:
+            output[i] += 7
+    return output
+
+
+def main():
+    key = "DS"
+    input = "Heet Vekariya"
+    output = xor(key, input)
+    print("\033[1;31m\nString output is:\033[0m", "".join([chr(i) for i in output]))
+
+
+if __name__ == "__main__":
+    main()
