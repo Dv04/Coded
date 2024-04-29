@@ -1,49 +1,55 @@
-import random
+# ANSI escape codes for some colors
+RED = "\033[1;31m"
+GREEN = "\033[0;32m"
+BLUE = "\033[0;34m"
+CYAN = "\033[0;36m"
+RESET = "\033[0m"
 
 
-def mod_exp(base, exponent, modulus):
-    result = 1
-    while exponent > 0:
-        if exponent % 2 == 1:
-            result = (result * base) % modulus
-        base = (base * base) % modulus
-        exponent //= 2
-    return result
+def xor(a, b):
+    print(GREEN + "Key is:" + RESET, a)
+    print(BLUE + "Input is:" + RESET, b)
+    # Convert input to binary and add a space after each 8-bit binary representation
+    a = " ".join(format(ord(i), "08b") for i in a)
+    b = " ".join(format(ord(i), "08b") for i in b)
+    # Add key to make it equal to input
+    key = a
+    while len(key) < len(b):
+        key += a
+
+    print(GREEN + "\nBinary of key :" + RESET, key)
+    print(BLUE + "Binary of input:" + RESET, b)
+    # XOR operation
+    output = ""
+
+    for i in range(len(b)):
+        if key[i] == b[i]:
+            output += "0"
+        else:
+            output += "1"
+
+    print(RED + "XORed output is:" + RESET, output)
+    # Convert binary to ascii
+    output = [
+        int(output[i : i + 8], 2) for i in range(0, len(output), 8) if output[i] != " "
+    ]
+    # Convert ascii to characters
+    for i in range(len(output)):
+        if output[i] < 65:
+            output[i] += 65
+        elif output[i] > 122:
+            output[i] -= 5
+        elif output[i] > 90 and output[i] < 97:
+            output[i] += 7
+    return output
 
 
-def generate_prime(bits):
-    while True:
-        p = random.getrandbits(bits)
-        if is_prime(p):
-            return p
+def main():
+    key = "DS"
+    input = "Dev Sanghvi"
+    output = xor(key, input)
+    print(CYAN + "\nString output is:" + RESET, "".join([chr(i) for i in output]))
 
 
-def is_prime(n, k=5):
-    if n <= 1:
-        return False
-    if n <= 3:
-        return True
-    for _ in range(k):
-
-        a = random.randint(2, n - 2)
-        if pow(a, n - 1, n) != 1:
-            return False
-    return True
-
-
-def generate_keys(bits):
-    p = generate_prime(bits)
-    g = random.randint(2, p - 1)
-    a = random.randint(2, p - 1)
-    b = random.randint(2, p - 1)
-    A = mod_exp(g, a, p)
-    B = mod_exp(g, b, p)
-    s1 = mod_exp(B, a, p)
-    s2 = mod_exp(A, b, p)
-    assert s1 == s2
-    return s1
-
-
-bits = 8
-shared_key = generate_keys(bits)
-print("Shared symmetric key:", shared_key)
+if __name__ == "__main__":
+    main()
