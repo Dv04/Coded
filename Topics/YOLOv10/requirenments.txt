@@ -1,0 +1,14 @@
+torch
+torchvision
+onnx
+onnxruntime
+pycocotools
+PyYAML
+scipy
+onnxsim
+gradio
+opencv-python
+psutil
+py-cpuinfo
+huggingface-hub
+safetensors
