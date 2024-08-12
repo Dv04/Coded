@@ -1,5 +1,6 @@
 from typing import Iterator
 from matplotlib import pyplot as plt
+import numpy as np
 
 
 def linear_congruential_generator(m: int, a: int, c: int, seed: int) -> Iterator[int]:
@@ -37,10 +38,59 @@ def rand_float_samples(n_samples: int, seed: int = 123_456_789) -> list[float]:
     return sequence
 
 
+def test_uniformity(samples: list[float]):
+    """
+    Test if the generated samples are uniformly distributed by plotting a histogram
+    :param samples: the list of pseudo-random samples
+    """
+    plt.hist(samples, bins=20, density=True)
+    plt.title("Uniformity Test - Histogram")
+    plt.xlabel("Value")
+    plt.ylabel("Frequency")
+    plt.show()
+
+
+def test_scalability(samples: list[float]):
+    """
+    Test the scalability by plotting samples against their indices to check for patterns
+    :param samples: the list of pseudo-random samples
+    """
+    plt.scatter(range(len(samples)), samples)
+    plt.title("Scalability Test - Scatter Plot")
+    plt.xlabel("Index")
+    plt.ylabel("Value")
+    plt.show()
+
+
+def test_consistency(n_tests: int = 5, n_samples: int = 1000, seed: int = 123_456_789):
+    """
+    Test the consistency by generating multiple sequences and comparing them
+    :param n_tests: number of sequences to generate
+    :param n_samples: number of samples in each sequence
+    :param seed: the seed value for the LCG
+    """
+    sequences = [rand_float_samples(n_samples, seed) for _ in range(n_tests)]
+
+    plt.figure(figsize=(12, 8))
+    for i, seq in enumerate(sequences):
+        plt.plot(seq, label=f"Sequence {i + 1}")
+
+    plt.title("Consistency Test - Multiple Sequences")
+    plt.xlabel("Index")
+    plt.ylabel("Value")
+    plt.legend()
+    plt.show()
+
+
 if __name__ == "__main__":
     n = 1000
     rand_sequence = rand_float_samples(n)
 
-    plt.scatter(rand_sequence, range(0, n))
-    plt.show()
-             
+    # Uniformity Test
+    test_uniformity(rand_sequence)
+
+    # Scalability Test
+    test_scalability(rand_sequence)
+
+    # Consistency Test
+    test_consistency()

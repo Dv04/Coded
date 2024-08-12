@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-__pycache__
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -130,4 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
->>>>>>> 5cb860549f1d45cd1538c5f05a723f24a30a36c7
