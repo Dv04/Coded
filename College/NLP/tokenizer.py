@@ -1,28 +1,38 @@
 import nltk
-
-nltk.download("punkt")
-
-# NLTK and Spacy Tools
-# Tokenization of word, sentence, character and subclass and punctuation
 from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
+from nltk.stem import PorterStemmer, WordNetLemmatizer
 
+# nltk.download('punkt')
+# nltk.download('wordnet')
 
-# Word
+# Initialize stemmer and lemmatizer
+stemmer = PorterStemmer()
+lemmatizer = WordNetLemmatizer()
+
+# Word Tokenization
 input_text = "We are enjoying the party"
 nltk_word = word_tokenize(input_text)
-print(nltk_word)
+print("Word Tokenization:", nltk_word)
 
-# Sentence
+# Stemming
+stemmed_words = [stemmer.stem(word) for word in nltk_word]
+print("Stemmed Words:", stemmed_words)
+
+# Lemmatization
+lemmatized_words = [lemmatizer.lemmatize(word, pos="v") for word in nltk_word]
+print("Lemmatized Words:", lemmatized_words)
+
+# Sentence Tokenization
 input_text = "We are enjoying the party. We are having fun."
 nltk_sent = sent_tokenize(input_text)
-print(nltk_sent)
+print("Sentence Tokenization:", nltk_sent)
 
-# Character
+# Character Tokenization
 input_text = "We are having fun. We are having fun"
 nltk_char = list(input_text)
-print(nltk_char)
+print("Character Tokenization:", nltk_char)
 
-# Subword - convert word to root forms
+# Subword Tokenization
 input_text = "We are having-fun. We are enjoying the party"
 nltk_subword = regexp_tokenize(input_text, pattern="\w+")
-print(nltk_subword)
+print("Subword Tokenization:", nltk_subword)
