@@ -3,9 +3,18 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from termcolor import colored
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    classification_report,
+)
+from sklearn.metrics import mean_squared_error
 
-# Preprocessing steps (from your template)
+# Preprocessing steps (retaining loan_status but not using it until the last part)
 data = pd.read_csv("loan_approval_dataset.csv")
+loan_status = data["loan_status"]  # Keep the 'loan_status' column for later comparison
 data = data.drop(columns=["loan_status"], axis=1)
 
 # Label encode 'education' and 'self_employed' columns
@@ -17,8 +26,8 @@ X = data.drop(columns=["loan_id", "loan_amount"])
 y = data["loan_amount"]
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+X_train, X_test, y_train, y_test, loan_status_train, loan_status_test = (
+    train_test_split(X, y, loan_status, test_size=0.2, random_state=42)
 )
 
 # Standardize the features
@@ -80,6 +89,15 @@ y_pred = y_scaler.inverse_transform(
     np.array(y_pred_discretized).reshape(-1, 1)
 ).flatten()
 
+# Generate predicted loan status based on predicted loan amount
+y_pred_loan_status = [
+    "Approved" if pred >= actual else "Rejected" for pred, actual in zip(y_pred, y_test)
+]
+
+# Generate classification report
+print("\nClassification Report:")
+print(classification_report(loan_status_test, y_pred_loan_status))
+
 # Testing on custom input (as per template)
 custom_input = pd.DataFrame(
     {
@@ -121,10 +139,10 @@ y_custom_pred = y_scaler.inverse_transform(
 print(f"\n\nPredicted loan amounts: \n{y_custom_pred}")
 print(f"\nActual applied loan amounts: \n{y_custom}")
 
-# Loan approval predictions
-print("\n\nPredictions:")
+# Loan approval predictions for custom input
+print("\n\nLoan Approval Predictions:")
 for i in range(len(y_custom_pred)):
-    if y_custom_pred[i] > y_custom[i]:
+    if y_custom_pred[i] > y_custom.iloc[i]:
         print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
     else:
         print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))

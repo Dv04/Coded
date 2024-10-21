@@ -5,12 +5,14 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, classification_report
 from collections import deque
 import random
 from termcolor import colored
 
-# Preprocessing steps (from your template)
+# Preprocessing steps
 data = pd.read_csv("loan_approval_dataset.csv")
+loan_status = data["loan_status"]  # Save loan_status for evaluation
 data = data.drop(columns=["loan_status"], axis=1)
 
 # Label encode 'education' and 'self_employed' columns
@@ -22,8 +24,8 @@ X = data.drop(columns=["loan_id", "loan_amount"])
 y = data["loan_amount"]
 
 # Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+X_train, X_test, y_train, y_test, loan_status_train, loan_status_test = (
+    train_test_split(X, y, loan_status, test_size=0.2, random_state=42)
 )
 
 # Standardize the features
@@ -162,7 +164,16 @@ y_pred = y_scaler.inverse_transform(
     np.array(y_pred_discretized).reshape(-1, 1)
 ).flatten()
 
-# Testing on custom input (as per template)
+# Generate predicted loan status based on predicted loan amount
+y_pred_loan_status = [
+    "Approved" if pred >= actual else "Rejected" for pred, actual in zip(y_pred, y_test)
+]
+
+# Generate classification report
+print("\nClassification Report:")
+print(classification_report(loan_status_test, y_pred_loan_status))
+
+# Testing on custom input
 custom_input = pd.DataFrame(
     {
         "no_of_dependents": [2, 5, 3, 0],
@@ -201,12 +212,12 @@ y_custom_pred = y_scaler.inverse_transform(
 ).flatten()
 
 print(f"\n\nPredicted loan amounts: \n{y_custom_pred}")
-print(f"\nActual applied loan amounts: \n{y_custom}")
+print(f"\nActual applied loan amounts: \n{y_custom.tolist()}")
 
 # Loan approval predictions
-print("\n\nPredictions:")
+print("\n\nLoan Approval Predictions:")
 for i in range(len(y_custom_pred)):
-    if y_custom_pred[i] > y_custom[i]:
+    if y_custom_pred[i] > y_custom.iloc[i]:
         print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
     else:
         print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))
