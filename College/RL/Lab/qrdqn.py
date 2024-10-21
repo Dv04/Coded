@@ -5,53 +5,41 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from termcolor import colored
+from sklearn.metrics import classification_report
 
-# Preprocessing steps (from your template)
-print("Reading dataset...")
+# Preprocessing steps
 data = pd.read_csv("loan_approval_dataset.csv")
-print("Dataset read successfully.")
+loan_status = data["loan_status"]  # Save loan_status for evaluation
 data = data.drop(columns=["loan_status"], axis=1)
 
 # Label encode 'education' and 'self_employed' columns
-print("Label encoding columns...")
 data["education"] = data["education"].map({" Not Graduate": 0, " Graduate": 1})
 data["self_employed"] = data["self_employed"].map({" No": 0, " Yes": 1})
-print("Label encoding completed.")
 
 # Separate features and target variable
-print("Separating features and target variable...")
 X = data.drop(columns=["loan_id", "loan_amount"])
 y = data["loan_amount"]
-print("Features and target separated.")
 
 # Split the data into training and testing sets
-print("Splitting data into training and testing sets...")
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+X_train, X_test, y_train, y_test, loan_status_train, loan_status_test = (
+    train_test_split(X, y, loan_status, test_size=0.2, random_state=42)
 )
-print("Data split completed.")
 
 # Standardize the features
-print("Standardizing features...")
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
-print("Feature standardization completed.")
 
 # Scale the target variable as well
-print("Scaling target variable...")
 y_scaler = StandardScaler()
 y_train_scaled = y_scaler.fit_transform(y_train.values.reshape(-1, 1)).flatten()
 y_test_scaled = y_scaler.transform(y_test.values.reshape(-1, 1)).flatten()
-print("Target scaling completed.")
 
 # Parameters for QR-DQN
 input_size = X_train.shape[1]
 n_quantiles = 51
 learning_rate = 0.001
 gamma = 0.99
-
 tau = torch.linspace(0.0, 1.0, n_quantiles + 1)[1:]  # Quantiles to estimate
 
 
@@ -71,16 +59,12 @@ class QRDQNNetwork(nn.Module):
 
 
 # Initialize network
-print("Initializing QR-DQN network...")
 qr_dqn_network = QRDQNNetwork(input_size, n_quantiles)
 optimizer = optim.Adam(qr_dqn_network.parameters(), lr=learning_rate)
-print("Network initialized.")
 
 # Train the QR-DQN model
-print("Starting training...")
 n_episodes = 5
 for episode in range(n_episodes):
-    print(f"Episode {episode + 1}/{n_episodes}")
     for i in range(len(X_train)):
         state = torch.FloatTensor(X_train[i]).unsqueeze(0)
         target_quantiles = torch.zeros((1, n_quantiles))
@@ -101,10 +85,7 @@ for episode in range(n_episodes):
         loss.backward()
         optimizer.step()
 
-print("Training completed.")
-
 # Testing
-print("Starting testing...")
 y_pred = []
 for state in X_test:
     state_tensor = torch.FloatTensor(state).unsqueeze(0)
@@ -112,10 +93,17 @@ for state in X_test:
     expected_value = torch.mean(predicted_quantiles).item()
     predicted_loan_amount = y_scaler.inverse_transform([[expected_value]])[0][0]
     y_pred.append(predicted_loan_amount)
-    print(f"Test state: Predicted loan amount: {predicted_loan_amount}")
 
-# Testing on custom input (as per template)
-print("Testing on custom input...")
+# Generate predicted loan status based on predicted loan amount
+y_pred_loan_status = [
+    "Approved" if pred >= actual else "Rejected" for pred, actual in zip(y_pred, y_test)
+]
+
+# Generate classification report
+print("\nClassification Report:")
+print(classification_report(loan_status_test, y_pred_loan_status))
+
+# Testing on custom input
 custom_input = pd.DataFrame(
     {
         "no_of_dependents": [2, 5, 3, 0],
@@ -133,7 +121,6 @@ custom_input = pd.DataFrame(
 )
 
 # Preprocessing custom input
-print("Preprocessing custom input...")
 custom_input["education"] = custom_input["education"].map(
     {" Not Graduate": 0, " Graduate": 1}
 )
@@ -141,10 +128,8 @@ custom_input["self_employed"] = custom_input["self_employed"].map({" No": 0, " Y
 X_custom = custom_input.drop(columns=["loan_amount"])
 y_custom = custom_input["loan_amount"]
 X_custom = scaler.transform(X_custom)
-print("Custom input preprocessing completed.")
 
 # Predicting using QR-DQN
-print("Predicting on custom input...")
 y_custom_pred = []
 for state in X_custom:
     state_tensor = torch.FloatTensor(state).unsqueeze(0)
@@ -152,15 +137,14 @@ for state in X_custom:
     expected_value = torch.mean(predicted_quantiles).item()
     predicted_loan_amount = y_scaler.inverse_transform([[expected_value]])[0][0]
     y_custom_pred.append(predicted_loan_amount)
-    print(f"Custom state: Predicted loan amount: {predicted_loan_amount}")
 
 print(f"\n\nPredicted loan amounts: \n{y_custom_pred}")
 print(f"\nActual applied loan amounts: \n{y_custom.tolist()}")
 
 # Loan approval predictions
-print("\n\nPredictions:")
+print("\n\nLoan Approval Predictions:")
 for i in range(len(y_custom_pred)):
     if y_custom_pred[i] > y_custom.iloc[i]:
-        print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
+        print(f"Test Case {i+1}: Loan will be approved")
     else:
-        print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))
+        print(f"Test Case {i+1}: Loan will not be approved")
