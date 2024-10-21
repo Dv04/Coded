@@ -5,48 +5,35 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report
 from torch.distributions import MultivariateNormal
-from termcolor import colored
 
-
-# Preprocessing steps (from your template)
-print("Reading dataset...")
+# Preprocessing steps
 data = pd.read_csv("loan_approval_dataset.csv")
-print("Dataset read successfully.")
 data = data.drop(columns=["loan_status"], axis=1)
 
 # Label encode 'education' and 'self_employed' columns
-print("Label encoding columns...")
 data["education"] = data["education"].map({" Not Graduate": 0, " Graduate": 1})
 data["self_employed"] = data["self_employed"].map({" No": 0, " Yes": 1})
-print("Label encoding completed.")
 
 # Separate features and target variable
-print("Separating features and target variable...")
 X = data.drop(columns=["loan_id", "loan_amount"])
 y = data["loan_amount"]
-print("Features and target separated.")
 
 # Split the data into training and testing sets
-print("Splitting data into training and testing sets...")
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
-print("Data split completed.")
 
 # Standardize the features
-print("Standardizing features...")
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
-print("Feature standardization completed.")
 
 # Scale the target variable as well
-print("Scaling target variable...")
 y_scaler = StandardScaler()
 y_train_scaled = y_scaler.fit_transform(y_train.values.reshape(-1, 1)).flatten()
 y_test_scaled = y_scaler.transform(y_test.values.reshape(-1, 1)).flatten()
-print("Target scaling completed.")
 
 # Parameters for PPO
 input_size = X_train.shape[1]
@@ -91,12 +78,10 @@ class ValueNetwork(nn.Module):
 
 
 # Initialize networks
-print("Initializing networks...")
 policy_network = PolicyNetwork(input_size, output_size)
 value_network = ValueNetwork(input_size)
 policy_optimizer = optim.Adam(policy_network.parameters(), lr=learning_rate)
 value_optimizer = optim.Adam(value_network.parameters(), lr=learning_rate)
-print("Networks initialized.")
 
 
 # Compute PPO loss
@@ -108,9 +93,7 @@ def ppo_loss(old_log_probs, new_log_probs, advantages, eps_clip):
 
 
 # Train the PPO model
-print("Starting training...")
 for episode in range(n_episodes):
-    print(f"Episode {episode + 1}/{n_episodes}")
     states = []
     actions = []
     rewards = []
@@ -120,13 +103,10 @@ for episode in range(n_episodes):
     for i in range(len(X_train)):
         state = torch.FloatTensor(X_train[i]).unsqueeze(0)
         mean, std = policy_network(state)
-        dist = MultivariateNormal(
-            mean, torch.diag(std + 1e-6)
-        )  # Add small value to std for numerical stability
+        dist = MultivariateNormal(mean, torch.diag(std + 1e-6))
         action = dist.sample()
         log_prob = dist.log_prob(action)
 
-        next_state = X_train[i]
         reward = -np.abs(y_train_scaled[i] - action.item())  # Reward is negative error
 
         states.append(state)
@@ -147,7 +127,7 @@ for episode in range(n_episodes):
 
     # Update policy network using PPO
     old_log_probs = torch.cat(log_probs).detach()
-    for _ in range(k_epochs):  # Iterate for policy optimization
+    for _ in range(k_epochs):
         new_log_probs = torch.cat(
             [
                 MultivariateNormal(
@@ -163,20 +143,28 @@ for episode in range(n_episodes):
         loss.backward()
         policy_optimizer.step()
 
-print("Training completed.")
-
 # Testing
-print("Starting testing...")
 y_pred = []
 for state in X_test:
     state_tensor = torch.FloatTensor(state).unsqueeze(0)
     mean, _ = policy_network(state_tensor)
     predicted_loan_amount = y_scaler.inverse_transform(mean.detach().numpy())[0][0]
     y_pred.append(predicted_loan_amount)
-    print(f"Test state: Predicted loan amount: {predicted_loan_amount}")
 
-# Testing on custom input (as per template)
-print("Testing on custom input...")
+# Generate predicted loan status based on predicted loan amount
+y_pred_loan_status = [
+    "Approved" if pred >= actual else "Rejected" for pred, actual in zip(y_pred, y_test)
+]
+
+# Generate classification report
+print("\nClassification Report:")
+print(
+    classification_report(
+        y_test.apply(lambda x: "Approved" if x >= 0 else "Rejected"), y_pred_loan_status
+    )
+)
+
+# Testing on custom input
 custom_input = pd.DataFrame(
     {
         "no_of_dependents": [2, 5, 3, 0],
@@ -194,7 +182,6 @@ custom_input = pd.DataFrame(
 )
 
 # Preprocessing custom input
-print("Preprocessing custom input...")
 custom_input["education"] = custom_input["education"].map(
     {" Not Graduate": 0, " Graduate": 1}
 )
@@ -202,17 +189,14 @@ custom_input["self_employed"] = custom_input["self_employed"].map({" No": 0, " Y
 X_custom = custom_input.drop(columns=["loan_amount"])
 y_custom = custom_input["loan_amount"]
 X_custom = scaler.transform(X_custom)
-print("Custom input preprocessing completed.")
 
 # Predicting using PPO
-print("Predicting on custom input...")
 y_custom_pred = []
 for state in X_custom:
     state_tensor = torch.FloatTensor(state).unsqueeze(0)
     mean, _ = policy_network(state_tensor)
     predicted_loan_amount = y_scaler.inverse_transform(mean.detach().numpy())[0][0]
     y_custom_pred.append(predicted_loan_amount)
-    print(f"Custom state: Predicted loan amount: {predicted_loan_amount}")
 
 print(f"\n\nPredicted loan amounts: \n{y_custom_pred}")
 print(f"\nActual applied loan amounts: \n{y_custom.tolist()}")
@@ -221,6 +205,6 @@ print(f"\nActual applied loan amounts: \n{y_custom.tolist()}")
 print("\n\nPredictions:")
 for i in range(len(y_custom_pred)):
     if y_custom_pred[i] > y_custom.iloc[i]:
-        print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
+        print(f"Test Case {i+1}: Loan will be approved")
     else:
-        print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))
+        print(f"Test Case {i+1}: Loan will not be approved")

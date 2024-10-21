@@ -5,8 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import mean_squared_error, classification_report
-from termcolor import colored
+from sklearn.metrics import classification_report
 
 # Preprocessing steps
 data = pd.read_csv("loan_approval_dataset.csv")
@@ -155,6 +154,6 @@ print(f"\nActual applied loan amounts: \n{y_custom.tolist()}")
 print("\n\nLoan Approval Predictions:")
 for i in range(len(y_custom_pred)):
     if y_custom_pred[i] > y_custom.iloc[i]:
-        print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
+        print(f"Test Case {i+1}: Loan will be approved")
     else:
-        print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))
+        print(f"Test Case {i+1}: Loan will not be approved")
