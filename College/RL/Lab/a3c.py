@@ -5,10 +5,10 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import mean_squared_error, r2_score
 import torch.multiprocessing as mp
 import runpy
 from termcolor import colored
-
 
 # Preprocessing steps (from your template)
 print("Reading dataset...")
@@ -143,7 +143,16 @@ if __name__ == "__main__":
             action, _ = global_model(state_tensor)
         predicted_loan_amount = y_scaler.inverse_transform([[action.item()]])[0][0]
         y_pred.append(predicted_loan_amount)
-        print(f"Test state: Predicted loan amount: {predicted_loan_amount}")
+
+    # Calculate evaluation metrics for the test set
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+
+    print(f"\nTest Set Evaluation Metrics:")
+    print(f"Mean Squared Error (MSE): {mse}")
+    print(f"Root Mean Squared Error (RMSE): {rmse}")
+    print(f"R-squared (R^2): {r2}")
 
     # Testing on custom input (as per template)
     print("Testing on custom input...")
@@ -197,3 +206,13 @@ if __name__ == "__main__":
             print(colored(f"Test Case {i+1}: Loan will be approved", "green"))
         else:
             print(colored(f"Test Case {i+1}: Loan will not be approved", "red"))
+
+    # Calculate evaluation metrics for custom inputs
+    mse_custom = mean_squared_error(y_custom, y_custom_pred)
+    rmse_custom = np.sqrt(mse_custom)
+    r2_custom = r2_score(y_custom, y_custom_pred)
+
+    print(f"\nCustom Input Evaluation Metrics:")
+    print(f"Mean Squared Error (MSE): {mse_custom}")
+    print(f"Root Mean Squared Error (RMSE): {rmse_custom}")
+    print(f"R-squared (R^2): {r2_custom}")
