@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Enhanced HTML Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        :root {
+            --card-bg-color: rgba(255, 255, 255, 0.9);
+            --primary-text-color: #2c3e50;
+            --secondary-text-color: #576c7f;
+            --shadow-color: rgba(44, 62, 80, 0.15);
+            --accent-gradient: linear-gradient(45deg, #5f2c82, #49a09d);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 18s ease infinite;
+            color: var(--primary-text-color);
+            text-align: center;
+        }
+
+        .content {
+            background: var(--card-bg-color);
+            padding: 3rem 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.8s ease-out forwards;
+            max-width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* For Safari */
+        }
+
+        .content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 45px var(--shadow-color);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--secondary-text-color);
+            line-height: 1.6;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .content {
+                padding: 2rem;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <h1>Welcome to My First HTML Page</h1>
+        <p>This is a paragraph of text on my first HTML page.</p>
+    </div>
+</body>
+
+</html>
