@@ -1,0 +1,35 @@
+%--------------
+%% preamble.tex
+%% this should be included with a command like
+%% \input{preamble.tex}
+%% \lecture{``lecture number''}{``date''}{``name of professor''}{``name
+%%  of student''}
+
+\hbadness=10000
+\vbadness=10000
+
+\newcommand{\handout}[5]{%
+   \renewcommand{\thepage}{#1-\arabic{page}}%
+   \noindent
+   \begin{center}
+   \fbox{%
+      \parbox{0.98\textwidth}{%
+        \vspace{2mm}%
+        \textbf{COMP 480/580 --- Probabilistic Algorithms and Data Structures}\hfill #2\par
+        \vspace{2mm}%
+        {\Large\centering #5\par}%
+        \vspace{1mm}%
+        \textit{#3 \hfill #4}\par
+        \vspace{2mm}%
+      }%
+   }%
+   \end{center}
+   \vspace*{4mm}%
+}
+
+
+
+\newcommand{\lecture}[4]{\handout{#1}{#2}{Lecturer: #3}{Scribe By: #4}{Lecture #1}}
+
+
+
