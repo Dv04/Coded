@@ -18,6 +18,7 @@ plt.plot(x, y3, label="y = exp(0.2x)")
 # Labels, legend, grid
 plt.xlabel("x")
 plt.ylabel("y")
+plt.ylim(-5, 10)
 plt.title("Custom Plot with Three Equations")
 plt.legend()
 plt.grid(True)
