@@ -78,18 +78,17 @@ hdr("Indexing & slicing")
 vec = np.arange(10)
 kv("a(end) → vec[-1]", vec[-1])
 kv("a(2,5) → A[1,4]", A[1, 4])
-kv("a(2,:) → A[1,:]", A[1, :], show_shape=True)
-kv("a(1:5,:) → A[:5,:]", A[:5, :], show_shape=True)
-kv("a(end-4:end,:) → A[-5:,:]", A[-5:, :], show_shape=True)
-kv("a(1:3,5:9) → A[0:3,4:9]", A[0:3, 4:9], show_shape=True)
-kv("a([2,4,5],[1,3]) via ix_", A[np.ix_([1, 3, 4], [0, 2])], show_shape=True)
-kv("a(3:2:21,:) → A[2:21:2,:]", A[2:21:2, :], show_shape=True)
-kv("a(1:2:end,:) → A[::2,:]", A[::2, :], show_shape=True)
-kv("flipud(a) → A[::-1,:]", A[::-1, :], show_shape=True)
+kv("a(2,:) → A[1,:]", A[1, :])
+kv("a(1:5,:) → A[:5,:]", A[:5, :])
+kv("a(end-4:end,:) → A[-5:,:]", A[-5:, :])
+kv("a(1:3,5:9) → A[0:3,4:9]", A[0:3, 4:9])
+kv("a([2,4,5],[1,3]) via ix_", A[np.ix_([1, 3, 4], [0, 2])])
+kv("a(3:2:21,:) → A[2:21:2,:]", A[2:21:2, :])
+kv("a(1:2:end,:) → A[::2,:]", A[::2, :])
+kv("flipud(a) → A[::-1,:]", A[::-1, :])
 kv(
     "a([1:end 1],:) → A[np.r_[0:len(A),0],:]",
     A[np.r_[0 : len(A), 0], :],
-    show_shape=True,
 )
 
 # ---- Transpose / Conjugate transpose ----------------------------------------
