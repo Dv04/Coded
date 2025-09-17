@@ -1,17 +1,13 @@
 \documentclass[11pt]{article}
 
-\newtheorem{define}{Definition}
-%\newcommand{\F}{{\mathbb{F}}}
-%\usepackage{psfig}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{amssymb,amsthm}  % harmless + gives you theorem tools you likely want
-\usepackage{microtype}       % subtle kerning/protrusion ⇒ fewer overfull boxes
-\usepackage{hyperref}        % you already have URLs-like text; safe to include
+\usepackage{amssymb,amsthm}
+\usepackage{microtype}
+\usepackage{hyperref}
 \urlstyle{same}
-\setlength{\emergencystretch}{3em} % allows line stretch to avoid overfull boxes
-
+\setlength{\emergencystretch}{3em}
 
 \oddsidemargin=0.15in
 \evensidemargin=0.15in
@@ -19,12 +15,12 @@
 \textheight=9in
 \textwidth=6.25in
 
+\newtheorem{define}{Definition}
 
 \begin{document}
-
 \input{preamble}
 % Correct order: {number}{date}{lecturer}{scribe}
-\lecture{2}{\today}{Anshumali Shrivastava}{Dev S., Lajvi B., Saurav Kr.   G.}
+\lecture{2}{\today}{Anshumali Shrivastava}{Dev S. - ds221, Lajvi B. - lb71, Saurav Kr. G. - sg275}
 
 % Put the long topic as a section heading, not inside \lecture
 \section*{Pseudorandom Numbers, Universal Hashing, and Collision Resolution}
@@ -41,19 +37,46 @@ One of the earliest PRNGs, suggested by John von Neumann in 1946, is the \textbf
 
 While simple, the middle-square method has serious flaws. Many sequences generated this way tend to degenerate quickly. For instance, some seeds enter short cycles or even reach 0, after which they will output only zeros forever (e.g. starting from seed 0000 obviously yields 0000 every time). In practice, most seeds eventually fall into a loop or repeat within a relatively small number of steps. Von Neumann was aware of these issues but used the method as a stopgap given the limited computing resources of the time. Today, the middle-square method is mostly of historical interest, having been supplanted by more robust generators.
 
-\textbf{Exercise:} Try the middle-square method with a few different 4-digit seeds (for example, 1000, 3792, 6250). Observe how quickly the sequence repeats or reaches a trivial cycle. Can you find a seed (other than 0000) that causes an immediate repetition in one step?
+\paragraph{Example (Middle-square).}
+Take the 4-digit seed \(1111\).
+\begin{enumerate}
+  \item Square it: \(1111^2 = 1234321\).
+  \item Pad to 8 digits (twice the seed length): \(01234321\).
+  \item Take the middle 4 digits: \(\boxed{2343}\). This becomes the next value (and seed).
+\end{enumerate}
+If your table size is \(m\), the corresponding hash index is \(2343 \bmod m\).
+
+\paragraph{Exercise:} Try the middle-square method with a few different 4-digit seeds (for example, 1000, 3792, 6250). Observe how quickly the sequence repeats or reaches a trivial cycle. Can you find a seed (other than 0000) that causes an immediate repetition in one step?
 
 Interestingly, a recent revival of the middle-square idea combines it with an additional sequence to improve its quality. This brings us to the concept of \textbf{Weyl sequences}.
 
 \subsection{Weyl Sequences and Linear Congruential Generators}
-A \emph{Weyl sequence} is a sequence defined by repeated addition of a constant modulo some number. Specifically, choose an integer increment $k$ and modulus $m$; start from an initial value $X_0$ and generate $X_{n+1} = (X_n + k) \bmod m$. If $k$ and $m$ are relatively prime (i.e. $\gcd(k,m)=1$), then this sequence cycles through all $m$ possible residues before repeating, and the values are \emph{equidistributed} modulo $m$. In other words, over a full cycle, each value in $0,1,\ldots,m-1$ appears exactly once, so the sequence “fills” the residue space uniformly. This is a direct consequence of number theory: adding a fixed increment $k$ (with $\gcd(k,m)=1$) permutes the residues mod $m$.
+A \emph{Weyl sequence} is a sequence defined by repeated addition of a constant modulo some number. Specifically, choose an integer increment $k$ and modulus $m$; start from an initial value $X_0$ and generate $X_{n+1} = (X_n + k) \bmod m$. If $k$ and $m$ are relatively prime (i.e. $\gcd(k,m)=1$), then this sequence cycles through all $m$ possible residues before repeating, and the values are \emph{equidistributed} modulo $m$. In other words, over a full cycle, each value in $0,1,\ldots,m-1$ appears exactly once, so the sequence “fills” the residue space uniformly. This is a direct consequence of number theory: adding a fixed increment $k$ (with $\gcd(k,m)=1$) permutes the residues $ \bmod m$.
+
+\paragraph{Example (Weyl / modular sequence).}
+Let \(p=7\) and \(k=3\). The sequence of multiples of \(k\) modulo \(p\) is
+\[
+\langle 3,\,6,\,2,\,5,\,1,\,4,\,0\rangle \pmod{7},
+\]
+which is a permutation of \(\{0,1,2,3,4,5,6\}\). Thus probing by “add \(3\) mod \(7\)” will visit every slot exactly once before repeating.
 
 The Weyl sequence alone produces a simple linear progression modulo $m$, which is not very random (it’s just an arithmetic progression). However, it can be used to improve other generators. For example, one proposal called the \textbf{Middle Square Weyl Sequence} (MSWS) generator combines the middle-square method with a Weyl sequence increment to avoid the pitfalls of the middle-square alone. In MSWS, each iteration squares the state (like the middle-square) and also adds a constant (like a Weyl sequence) before taking the middle bits. The added constant helps ensure the state continues to evolve even if the squared part becomes 0 or stagnant. The C code snippet from the slides:
 \begin{verbatim}
     d += 362437;
 \end{verbatim}
-illustrates adding a constant increment each time (here 362437). In that example, 362437 is chosen as an odd integer seed/increment. The reason it must be odd is to ensure it is coprime with $2^{32}$ (assuming $m=2^{32}$ for a 32-bit generator). If it were even, then the sequence $d \leftarrow d + 362437$ (mod $2^{32}$) would only ever produce numbers of the same parity as the seed and would actually cycle through only half of the $2^{32}$ values (skipping all odd outputs) – not fully utilizing the 32-bit range. With 362437 (odd), the additive sequence has a full period of $2^{32}$, achieving equidistribution of outputs in the 32-bit space. More generally, with modulus $2^n$, using an \emph{odd} increment yields a full-period additive (Weyl) sequence that visits every residue class exactly once.
+illustrates adding a constant increment each time (here 362437). In that example, 362437 is chosen as an odd integer seed/increment. The reason it must be odd is to ensure it is coprime with $2^{32}$ (assuming $m=2^{32}$ for a 32-bit generator). If it were even, then the sequence $d \leftarrow d + 362437$ ($ \bmod 2^{32}$) would only ever produce numbers of the same parity as the seed and would actually cycle through only half of the $2^{32}$ values (skipping all odd outputs) – not fully utilizing the 32-bit range. With 362437 (odd), the additive sequence has a full period of $2^{32}$, achieving equidistribution of outputs in the 32-bit space. More generally, with modulus $2^n$, using an \emph{odd} increment yields a full-period additive (Weyl) sequence that visits every residue class exactly once.
 
+\paragraph{Example (LCG).}
+Let \(a=5\), \(c=3\), \(m=16\), and \(x_0=7\).
+\[
+\begin{aligned}
+x_1 &= (5\cdot 7 + 3)\bmod 16 = 38\bmod 16 = \mathbf{6},\\
+x_2 &= (5\cdot 6 + 3)\bmod 16 = 33\bmod 16 = \mathbf{1},\\
+x_3 &= (5\cdot 1 + 3)\bmod 16 = 8\bmod 16 = \mathbf{8}.
+\end{aligned}
+\]
+
+So the sequence begins \(7,\,\mathbf{6},\,\mathbf{1},\,\mathbf{8},\dots\). You can use \(x_n\) as a table index or as a probe step.
 The most widely used class of PRNGs in practice (for non-cryptographic purposes) is the \textbf{linear congruential generator (LCG)}. An LCG produces a sequence according to the recurrence:
 \[ X_{n+1} = (a \cdot X_n + c) \bmod m, \]
 with multiplier $a$, increment $c$, modulus $m$, and initial seed $X_0$. The Weyl sequence is essentially a special case of an LCG with $a=1$ (often called an \emph{additive congruential} generator). More generally, by choosing appropriate $a, c, m$, one can obtain a much longer period and better statistical properties. In fact, a well-chosen LCG can have a period equal to $m$, meaning it cycles through all residues before repeating. For an LCG to have full period $m$, it must satisfy the standard Hull-Dobell conditions:
@@ -64,11 +87,11 @@ with multiplier $a$, increment $c$, modulus $m$, and initial seed $X_0$. The Wey
 \end{itemize}
 We won’t derive these conditions here, but intuitively the second and third conditions ensure the multiplier $a$ has certain residue cycle properties relative to $m$. For a \emph{mixed} LCG $X_{n+1}=(aX_n+c)\bmod m$ to have full period $m$, the Hull–Dobell conditions must hold: $\gcd(c,m)=1$; every prime $q\mid m$ divides $(a-1)$; and if $4\mid m$ then $4\mid(a-1)$. In particular, when $m$ is prime these conditions force $a\equiv 1\pmod m$ (not that $a$ be a generator), so taking $a=1$ with $c\neq 0$ achieves period $m$.
 
-\textbf{Example.} A widely cited LCG (popularized by \emph{Numerical Recipes}) uses $m=2^{32}$, $a=1664525$, $c=1013904223$ and achieves full period under Hull–Dobell. By contrast, many classic C \texttt{rand()} implementations historically used different parameters, e.g., $a=1103515245$, $c=12345$, $m=2^{31}$; However, not all LCGs are good. A notorious bad example was \texttt{RANDU} from the 1960s, which used $m=2^{31}$, $a=65539$, $c=0$. Its choice of $a$ caused the sequence to fall into planes in 3D space, failing spectral tests (its choice $a=65539=2^{16}+3$ with $m=2^{31}$ and $c=0$ led to severe correlations, notoriously, triples fall on 15 parallel planes in 3D).
+\paragraph{Example.} A widely cited LCG (popularized by \emph{Numerical Recipes}) uses $m=2^{32}$, $a=1664525$, $c=1013904223$ and achieves full period under Hull–Dobell. By contrast, many classic C \texttt{rand()} implementations historically used different parameters, e.g., $a=1103515245$, $c=12345$, $m=2^{31}$; However, not all LCGs are good. A notorious bad example was \texttt{RANDU} from the 1960s, which used $m=2^{31}$, $a=65539$, $c=0$. Its choice of $a$ caused the sequence to fall into planes in 3D space, failing spectral tests (its choice $a=65539=2^{16}+3$ with $m=2^{31}$ and $c=0$ led to severe correlations, notoriously, triples fall on 15 parallel planes in 3D).
 
 Even with a full-period, LCG outputs can have subtle statistical shortcomings. For instance, using an increment $c$ ensures full coverage of residues (Weyl sequence property), but the sequence still has a linear structure. For this reason, modern general-purpose PRNGs often use more complex algorithms (like \textbf{Mersenne Twister} (MT19937), which has period $2^{19937}-1$ and excellent equidistribution in high dimensions,\footnote{MT19937 is \emph{not} cryptographically secure; use a CSPRNG for adversarial settings.} or cryptographic generators based on ciphers). Nonetheless, LCGs remain popular for their simplicity and speed. 
 
-\textbf{Exercise:} (i) Prove that if $\gcd(k,m)=1$, the sequence $0, k, 2k, 3k, \ldots \pmod m$ is uniformly distributed over $\{0,\ldots,m-1\}$. (Hint: show that the first $m$ terms are a permutation of all residues mod $m$.) (ii) Using the above, explain why adding an odd constant in a modulus $2^n$ PRNG guarantees hitting all values, whereas adding an even constant would not.
+\paragraph{Exercise:} (i) Prove that if $\gcd(k,m)=1$, the sequence $0, k, 2k, 3k, \ldots \pmod m$ is uniformly distributed over $\{0,\ldots,m-1\}$. (Hint: show that the first $m$ terms are a permutation of all residues $ \bmod m$.) (ii) Using the above, explain why adding an odd constant in a modulus $2^n$ PRNG guarantees hitting all values, whereas adding an even constant would not.
 
 \section{Hash Functions and Universal Hashing}
 \label{sec:hashing}
@@ -77,11 +100,11 @@ Hashing is a technique to map a potentially large universe of keys (e.g. strings
 
 A simple and common choice is the \textbf{division method}: pick a table size $m$ and let 
 \[ h(k) = k \bmod m. \] 
-This is easy to compute (one modulo operation). For example, if $m=10$ and the key universe is integers, $h(k)=k \mod 10$ just gives the last decimal digit of $k$. In choosing $m$, one should avoid certain values that could lead to non-uniform distributions. Powers of 2 are often poor choices for $m$ because $k \mod 2^p$ is just the lowest $p$ bits of $k$. If, say, many keys share the same lower bits (e.g. all keys are even, or all are multiples of 100), they would all hash to a small subset of slots. A prime $m$ not close to a power of 2 is usually recommended. As an example, if keys are character strings interpreted in base 128, a prime $m$ like 10,007 is preferable to $m=8192$ (which is $2^{13}$) to avoid only hashing on a few bits of the sum or value. Another method, the \textbf{multiplication method}, avoids picking bad $m$ by multiplying $k$ by a constant $A \in (0,1)$ and extracting the fractional part times $m$; this can distribute keys evenly for any $m$ (Knuth recommends $A \approx (\sqrt{5}-1)/2$), but it involves floating-point multiplication which can be slower.
+This is easy to compute (one modulo operation). For example, if $m=10$ and the key universe is integers, $h(k)=k \bmod 10$ just gives the last decimal digit of $k$. In choosing $m$, one should avoid certain values that could lead to non-uniform distributions. Powers of 2 are often poor choices for $m$ because $k \bmod 2^p$ is just the lowest $p$ bits of $k$. If, say, many keys share the same lower bits (e.g. all keys are even, or all are multiples of 100), they would all hash to a small subset of slots. A prime $m$ not close to a power of 2 is usually recommended. As an example, if keys are character strings interpreted in base 128, a prime $m$ like 10,007 is preferable to $m=8192$ (which is $2^{13}$) to avoid only hashing on a few bits of the sum or value. Another method, the \textbf{multiplication method}, avoids picking bad $m$ by multiplying $k$ by a constant $A \in (0,1)$ and extracting the fractional part times $m$; this can distribute keys evenly for any $m$ (Knuth recommends $A \approx (\sqrt{5}-1)/2$), but it involves floating-point multiplication which can be slower.
 
 Computing a modulo can be slow on some hardware, especially if $m$ is not a power of 2. An optimization (often a discussion point in class) is that if $m$ is a power of 2, say $m=2^p$, then $h(k)=k \bmod 2^p$ can be computed by taking the $p$ lowest-order bits of $k$ (essentially a bitmask). This eliminates the expensive division operation. \emph{However}, as noted above, using $m=2^p$ can harm the uniformity of $h$ if the key values exhibit patterns in their lower bits. \textbf{Class Exercise (Mod operation is slow):} Consider scenarios where using $m=2^p$ might be acceptable or beneficial. For example, if we know our keys are uniformly distributed 32-bit integers, $m=2^{10}=1024$ might work fine and allow using a bitmask. On the other hand, if keys are, say, all multiples of 1024 (such as addresses aligned to 1024 bytes), then $k \bmod 1024$ is always 0, causing a disastrous hash distribution. This exercise highlights the trade-off between computational efficiency and hash quality.
 
-In summary, a good hash function should balance \textit{speed} and \textit{uniformity}. In practice, for general keys (like strings), one might combine operations (bit shifts, multiplications, etc.) to mix the bits of the key thoroughly, then take mod $m$. For example, a simple string hash might do:
+In summary, a good hash function should balance \textit{speed} and \textit{uniformity}. In practice, for general keys (like strings), one might combine operations (bit shifts, multiplications, etc.) to mix the bits of the key thoroughly, then take $ \bmod m$. For example, a simple string hash might do:
 \[ h(s) = \Big(\sum_{i} c_i \cdot 128^i \Big) \bmod m, \] 
 where $c_i$ are character codes. This treats the string as a number in base 128. A potential issue arises if $m$ divides $128^{k}-1$ for some $k$, which can induce structured collisions among \emph{related} strings; choosing a prime $m$ not near a power of $128$ mitigates this. (Note: polynomial/base-$128$ hashes do \emph{not} collapse arbitrary anagrams, since positions change exponents.)
 
@@ -98,7 +121,7 @@ The main benefit of universal hashing is a provable guarantee on expected perfor
 \[ E[\text{collisions on }x] = \sum_{y \neq x} \Pr[h(y)=h(x)] \le \frac{n-1}{m}. \]
 So the expected \emph{chain length} or cluster size for $x$ (including $x$ itself, in case $x$ is in the table) is at most $1 + \frac{n-1}{m}$. If $n$ is on the order of $m$ (load factor $\alpha = n/m$ is a constant), this is $O(1)$. We emphasize this is an expectation taken over the random choice of $h$ (which in turn randomizes the placement of keys). No matter how adversarial the key set is, a random $h \in \mathcal{H}$ will, on average, scatter them enough to keep collisions low.
 
-\textbf{Conclusion:} With universal hashing, the expected time for a search (or insert or delete) in a hash table is $\Theta(1)$, assuming the load factor $n/m = O(1)$. This expected time is \emph{input distribution independent}, meaning it holds even in the worst-case scenario for the keys, as long as our hash function was chosen at random from a universal family.
+\paragraph{Conclusion:} With universal hashing, the expected time for a search (or insert or delete) in a hash table is $\Theta(1)$, assuming the load factor $n/m = O(1)$. This expected time is \emph{input distribution independent}, meaning it holds even in the worst-case scenario for the keys, as long as our hash function was chosen at random from a universal family.
 
 Designing a universal family $\mathcal{H}$ is an interesting task. A classic and widely used construction for hashing integers is as follows:
 - Fix a prime number $p$ larger than the maximum possible key value (or at least larger than $|U|$, the universe size). For example, if keys are 32-bit, one might choose a 32-bit prime like $p = 2^{31}-1 = 2147483647$.
@@ -107,35 +130,207 @@ Designing a universal family $\mathcal{H}$ is an interesting task. A classic and
 
 It can be shown that the family ${h_{a,b}}$ is \emph{universal} for $[m]$ when $a$ is uniform over ${1,\dots,p-1}$ and $b$ over ${0,\dots,p-1}$. Moreover, the map $\tilde h_{a,b}(x)=(ax+b)\bmod p$ is pairwise independent over $[p]$; after the final reduction $\bmod, m$ we retain universality $\Pr[h(x)=h(y)]\le 1/m$ for $x\ne y$, but full pairwise independence need not hold unless $m=p$.
 
-Other universal families exist for different key types (e.g., for strings, one can interpret the string as a polynomial and choose a random mod $p$ evaluation). The important takeaway is that by randomizing the hash function choice, we obtain guarantees on collision probability. Many modern hash table implementations use a fixed hash but rely on randomness in keys or assume average-case distributions. However, truly adversary-resistant implementations (e.g., some hash tables in cryptographic contexts or in programming languages for security) do employ random hashing under the hood.
+Other universal families exist for different key types (e.g., for strings, one can interpret the string as a polynomial and choose a random $ \bmod p$ evaluation). The important takeaway is that by randomizing the hash function choice, we obtain guarantees on collision probability. Many modern hash table implementations use a fixed hash but rely on randomness in keys or assume average-case distributions. However, truly adversary-resistant implementations (e.g., some hash tables in cryptographic contexts or in programming languages for security) do employ random hashing under the hood.
 
-\textbf{Exercise:} Prove that the family $H = \{h_{a,b}\}$ defined above is universal, by showing for any fixed $x \neq y$ and any $i,j \in [m]$, $\Pr[h_{a,b}(x)=i \wedge h_{a,b}(y)=j] = 1/m^2$. You will need to use the primeness of $p$ in the argument.
+\paragraph{Exercise:} Prove that the family $H = \{h_{a,b}\}$ defined above is universal, by showing for any fixed $x \neq y$ and any $i,j \in [m]$, $\Pr[h_{a,b}(x)=i \wedge h_{a,b}(y)=j] = 1/m^2$. You will need to use the primeness of $p$ in the argument.
 
 
 \section{Examples for Hashing Methods}
 \subsection{Middle-Square Method}
-Start with seed $1111$. Then $1111^2 = 1234321$ (pad to 8 digits: 01234321). Take middle 4 digits: $2343$.
+
+Key Idea: Use a number (seed), square it, extract the middle digits, and treat those as the next value. For hashing, you can then map that value into your table by taking mod m (table size).
+
+
+\paragraph{Example 1}
+  \textbf{Seed 5735.}
+  \[
+  5735^2 = 32890225 \quad(\text{already 8 digits})\quad
+    \Rightarrow\ \text{middle 4 digits } = \boxed{8902}.
+  \]
+Hash index (if table size \(m\)) is \(8902 \bmod m\).
+
+\paragraph{Example 2}
+  \textbf{Seed 2020.}
+  \[
+    2020^2 = 4080400 \quad\text{(pad to 8 digits: } 04080400\text{)}\quad
+    \Rightarrow\ \text{middle 4 digits } = \boxed{0804}.
+  \]
+  The corresponding index is \(804 \bmod m\) if you drop the leading zero, or \(0804 \bmod m\) if you keep fixed width.
+
+\vspace{0.75em}
+
+
+
+The fixed padding rule is important: always extract the same number of middle digits each time so the procedure is well-defined.
 
 \subsection{Modular Sequence Method}
-Let $p = 7$ and $k = 3$. Sequence: $3, 6, 2, 5, 1, 4, 0 \mod 7$.
+
+Work modulo a prime \(p\) and advance by a fixed step \(k\).
+The sequence \(\{k,2k,3k,\dots\} \bmod p\) visits every residue class exactly once when \(\gcd(k,p)=1\).
+
+\medskip
+\paragraph{Example 1.} \(p=11,\ k=2\).
+\[
+\langle 2,4,6,8,10,1,3,5,7,9,0\rangle \pmod{11},
+\]
+which is a permutation of \(\{0,\dots,10\}\).
+
+\medskip
+\paragraph{Example 2.} \(p=13,\ k=5\).
+\[
+\langle 5,10,2,7,12,4,9,1,6,11,3,8,0\rangle \pmod{13},
+\]
+which covers all residues exactly once.
+
+\medskip
+\paragraph{Note.} If \(\gcd(k,p)\neq 1\) (for example, modulus \(8\) with step \(k=2\)),
+the sequence may not cover all residues:
+\(2,4,6,0,2,4,6,\dots\) visits only the even classes.
 
 \subsection{Linear Congruential Generator (LCG)}
-Parameters: $a = 5$, $c = 3$, $m = 16$, seed $x_0 = 7$. Then:
-\begin{align*}
-x_1 &= (5 \cdot 7 + 3) \mod 16 = 38 \mod 16 = 6 \\
-x_2 &= (5 \cdot 6 + 3) \mod 16 = 33 \mod 16 = 1 \\
-x_3 &= (5 \cdot 1 + 3) \mod 16 = 8 \mod 16 = 8
-\end{align*}
+Define \(x_{n+1}\equiv (a x_n + c)\pmod m\) and use \(x_n\) as an index or probe step.
+
+\medskip
+\paragraph{Example 1.} \(a=7,\ c=0,\ m=10,\ x_0=4\).
+\[
+\begin{aligned}
+x_1 &= (7\cdot 4)\bmod 10 = 28\bmod 10 = \mathbf{8},\\
+x_2 &= (7\cdot 8)\bmod 10 = 56\bmod 10 = \mathbf{6},\\
+x_3 &= (7\cdot 6)\bmod 10 = 42\bmod 10 = \mathbf{2},\\
+x_4 &= (7\cdot 2)\bmod 10 = 14\bmod 10 = \mathbf{4}.
+\end{aligned}
+\]
+Sequence: \(4,\,8,\,6,\,2,\,4,\dots\) with period \(4\).
+
+\medskip
+\paragraph{Example 2.} \(a=3,\ c=1,\ m=7,\ x_0=2\).
+\[
+\begin{aligned}
+x_1 &= (3\cdot 2 + 1)\bmod 7 = 7\bmod 7 = \mathbf{0},\\
+x_2 &= (3\cdot 0 + 1)\bmod 7 = \mathbf{1},\\
+x_3 &= (3\cdot 1 + 1)\bmod 7 = \mathbf{4},\\
+x_4 &= (3\cdot 4 + 1)\bmod 7 = 13\bmod 7 = \mathbf{6},\\
+x_5 &= (3\cdot 6 + 1)\bmod 7 = 19\bmod 7 = \mathbf{5},\\
+x_6 &= (3\cdot 5 + 1)\bmod 7 = 16\bmod 7 = \mathbf{2}.
+\end{aligned}
+\]
+Sequence: \(2,\,0,\,1,\,4,\,6,\,5,\,2,\dots\) which cycles with period \(6\).
+
+\medskip
+\paragraph{Use in hashing}
+If the table size is \(m\), the index at step \(n\) can be \(x_n\).
+Alternatively, use \(x_n\) to define the probe order in open addressing.
+
+\medskip
+\paragraph{Notes.}
+\begin{itemize}
+  \item The quality of the sequence depends on \(a,c,m\). Poor choices can give short cycles.
+  \item Small moduli make patterns easy to see. Real systems pick larger \(m\) and tuned parameters.
+\end{itemize}
 
 \section{Proof of 2-Universal Hashing}
-We define $h_{a,b}(x) = ((a \cdot x + b) \mod p) \mod m$ where $a \in \{1,\ldots,p-1\}$ and $b \in \{0,\ldots,p-1\}$. 
+We define $h_{a,b}(x) = ((a \cdot x + b) \bmod p) \bmod m$ where $a \in \{1,\ldots,p-1\}$ and $b \in \{0,\ldots,p-1\}$. 
 Let $x \neq y$ be two keys. We want to show: $\Pr[h_{a,b}(x) = h_{a,b}(y)] \leq \frac{1}{m}$.
-Because $a(x - y) \not\equiv 0 \mod p$ (as $x \neq y$ and $a \neq 0$), the expression $(a(x-y))$ ranges over all nonzero values mod $p$ uniformly.
+Because $a(x - y) \not\equiv 0 \bmod p$ (as $x \neq y$ and $a \neq 0$), the expression $(a(x-y))$ ranges over all nonzero values $\bmod p$ uniformly.
 So for any fixed $i$, $\Pr[h_{a,b}(x) = h_{a,b}(y) = i] = \frac{1}{m^2}$, implying collision probability is bounded by $1/m$.
+
+We consider the affine family
+\[
+h_{a,b}(x)=\big((a x+b)\bmod p\big)\bmod m,
+\qquad a\in\{1,\dots,p-1\},\; b\in\{0,\dots,p-1\},
+\]
+with a prime $p > |U|$. For two distinct keys $x\neq y$, we want to show
+\[
+\Pr_{a,b}\big[h_{a,b}(x)=h_{a,b}(y)\big]\;\le\;\frac1m.
+\]
+
+\subsection*{Step 1: Lift to $\bmod p$ and count pairs}
+Define $\tilde h_{a,b}(t)=(a t+b)\bmod p \in \{0,\dots,p-1\}$.
+Consider the mapping
+\[
+\Phi:\ (a,b)\mapsto \big(\tilde h_{a,b}(x),\,\tilde h_{a,b}(y)\big) \in \mathbb{F}_p^2 .
+\]
+For fixed $x\neq y$, as $(a,b)$ ranges uniformly over $(p-1)\cdot p$ choices, the pair $(\tilde h(x),\tilde h(y))$ ranges \emph{uniformly} over all $p(p-1)$ ordered pairs $(u,v)$ with $u\neq v$.
+This follows because the linear system
+\[
+ax+b\equiv u\ (\bmod p), \qquad ay+b\equiv v\ (\bmod p)
+\]
+has a unique solution for $a,b$ whenever $u\neq v$.
+
+\subsection*{Step 2: Reduction $\bmod m$ and ``same-bucket'' counting}
+Let the residue classes after the final $\bmod m$ be
+\[
+S_r=\{\,z\in\{0,\dots,p-1\}: z \bmod m = r\,\},\qquad r=0,\dots,m-1.
+\]
+Their sizes satisfy
+\[
+|S_r|\in\{q, q+1\},\quad\text{where }p=mq+t,\ \ 0\le t<m.
+\]
+The event $h_{a,b}(x)=h_{a,b}(y)$ means $\tilde h(x)$ and $\tilde h(y)$ land in the same bucket $S_r$.
+Thus
+\[
+\Pr[h_{a,b}(x)=h_{a,b}(y)]
+= \frac{\sum_{r=0}^{m-1} |S_r|(|S_r|-1)}{p(p-1)}.
+\]
+
+\subsection*{Step 3: Bound by $1/m$}
+Compute the numerator:
+\[
+\sum_{r} |S_r|(|S_r|-1)
+= t(q+1)q + (m-t)q(q-1)
+= m q^2 - m q + 2t q.
+\]
+So
+\[
+\Pr[h_{a,b}(x)=h_{a,b}(y)]
+= \frac{m q^2 - m q + 2t q}{p(p-1)}.
+\]
+Since $p=mq+t$, one checks that
+\[
+\frac{m q^2 - m q + 2t q}{p(p-1)} \;\le\; \frac1m.
+\]
+Therefore, the family $\{h_{a,b}\}$ is \textbf{2-universal}.
 
 \section{Generalization to k-wise Independence}
 A hash family is $k$-wise independent if for any $k$ distinct keys, their hash values are mutually independent.
 For example, with 3-wise independence, we have: $\Pr[h(x_1)=i_1 \wedge h(x_2)=i_2 \wedge h(x_3)=i_3] = \frac{1}{m^3}$ for all $x_1 \neq x_2 \neq x_3$ and $i_1,i_2,i_3 \in [m]$.
 This stronger notion can be constructed using degree-$(k-1)$ polynomials over finite fields.
+
+
+\subsection*{More Details}
+A hash family is \textbf{$k$-wise independent} if, for any set of $k$ distinct keys 
+$x_1,\dots,x_k$ and any target values $i_1,\dots,i_k \in [m]$, we have
+\[
+\Pr[h(x_1)=i_1 \wedge h(x_2)=i_2 \wedge \cdots \wedge h(x_k)=i_k] = \frac{1}{m^k}.
+\]
+This means the hash values behave exactly like independent uniform random draws from $[m]$,
+as long as we restrict to at most $k$ keys.
+
+\begin{itemize}
+  \item 2-wise independence (universality) only ensures collision probabilities are controlled. 
+  \item $k$-wise independence is stronger: no correlations exist among up to $k$ keys.
+\end{itemize}
+
+A standard way to construct such families is via \textbf{polynomials over finite fields}. 
+Pick a prime $p \geq m$ and choose coefficients $a_0,a_1,\dots,a_{k-1}$ uniformly at random in $\mathbb{F}_p$.
+Define
+\[
+h(x) = \Big( a_0 + a_1 x + a_2 x^2 + \cdots + a_{k-1} x^{k-1} \Big) \bmod p \bmod m .
+\]
+
+The key fact is that for any $k$ distinct inputs $x_1,\dots,x_k$, the system of equations uniquely determines 
+the coefficients, so the outputs are uniform and independent. Thus polynomial hashing extends the idea of universality 
+to stronger $k$-wise independence, which is useful in randomized algorithms requiring tighter guarantees.
+
+
+% ---------- References ----------
+\clearpage
+\bibliographystyle{plain}
+
+% If you want the whole .bib printed even if nothing is cited yet:
+\nocite{*}
+
+
+\bibliography{biblio}
 
 \end{document}
