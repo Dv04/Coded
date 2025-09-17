@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{CarterWegman79}
+J.~Lawrence Carter and Mark~N. Wegman.
+\newblock Universal classes of hash functions.
+\newblock {\em Journal of Computer and System Sciences}, 18(2):143--154, 1979.
+
+\bibitem{CLRS09}
+Thomas~H. Cormen, Charles~E. Leiserson, Ronald~L. Rivest, and Clifford Stein.
+\newblock {\em Introduction to Algorithms}.
+\newblock MIT Press, 3rd edition, 2009.
+
+\bibitem{HullDobell62}
+T.~E. Hull and A.~R. Dobell.
+\newblock Random number generators.
+\newblock {\em SIAM Review}, 4(3):230--254, 1962.
+
+\bibitem{KnuthV3}
+Donald~E. Knuth.
+\newblock {\em The Art of Computer Programming, Vol. 3: Sorting and Searching}.
+\newblock Addison–Wesley, 2nd edition, 1998.
+
+\bibitem{MatsumotoNishimura98}
+Makoto Matsumoto and Takuji Nishimura.
+\newblock Mersenne twister: A 623-dimensionally equidistributed uniform pseudorandom number generator.
+\newblock {\em ACM Transactions on Modeling and Computer Simulation}, 8(1):3--30, 1998.
+
+\end{thebibliography}
