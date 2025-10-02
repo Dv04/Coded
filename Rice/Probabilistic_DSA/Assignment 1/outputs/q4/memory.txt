@@ -1,0 +1,1 @@
+Bloom memory: 16441..32825 bytes; Python set: 524504 bytes.

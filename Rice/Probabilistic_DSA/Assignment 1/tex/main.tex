@@ -1,0 +1,135 @@
+\section{Counting Turtle Confidence }
+
+\textbf{Goal} Using Chebyshev's inequality, I (i) pick an explicit band width of the form
+\emph{constant\,$\times$\,std} for the sample mean $\bar M$ of overlap counts; (ii) show how to
+choose the number of repetitions $R$ so that the relative error $|\bar M-\mathbb{E}[M]| \le f\,\mathbb{E}[M]$
+holds with failure probability at most $0.05$; (iii) translate this band into an interval for the
+population-size estimator $\hat n = \frac{k_1k_2}{\bar M}$; and (iv) briefly note when estimation is
+intrinsically hard (e.g., very small $p=k_1/n$).
+
+
+I performed the capture--recapture experiment $R$ times, obtaining i.i.d.\ counts $M_1,\dots, M_R$ of overlaps (matches) in the second round. Let
+\[
+\bar M \;=\; \frac{1}{R}\sum_{i=1}^R M_i,
+\qquad
+\mu \;\triangleq\; \mathbb{E}[M] \;=\; \frac{k_1 k_2}{n}.
+\]
+(Here $k_1$ and $k_2$ are the numbers captured in rounds 1 and 2, respectively, and $n$ is the (unknown) population size.) The standard estimator is
+\[
+\hat n \;=\; \frac{k_1 k_2}{\bar M}.
+\]
+
+\paragraph{Chebyshev band (``constant $\times$ std'')}
+Since $\mathrm{Var}(\bar M)=\mathrm{Var}(M)/R$, Chebyshev’s inequality gives, for any $\delta\in(0,1)$,
+\[
+\Pr\!\big[\,|\bar M-\mu| \ge a\,\big] \;\le\; \frac{\mathrm{Var}(M)}{R\,a^2}.
+\]
+Choosing
+\[
+\boxed{\; a(\delta,R) \;=\; \sqrt{\frac{\mathrm{Var}(M)}{R\,\delta}}
+\;=\; \frac{1}{\sqrt{\delta}}\,\underbrace{\sqrt{\frac{\mathrm{Var}(M)}{R}}}_{\mathrm{std}(\bar M)} \;}
+\]
+ensures $\Pr[|\bar M-\mu|\le a]\ge 1-\delta$. In particular, for the assignment’s failure level $\delta=0.05$,
+\[
+\boxed{\; a \;=\; \frac{1}{\sqrt{0.05}}\;\mathrm{std}(\bar M)
+\;\approx\; 4.4721\,\sqrt{\frac{\mathrm{Var}(M)}{R}} \;}.
+\]
+Under a binomial model $M\sim\mathrm{Binomial}(k_2,p)$ with $p=k_1/n$, we will have
+\[
+\mathrm{Var}(M) \;=\; k_2\,p\,(1-p),
+\qquad\Rightarrow\qquad
+\mathrm{std}(\bar M) \;=\; \sqrt{\frac{k_2\,p\,(1-p)}{R}}.
+\]
+
+Therefore, with probability at least $95\%$,
+\[
+\bar M \in \big[\mu - a,\, \mu + a\big]
+\quad\text{where}\quad
+a \;=\; 4.4721\,\sqrt{\frac{k_2\,p\,(1-p)}{R}}.
+\]
+
+\paragraph{How many repetitions $R$ for a target \emph{relative} error $f$ at failure $<0.05$?}
+A relative error requirement $|\bar M-\mu|\le f\,\mu$ with failure probability at most $\delta$ is met by setting $a=f\,\mu$ above and solving for $R$:
+\[
+\delta \;\ge\; \frac{\mathrm{Var}(M)}{R\,(f\mu)^2}
+\quad\Longrightarrow\quad
+\boxed{\;
+R \;\ge\; \frac{\mathrm{Var}(M)}{\delta\,f^2\,\mu^2}
+\;=\; \frac{k_2\,p\,(1-p)}{\delta\,f^2\,(k_2 p)^2}
+\;=\; \frac{1-p}{\delta\,f^2\,k_2\,p}\;}.
+\]
+For the assignment’s $\delta=0.05$, this specializes to
+\[
+\boxed{\; R \;\ge\; \dfrac{1-p}{0.05\,f^2\,k_2\,p}\; }.
+\]
+
+
+\paragraph{Translating to a CI for \(\hat{n}\)}
+Since \(g(m)=\frac{k_1 k_2}{m}\) is decreasing for \(m>0\), the interval
+\(\bar{M}\in[\mu-a,\mu+a]\) with \(\mu=\mathbb{E}[M]\) and \(\mu>a\) implies
+\[
+  \hat{n} \in
+  \left[\, \frac{k_1 k_2}{\mu+a}\,,\; \frac{k_1 k_2}{\mu-a}\,\right].
+\]
+Using \( \mu=\frac{k_1 k_2}{n}\), this becomes
+\[
+  \hat{n} \in 
+  \left[\, \frac{k_1 k_2}{\frac{k_1 k_2}{n}+a}\,,\; \frac{k_1 k_2}{\frac{k_1 k_2}{n}-a}\,\right]
+  \;=\;
+  \left[\, \frac{n}{1 + \frac{a n}{k_1 k_2}}\,,\; \frac{n}{1 - \frac{a n}{k_1 k_2}}\,\right].
+\]
+In practice \(n\) is unknown; a plug-in approach replaces \(\mu\) and \(p\) with \(\bar{M}\)-based estimates to compute \(a\) and the CI.
+
+\paragraph{When is estimation complex?}
+If \(p=\frac{k_1}{n}\) is very small (few overlaps), then \(\mu=k_2p\) is small and \(1/\bar{M}\) becomes unstable.
+Chebyshev is also loose. This is the classical \emph{rare events} regime: either increase \(k_1,k_2\) or increase \(R\) (or both) to control variance.
+
+\newpage
+
+\section{Inequalities: Linear Probing with 5-independence}
+With load factor \(\alpha=m/n=1/3\), and assuming the following bound for the expected search cost in linear probing (given in the problem):
+\[
+  \mathbb{E}[\text{cost}] \;=\; \mathcal{O}(1)\sum_{s=1}^{\lfloor \log_2 n \rfloor} 2^s \cdot \Pr\big[B_s \ge 2\,\mathbb{E}[B_s]\big],
+\]
+Where \(B_s\) counts the number of inserted keys that hash into a fixed \emph{interval of length \(2^s\)} (a contiguous block of table positions), under a \emph{5-independent} hash function.
+
+\paragraph{Goal} Prove this sum is bounded by a constant (independent of \(n\)).
+
+\paragraph{Setup} Fix an interval \(I_s\) of length \(2^s\). Let
+\[
+  B_s \;=\; \sum_{i=1}^m X_i,\quad X_i=\mathbf{1}\{h(\text{key}_i)\in I_s\},\quad
+  p_s=\Pr[X_i=1]=\frac{2^s}{n}.
+\]
+Then \(\mu_s \triangleq \mathbb{E}[B_s]=m p_s=\alpha\, 2^s\) and \(\mathrm{Var}(B_s)=m p_s(1-p_s)\le \mu_s\).
+
+\paragraph{Fourth moment under 5-independence}
+Let \(Y_i=X_i-p_s\) so that \(B_s-\mu_s=\sum_{i=1}^m Y_i\), with \(\mathbb{E}[Y_i]=0\),
+\(\mathbb{E}[Y_i^2]=p_s(1-p_s)\), and \(\mathbb{E}[Y_i^4]\le C_0\,p_s\) for a constant \(C_0\).
+Expanding and using that odd mixed moments vanish,
+\[
+  \mathbb{E}\big[(B_s-\mu_s)^4\big]
+  = \sum_i \mathbb{E}[Y_i^4] + 6\!\!\sum_{i<j}\! \mathbb{E}[Y_i^2 Y_j^2]
+  \quad (\text{all other index patterns are zero}).
+\]
+By 5-independence, products of up to four distinct indicators factorize, so
+\(\mathbb{E}[Y_i^2 Y_j^2]=\mathbb{E}[Y_i^2]\,\mathbb{E}[Y_j^2]=p_s^2(1-p_s)^2\).
+Hence,
+\[
+  \mathbb{E}\big[(B_s-\mu_s)^4\big]
+  \;\le\; C_0\,m\,p_s \;+\; 6\binom{m}{2}\!p_s^2
+  \;=\; \mathcal{O}\!\big(\mu_s + \mu_s^2\big),
+\]
+where \(\mu_s=m p_s=\alpha 2^s\). Markov’s inequality on the 4th power then gives
+\(\Pr[B_s\!\ge 2\mu_s]\le \mathbb{E}[(B_s-\mu_s)^4]/\mu_s^4 \le C/\mu_s^2\),
+yielding the summable bound in the next step.
+
+\paragraph{Summation}
+Insert this into the given bound:
+\[
+  \sum_{s=1}^{\lfloor\log_2 n\rfloor} 2^s \cdot \Pr[B_s \ge 2\mu_s]
+  \;\le\; \sum_{s=1}^{\infty} 2^s \cdot \frac{C}{\alpha^2\,2^{2s}}
+  \;=\; \frac{C}{\alpha^2}\sum_{s=1}^{\infty} 2^{-s}
+  \;=\; \frac{C}{\alpha^2}.
+\]
+For \(\alpha=1/3\), this is a constant. For \(\mu_s<1\) (very small intervals), a crude bound like
+\(\Pr[B_s\ge 2\mu_s]\le \Pr[B_s\ge 1]\le \mu_s\) also gives a summable tail. Hence, the expected search cost is \( \mathcal{O}(1)\).

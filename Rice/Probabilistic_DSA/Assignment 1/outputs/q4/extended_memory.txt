@@ -1,0 +1,4 @@
+R=524288 bits | k=1 | bf_bytes=65593 | theory_bytes=65536 | python_set_bytes=16777432
+R=1048576 bits | k=1 | bf_bytes=131129 | theory_bytes=131072 | python_set_bytes=16777432
+R=2097152 bits | k=3 | bf_bytes=262201 | theory_bytes=262144 | python_set_bytes=16777432
+R=4194304 bits | k=7 | bf_bytes=524345 | theory_bytes=524288 | python_set_bytes=16777432

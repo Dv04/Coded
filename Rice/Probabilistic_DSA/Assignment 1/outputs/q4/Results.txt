@@ -1,0 +1,4 @@
+TheoreticalFP | num_bits | RealFP
+9-hash on 131072 bits | 9 | theo=0.00184141 real=0.002
+18-hash on 262144 bits | 18 | theo=3.3908e-06 real=0
+18-hash on 262144 bits | 18 | theo=3.3908e-06 real=0
