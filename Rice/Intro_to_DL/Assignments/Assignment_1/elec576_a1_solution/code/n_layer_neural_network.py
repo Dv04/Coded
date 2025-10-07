@@ -32,7 +32,7 @@ def one_hot(y: np.ndarray, C: int) -> np.ndarray:
 
 def act(z: np.ndarray, name: str) -> np.ndarray:
     if name == "ReLU":
-        return np.maximum(0., z)
+        return np.maximum(0.0, z)
     elif name == "Tanh":
         return np.tanh(z)
     elif name == "Sigmoid":
@@ -43,10 +43,10 @@ def act(z: np.ndarray, name: str) -> np.ndarray:
 
 def dact(z: np.ndarray, name: str) -> np.ndarray:
     if name == "ReLU":
-        return (z > 0.).astype(z.dtype)
+        return (z > 0.0).astype(z.dtype)
     elif name == "Tanh":
         a = np.tanh(z)
-        return 1. - a**2
+        return 1.0 - a**2
     elif name == "Sigmoid":
         s = 1.0 / (1.0 + np.exp(-z))
         return s * (1.0 - s)
@@ -58,8 +58,8 @@ def dact(z: np.ndarray, name: str) -> np.ndarray:
 class DeepConfig:
     input_dim: int = 2
     output_dim: int = 2
-    n_hidden_layers: int = 3     # number of hidden layers (>=1)
-    hidden_size: int = 16        # width of each hidden layer
+    n_hidden_layers: int = 3  # number of hidden layers (>=1)
+    hidden_size: int = 16  # width of each hidden layer
     activation: str = "ReLU"
     reg_lambda: float = 1e-3
     learning_rate: float = 0.05
@@ -68,15 +68,18 @@ class DeepConfig:
 
 class DeepNeuralNetwork:
     """n-layer MLP with identical hidden sizes and chosen activation; softmax output."""
+
     def __init__(self, cfg: DeepConfig):
         self.cfg = cfg
         np.random.seed(cfg.seed)
 
-        sizes = [cfg.input_dim] + [cfg.hidden_size] * cfg.n_hidden_layers + [cfg.output_dim]
+        sizes = (
+            [cfg.input_dim] + [cfg.hidden_size] * cfg.n_hidden_layers + [cfg.output_dim]
+        )
         self.L = len(sizes) - 1  # number of weight layers
 
-        self.W = [0.01 * np.random.randn(sizes[l], sizes[l+1]) for l in range(self.L)]
-        self.b = [np.zeros((1, sizes[l+1])) for l in range(self.L)]
+        self.W = [0.01 * np.random.randn(sizes[l], sizes[l + 1]) for l in range(self.L)]
+        self.b = [np.zeros((1, sizes[l + 1])) for l in range(self.L)]
 
         # caches
         self.z = [None] * self.L
@@ -87,9 +90,11 @@ class DeepNeuralNetwork:
         self.a[0] = X
         for l in range(self.L - 1):  # hidden layers
             self.z[l] = self.a[l].dot(self.W[l]) + self.b[l]
-            self.a[l+1] = act(self.z[l], self.cfg.activation)
+            self.a[l + 1] = act(self.z[l], self.cfg.activation)
         # output (linear -> softmax)
-        self.z[self.L - 1] = self.a[self.L - 1].dot(self.W[self.L - 1]) + self.b[self.L - 1]
+        self.z[self.L - 1] = (
+            self.a[self.L - 1].dot(self.W[self.L - 1]) + self.b[self.L - 1]
+        )
         self.probs = softmax(self.z[self.L - 1])
         return self.probs
 
@@ -111,7 +116,9 @@ class DeepNeuralNetwork:
 
         # output layer gradient
         delta = (probs - y_onehot) / N  # (N,C)
-        dW[self.L - 1] = self.a[self.L - 1].T.dot(delta) + self.cfg.reg_lambda * self.W[self.L - 1]
+        dW[self.L - 1] = (
+            self.a[self.L - 1].T.dot(delta) + self.cfg.reg_lambda * self.W[self.L - 1]
+        )
         db[self.L - 1] = np.sum(delta, axis=0, keepdims=True)
 
         # backprop through hidden layers
@@ -128,7 +135,9 @@ class DeepNeuralNetwork:
             self.W[l] -= self.cfg.learning_rate * dW[l]
             self.b[l] -= self.cfg.learning_rate * db[l]
 
-    def fit(self, X: np.ndarray, y: np.ndarray, iters: int = 10000, print_every: int = 1000):
+    def fit(
+        self, X: np.ndarray, y: np.ndarray, iters: int = 10000, print_every: int = 1000
+    ):
         for i in range(1, iters + 1):
             _ = self.forward(X)
             grads = self.backward(X, y)
@@ -142,38 +151,47 @@ class DeepNeuralNetwork:
 
     # ---------- Visualization helpers ----------
     @staticmethod
-    def _plot_decision_boundary(predict_fn: Callable[[np.ndarray], np.ndarray],
-                                X: np.ndarray, y: np.ndarray,
-                                title: str, savepath: Optional[str] = None):
+    def _plot_decision_boundary(
+        predict_fn: Callable[[np.ndarray], np.ndarray],
+        X: np.ndarray,
+        y: np.ndarray,
+        title: str,
+        savepath: Optional[str] = None,
+    ):
         h = 0.01
-        x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
-        y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
-        xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                             np.arange(y_min, y_max, h))
+        x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
+        y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
         grid = np.c_[xx.ravel(), yy.ravel()]
         Z = predict_fn(grid).reshape(xx.shape)
 
         plt.figure(figsize=(5, 4))
         plt.contourf(xx, yy, Z, alpha=0.6)
-        plt.scatter(X[:, 0], X[:, 1], c=y, s=20, edgecolors='k')
+        plt.scatter(X[:, 0], X[:, 1], c=y, s=20, edgecolors="k")
         plt.title(title)
-        plt.xlabel("x1"); plt.ylabel("x2")
+        plt.xlabel("x1")
+        plt.ylabel("x2")
         if savepath:
-            plt.tight_layout(); plt.savefig(savepath, dpi=180); plt.close()
+            plt.tight_layout()
+            plt.savefig(savepath, dpi=180)
+            plt.close()
         else:
             plt.show()
 
 
-def load_toy_dataset(name: str = "moons",
-                     n_samples: int = 500,
-                     noise: float = 0.2,
-                     random_state: int = 0) -> Tuple[np.ndarray, np.ndarray]:
+def load_toy_dataset(
+    name: str = "moons", n_samples: int = 500, noise: float = 0.2, random_state: int = 0
+) -> Tuple[np.ndarray, np.ndarray]:
     if name == "moons":
         X, y = make_moons(n_samples=n_samples, noise=noise, random_state=random_state)
     elif name == "circles":
-        X, y = make_circles(n_samples=n_samples, noise=noise, factor=0.5, random_state=random_state)
+        X, y = make_circles(
+            n_samples=n_samples, noise=noise, factor=0.5, random_state=random_state
+        )
     elif name == "blobs":
-        X, y = make_blobs(n_samples=n_samples, centers=3, cluster_std=1.0, random_state=random_state)
+        X, y = make_blobs(
+            n_samples=n_samples, centers=3, cluster_std=1.0, random_state=random_state
+        )
         # convert to 0..C-1 integers
         y = (y - y.min()).astype(int)
     else:
@@ -184,31 +202,49 @@ def load_toy_dataset(name: str = "moons",
 def experiment():
     # Compare configurations on Make-Moons
     X, y = load_toy_dataset("moons", n_samples=400, noise=0.2, random_state=0)
-    Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
+    Xtr, Xte, ytr, yte = train_test_split(
+        X, y, test_size=0.25, random_state=42, stratify=y
+    )
 
     # Vary depth and width
     for L in [1, 2, 4, 6]:  # number of hidden layers
         for H in [4, 16, 64]:
-            cfg = DeepConfig(n_hidden_layers=L, hidden_size=H, activation="ReLU",
-                             learning_rate=0.05, reg_lambda=1e-3, seed=1)
+            cfg = DeepConfig(
+                n_hidden_layers=L,
+                hidden_size=H,
+                activation="ReLU",
+                learning_rate=0.05,
+                reg_lambda=1e-3,
+                seed=1,
+            )
             model = DeepNeuralNetwork(cfg)
             model.fit(Xtr, ytr, iters=8000, print_every=2000)
             acc_tr = (model.predict(Xtr) == ytr).mean()
             acc_te = (model.predict(Xte) == yte).mean()
             title = f"DeepNN — L={L}, H={H}, act=ReLU (train={acc_tr:.2f}, test={acc_te:.2f})"
             savepath = f"report/figs/deep_decision_L{L}_H{H}.png"
-            DeepNeuralNetwork._plot_decision_boundary(lambda xx: model.predict(xx), X, y, title, savepath)
+            DeepNeuralNetwork._plot_decision_boundary(
+                lambda xx: model.predict(xx), X, y, title, savepath
+            )
 
     # Try another dataset
     for ds in ["circles", "blobs"]:
         X, y = load_toy_dataset(ds, n_samples=400, noise=0.2, random_state=1)
-        cfg = DeepConfig(n_hidden_layers=3, hidden_size=32, activation="Tanh",
-                         learning_rate=0.05, reg_lambda=1e-3, seed=7)
+        cfg = DeepConfig(
+            n_hidden_layers=3,
+            hidden_size=32,
+            activation="Tanh",
+            learning_rate=0.05,
+            reg_lambda=1e-3,
+            seed=7,
+        )
         model = DeepNeuralNetwork(cfg)
         model.fit(X, y, iters=8000, print_every=2000)
         title = f"DeepNN on {ds} — L=3, H=32, act=Tanh"
         savepath = f"report/figs/deep_{ds}_L3_H32.png"
-        DeepNeuralNetwork._plot_decision_boundary(lambda xx: model.predict(xx), X, y, title, savepath)
+        DeepNeuralNetwork._plot_decision_boundary(
+            lambda xx: model.predict(xx), X, y, title, savepath
+        )
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1759290243.11504 "/Users/apple/Coded/Rice/Intro_to_DL/Assignments/Assignment_1/elec576_a1_solution/report/report.tex" "report.pdf" "report" 1759290243.80691 0
-  "/Users/apple/Coded/Rice/Intro_to_DL/Assignments/Assignment_1/elec576_a1_solution/report/report.tex" 1759290243.59114 11011 d0ff36d8b876080f9545daa65f323640 ""
+["pdflatex"] 1759848466.49289 "/Users/apple/Coded/Rice/Intro_to_DL/Assignments/Assignment_1/elec576_a1_solution/report/report.tex" "report.pdf" "report" 1759848467.18889 0
+  "/Users/apple/Coded/Rice/Intro_to_DL/Assignments/Assignment_1/elec576_a1_solution/report/report.tex" 1759848466.32378 10980 bfa622a4a103ff6bba86ae868851d147 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
@@ -124,9 +124,9 @@
   "figs/deep_decision_L2_H16.png" 1759304166 11607 686fe3a044b0cb63bd537e69cd9974fd ""
   "figs/deep_decision_L6_H64.png" 1759304166 11891 c18856b7894e3e6feb3eb5f949614100 ""
   "figs/moons_scatter.png" 1759304166 10965 40e29f5ac127751b340313b715f9aa41 ""
-  "report.aux" 1759290243.7466 2912 c89fdebbb0bcf4dd262102aa6c7e1676 "pdflatex"
-  "report.out" 1759290243.74745 3175 b17319a536d76a29e1bac865c2bdf6a0 "pdflatex"
-  "report.tex" 1759290243.59114 11011 d0ff36d8b876080f9545daa65f323640 ""
+  "report.aux" 1759848467.12875 2912 c89fdebbb0bcf4dd262102aa6c7e1676 "pdflatex"
+  "report.out" 1759848467.12932 3175 b17319a536d76a29e1bac865c2bdf6a0 "pdflatex"
+  "report.tex" 1759848466.32378 10980 bfa622a4a103ff6bba86ae868851d147 ""
   (generated)
   "report.aux"
   "report.log"
