@@ -3,3 +3,17 @@
 MongoDB/myExpressApp/node_modules/*
 MongoDB/node_modules/*
 */env/*
+Rice/Intro_to_DL/Assignments/Assignment_1/checkpoints/best_MNIST_relu_adam_kaiming_20251007_094453.pt
+.gitignore
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/t10k-images-idx3-ubyte
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/t10k-images-idx3-ubyte.gz
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/t10k-labels-idx1-ubyte
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/t10k-labels-idx1-ubyte.gz
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/train-images-idx3-ubyte
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/train-images-idx3-ubyte.gz
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/train-labels-idx1-ubyte
+Rice/Intro_to_DL/Assignments/Assignment_1/data/MNIST/raw/train-labels-idx1-ubyte.gz
+Rice/Intro_to_DL/Assignments/Assignment_1/runs/MNIST_relu_adam_kaiming_20251007_094610/events.out.tfevents.1759848370.MacBook-Air-668.local.60358.0
+Rice/Intro_to_DL/Assignments/Assignment_1/runs/MNIST_relu_adam_kaiming_20251007_094453/events.out.tfevents.1759848293.MacBook-Air-668.local.58958.0
+Rice/Intro_to_DL/Assignments/Assignment_1/checkpoints/best_MNIST_relu_adam_kaiming_20251007_094610.pt
+Rice/Probabilistic_DSA/Assignment 1/user-ct-test-collection-01.txt
