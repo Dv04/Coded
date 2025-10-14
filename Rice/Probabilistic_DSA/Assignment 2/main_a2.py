@@ -99,7 +99,7 @@ def compute_errors(
     errors = []
     for token, truth in items:
         truth = max(int(truth), 1)
-        estimate = max(sketch.estimate(token), 0.0)
+        estimate = sketch.estimate(token)
         errors.append(abs(estimate - truth) / truth)
     if errors:
         stats = {
@@ -188,25 +188,31 @@ def write_latex_tables(summary: Dict, out_dir: Path) -> None:
     error_summary = summary.get("error_summary") or {}
     if error_summary:
         r_keys = sorted(error_summary.keys(), key=lambda k: int(k))
-        r_key = r_keys[0]
         categories = ["Frequent-100", "Random-100", "Infrequent-100"]
         sketches = ["Count-Min", "Count-Median", "Count-Sketch"]
         lines = [
-            "\\begin{tabular}{llccc}",
+            "\\begin{tabular}{lllccc}",
             "\\toprule",
-            "Category & Sketch & Mean & Median & Max \\\\",
+            "Category & Sketch & $R$ & Mean & Median & Max \\\\",
             "\\midrule",
         ]
         for c_idx, category in enumerate(categories):
             for s_idx, sketch in enumerate(sketches):
-                stats = error_summary.get(r_key, {}).get(sketch, {}).get(category, {})
-                mean_val = _format_value(stats.get("mean", float("nan")))
-                median_val = _format_value(stats.get("median", float("nan")))
-                max_val = _format_value(stats.get("max", float("nan")))
-                label = category if s_idx == 0 else ""
-                lines.append(
-                    f"{label} & {sketch} & {mean_val} & {median_val} & {max_val} \\\\"
-                )
+                for r_idx, r_key in enumerate(r_keys):
+                    stats = (
+                        error_summary.get(r_key, {})
+                        .get(sketch, {})
+                        .get(category, {})
+                    )
+                    mean_val = _format_value(stats.get("mean", float("nan")))
+                    median_val = _format_value(stats.get("median", float("nan")))
+                    max_val = _format_value(stats.get("max", float("nan")))
+                    cat_label = category if s_idx == 0 and r_idx == 0 else ""
+                    sketch_label = sketch if r_idx == 0 else ""
+                    r_label = f"$2^{{{int(math.log2(int(r_key)))}}}$"
+                    lines.append(
+                        f"{cat_label} & {sketch_label} & {r_label} & {mean_val} & {median_val} & {max_val} \\\\"
+                    )
             if c_idx < len(categories) - 1:
                 lines.append("\\midrule")
         lines.append("\\bottomrule")
@@ -434,6 +440,8 @@ def main() -> None:
         if unique_tokens
         else []
     )
+    if rand_items:
+        rand_items = sorted(rand_items, key=lambda kv: kv[1], reverse=True)
 
     categories: Dict[str, List[Tuple[str, int]]] = {
         "Frequent-100": freq_items,

@@ -39,16 +39,6 @@ All runs fix the random seed to \texttt{20251013} for reproducibility. The datas
 \end{table}
 The table above will then report the full dataset scale (roughly $10^7$ tokens, $4.5\times 10^5$ unique terms, and a $\sim$50~MiB dictionary footprint).
 
-\section{Error Statistics}
-Table~\ref{tab:error} reports relative-error aggregates for $R=2^{10}$ on the 100 most frequent, random, and least frequent tokens, directly reflecting the latest metrics captured in \texttt{summary.json}. Increasing $R$ sharply reduces error for the rarer categories, while $R=2^{10}$ exposes the bias/variance trade-offs among the sketches.
-
-\begin{table}[H]
-  \centering
-  \input{../outputs/a2/error_table.tex}
-  \caption{Relative-error summary for $R=2^{10}$}
-  \label{tab:error}
-\end{table}
-
 \section{Plots}
 Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-error profiles for each sketch and $R$ setting. Figure~\ref{fig:top500} reports the top-500 intersection curve used in the grading rubric. Each figure is regenerated automatically from the latest execution.
 
@@ -80,7 +70,7 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
 
 
 \begin{itemize}
-  \item Frequent tokens already show a clear separation: Count-Min retains the smallest median error, Count-Median overshoots most often, and Count-Sketch sits between them (Table~\ref{tab:error}).
+  \item Frequent tokens already show a clear separation: Count-Min retains the smallest median error, Count-Median overshoots most often, and Count-Sketch sits between them.
   \item Random and infrequent tokens expose large positive bias in the sketches with unsigned counters, with Count-Median showing the steepest tails and Count-Sketch attenuating many of those errors via signed updates (Figures~\ref{fig:error-r1024}a--c).
 \end{itemize}
 
@@ -187,7 +177,7 @@ The heap-based tracker yields the set intersection sizes summarised in Table~\re
 \end{itemize}
 
 \section{Conclusions}
-The combined pipeline is as structured as: it streams the AOL log once, maintains exact frequencies for evaluation, compares three sketches at multiple width settings, quantifies relative errors for representative token buckets, and evaluates top-k recovery. The Count-Min sketch offers deterministic upper bounds but requires larger widths to suppress overestimation on sparse items, Count-Median provides unbiased point estimates at the cost of higher variance (especially with small $R$), and Count-Sketch trades reduced bias for manageable variance through signed updates. 
+The combined pipeline is structured to stream the AOL log once, maintain exact frequencies for evaluation, compare three sketches at multiple width settings, quantify relative errors for representative token buckets, and evaluate top-$k$ recovery. Count-Min offers deterministic upper bounds but needs wider tables to suppress overestimation on sparse items. Count-Median remains positively biased because it averages unsigned counters, yet its variance shrinks quickly as $R$ grows. Count-Sketch leverages signed updates to curb both bias and variance, delivering the tightest estimates once the width is large enough.
 
 
 \end{document}

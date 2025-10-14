@@ -214,9 +214,6 @@ INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc
-INPUT ../outputs/a2/error_table.tex
-INPUT ../outputs/a2/error_table.tex
-INPUT ../outputs/a2/error_table.tex
 INPUT ../outputs/a2/errors_R1024_Frequent_100.png
 INPUT ../outputs/a2/errors_R1024_Frequent_100.png
 INPUT ../outputs/a2/errors_R1024_Frequent_100.png
