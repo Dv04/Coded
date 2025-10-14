@@ -137,9 +137,7 @@ def plot_error_curves(
     ax.set_ylabel("Relative error")
     ax.set_title(title)
     if len(tokens) <= 100:
-        labels = [
-            tok if len(tok) <= 20 else f"{tok[:19]}…" for tok, _ in tokens
-        ]
+        labels = [tok if len(tok) <= 20 else f"{tok[:19]}…" for tok, _ in tokens]
         ax.set_xticks(xs)
         ax.set_xticklabels(labels, rotation=90, fontsize=6)
     ax.legend()
@@ -170,6 +168,10 @@ def plot_topk_intersection(
 _MATPLOTLIB = None
 
 
+def _format_int(value: int) -> str:
+    return f"{int(value):,}".replace(",", "\\,")
+
+
 def _format_value(value) -> str:
     if isinstance(value, (int, float)):
         if math.isnan(value):
@@ -197,11 +199,7 @@ def write_latex_tables(summary: Dict, out_dir: Path) -> None:
         ]
         for c_idx, category in enumerate(categories):
             for s_idx, sketch in enumerate(sketches):
-                stats = (
-                    error_summary.get(r_key, {})
-                    .get(sketch, {})
-                    .get(category, {})
-                )
+                stats = error_summary.get(r_key, {}).get(sketch, {}).get(category, {})
                 mean_val = _format_value(stats.get("mean", float("nan")))
                 median_val = _format_value(stats.get("median", float("nan")))
                 max_val = _format_value(stats.get("max", float("nan")))
@@ -238,6 +236,85 @@ def write_latex_tables(summary: Dict, out_dir: Path) -> None:
         (out_dir / "intersection_table.tex").write_text(
             "\n".join(lines), encoding="utf-8"
         )
+
+        col_span = len(r_values) + 1
+        median_lines = [
+            f"\\begin{{tabular}}{{l{'c'*len(r_values)}}}",
+            "\\toprule",
+            "Sketch & " + " & ".join(header_cols) + " \\\\",
+            "\\midrule",
+            f"\\multicolumn{{{col_span}}}{{c}}{{Frequent-100 median relative error}} \\\\",
+            "\\midrule",
+        ]
+        for sketch in intersections:
+            row = []
+            for r in r_values:
+                stats = (
+                    error_summary.get(str(r), {})
+                    .get(sketch, {})
+                    .get("Frequent-100", {})
+                )
+                row.append(_format_value(stats.get("median", float("nan"))))
+            median_lines.append(f"{sketch} & " + " & ".join(row) + " \\\\")
+        median_lines.append("\\addlinespace")
+        median_lines.append("\\midrule")
+        median_lines.append(
+            f"\\multicolumn{{{col_span}}}{{c}}{{Random-100 median relative error}} \\\\"
+        )
+        median_lines.append("\\midrule")
+        for sketch in intersections:
+            row = []
+            for r in r_values:
+                stats = (
+                    error_summary.get(str(r), {}).get(sketch, {}).get("Random-100", {})
+                )
+                row.append(_format_value(stats.get("median", float("nan"))))
+            median_lines.append(f"{sketch} & " + " & ".join(row) + " \\\\")
+        median_lines.append("\\addlinespace")
+        median_lines.append("\\midrule")
+        median_lines.append(
+            f"\\multicolumn{{{col_span}}}{{c}}{{Infrequent-100 median relative error}} \\\\"
+        )
+        median_lines.append("\\midrule")
+        for sketch in intersections:
+            row = []
+            for r in r_values:
+                stats = (
+                    error_summary.get(str(r), {})
+                    .get(sketch, {})
+                    .get("Infrequent-100", {})
+                )
+                row.append(_format_value(stats.get("median", float("nan"))))
+            median_lines.append(f"{sketch} & " + " & ".join(row) + " \\\\")
+        median_lines.append("\\bottomrule")
+        median_lines.append("\\end{tabular}")
+        (out_dir / "median_table.tex").write_text(
+            "\n".join(median_lines), encoding="utf-8"
+        )
+
+    dataset_str = str(summary.get("parameters", {}).get("dataset", ""))
+    dataset_tex = dataset_str.replace("_", "\\_")
+    limit_rows = summary.get("parameters", {}).get("limit_rows", 0)
+    if limit_rows in (0, None):
+        limit_text = "All rows"
+    else:
+        limit_text = _format_int(limit_rows)
+    dict_bytes = summary.get("dictionary_bytes_estimate", 0)
+    dict_mib = dict_bytes / (1024**2) if dict_bytes else 0
+    run_lines = [
+        "\\begin{tabular}{lr}",
+        "\\toprule",
+        "Metric & Value \\\\",
+        "\\midrule",
+        f"Processed tokens & {_format_int(summary.get('total_tokens', 0))} \\\\",
+        f"Unique tokens & {_format_int(summary.get('unique_tokens', 0))} \\\\",
+        f"Dictionary size (MiB) & {_format_value(dict_mib)} \\\\",
+        f"Row budget & {limit_text} \\\\",
+        f"Dataset flag & \\texttt{{--dataset~{dataset_tex}}} \\\\",
+        "\\bottomrule",
+        "\\end{tabular}",
+    ]
+    (out_dir / "run_summary.tex").write_text("\n".join(run_lines), encoding="utf-8")
 
 
 def ensure_matplotlib():

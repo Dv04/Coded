@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  13 OCT 2025 01:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  14 OCT 2025 17:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -485,88 +485,73 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 21.
-
-Overfull \hbox (93.01018pt too wide) in paragraph at lines 21--22
-\T1/lmr/m/n/10.95 and Count-Sketch---on the heavy-hitter prob-lem us-ing the AOL query log (file \T1/lmtt/m/n/10.95 user-ct-test-collection-01.txt\T1/lmr/m/n/10.95 ).
- []
-
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 25.
-(/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 25.
-
-Overfull \hbox (2.64221pt too wide) in paragraph at lines 36--37
-\T1/lmr/m/n/10.95 which streamed $\OT1/lmr/m/n/10.95 26[]196$ \T1/lmr/m/n/10.95 to-kens drawn from $\OT1/lmr/m/n/10.95 4[]158$ \T1/lmr/m/n/10.95 dis-tinct words (dic-tio-nary foot-print $\OMS/lmsy/m/n/10.95 ^^Y \OT1/lmr/m/n/10.95 0\OML/lmm/m/it/10.95 :\OT1/lmr/m/n/10.95 40$ \T1/lmr/m/n/10.95 MiB).
- []
-
-
+ (../outputs/a2/run_summary.tex)
 
 [1
 
-{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 43--43
-[]\T1/lmr/m/n/10.95 Table 1: |Relative-error sum-mary for $\OML/lmm/m/it/10.95 R \OT1/lmr/m/n/10.95 = 2[]$ \T1/lmr/m/n/10.95 (val-ues auto-generated from
- []
-
-(../outputs/a2/error_table.tex)
-<../outputs/a2/errors_R1024_Frequent_100.png, id=56, 722.7pt x 289.08pt>
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] (../outputs/a2/error_table.tex)
+<../outputs/a2/errors_R1024_Frequent_100.png, id=58, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R1024_Frequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R1024_Frequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R1024_Frequent_100.png  used on input line 57.
+Package pdftex.def Info: ../outputs/a2/errors_R1024_Frequent_100.png  used on input line 61.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R1024_Random_100.png, id=58, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R1024_Random_100.png, id=60, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R1024_Random_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R1024_Random_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R1024_Random_100.png  used on input line 63.
+Package pdftex.def Info: ../outputs/a2/errors_R1024_Random_100.png  used on input line 67.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R1024_Infrequent_100.png, id=59, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R1024_Infrequent_100.png, id=61, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R1024_Infrequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R1024_Infrequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R1024_Infrequent_100.png  used on input line 69.
+Package pdftex.def Info: ../outputs/a2/errors_R1024_Infrequent_100.png  used on input line 73.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R16384_Frequent_100.png, id=60, 722.7pt x 289.08pt>
+
+
+[2 <../outputs/a2/errors_R1024_Frequent_100.png> <../outputs/a2/errors_R1024_Random_100.png> <../outputs/a2/errors_R1024_Infrequent_100.png>]
+<../outputs/a2/errors_R16384_Frequent_100.png, id=75, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R16384_Frequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R16384_Frequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R16384_Frequent_100.png  used on input line 80.
+Package pdftex.def Info: ../outputs/a2/errors_R16384_Frequent_100.png  used on input line 95.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R16384_Random_100.png, id=61, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R16384_Random_100.png, id=76, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R16384_Random_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R16384_Random_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R16384_Random_100.png  used on input line 86.
+Package pdftex.def Info: ../outputs/a2/errors_R16384_Random_100.png  used on input line 101.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R16384_Infrequent_100.png, id=62, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R16384_Infrequent_100.png, id=77, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R16384_Infrequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R16384_Infrequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R16384_Infrequent_100.png  used on input line 92.
+Package pdftex.def Info: ../outputs/a2/errors_R16384_Infrequent_100.png  used on input line 107.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R262144_Frequent_100.png, id=63, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R262144_Frequent_100.png, id=80, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R262144_Frequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R262144_Frequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R262144_Frequent_100.png  used on input line 103.
+Package pdftex.def Info: ../outputs/a2/errors_R262144_Frequent_100.png  used on input line 127.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R262144_Random_100.png, id=64, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R262144_Random_100.png, id=81, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R262144_Random_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R262144_Random_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R262144_Random_100.png  used on input line 109.
+Package pdftex.def Info: ../outputs/a2/errors_R262144_Random_100.png  used on input line 133.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-<../outputs/a2/errors_R262144_Infrequent_100.png, id=65, 722.7pt x 289.08pt>
+<../outputs/a2/errors_R262144_Infrequent_100.png, id=82, 722.7pt x 289.08pt>
 File: ../outputs/a2/errors_R262144_Infrequent_100.png Graphic file (type png)
 <use ../outputs/a2/errors_R262144_Infrequent_100.png>
-Package pdftex.def Info: ../outputs/a2/errors_R262144_Infrequent_100.png  used on input line 115.
+Package pdftex.def Info: ../outputs/a2/errors_R262144_Infrequent_100.png  used on input line 139.
 (pdftex.def)             Requested size: 144.95303pt x 57.97818pt.
-
-
-[2 <../outputs/a2/errors_R1024_Frequent_100.png> <../outputs/a2/errors_R1024_Random_100.png> <../outputs/a2/errors_R1024_Infrequent_100.png> <../outputs/a2/errors_R16384_Frequent_100.png> <../outputs/a2/errors_R16384_Random_100.png> <../outputs/a2/errors_R16384_Infrequent_100.png>]
-<../outputs/a2/top500_intersection.png, id=81, 433.62pt x 289.08pt>
+<../outputs/a2/top500_intersection.png, id=85, 433.62pt x 289.08pt>
 File: ../outputs/a2/top500_intersection.png Graphic file (type png)
 <use ../outputs/a2/top500_intersection.png>
-Package pdftex.def Info: ../outputs/a2/top500_intersection.png  used on input line 124.
+Package pdftex.def Info: ../outputs/a2/top500_intersection.png  used on input line 155.
 (pdftex.def)             Requested size: 249.13371pt x 166.09178pt.
- (../outputs/a2/intersection_table.tex)
+ (../outputs/a2/median_table.tex)
 
-[3 <../outputs/a2/errors_R262144_Frequent_100.png> <../outputs/a2/errors_R262144_Random_100.png> <../outputs/a2/errors_R262144_Infrequent_100.png> <../outputs/a2/top500_intersection.png>]
+[3 <../outputs/a2/errors_R16384_Frequent_100.png> <../outputs/a2/errors_R16384_Random_100.png> <../outputs/a2/errors_R16384_Infrequent_100.png> <../outputs/a2/errors_R262144_Frequent_100.png> <../outputs/a2/errors_R262144_Random_100.png> <../outputs/a2/errors_R262144_Infrequent_100.png> <../outputs/a2/top500_intersection.png>] (../outputs/a2/intersection_table.tex)
 
 [4] (./comp580_a2.aux)
  ***********
@@ -574,21 +559,21 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `comp580_a2.out' has not changed.
-(rerunfilecheck)             Checksum: DC101148C7DA0E602E89C571B4CE36AA;978.
+(rerunfilecheck)             Checksum: 51E2B702B41AF985184B56123CE34260;896.
  ) 
 Here is how much of TeX's memory you used:
- 12910 strings out of 473190
- 207398 string characters out of 5715801
- 606813 words of memory out of 5000000
- 35954 multiletter control sequences out of 15000+600000
+ 12926 strings out of 473190
+ 207832 string characters out of 5715801
+ 605848 words of memory out of 5000000
+ 35962 multiletter control sequences out of 15000+600000
  604465 words of font info for 72 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,873b,553s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,673b,553s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on comp580_a2.pdf (4 pages, 2156039 bytes).
+Output written on comp580_a2.pdf (4 pages, 2156547 bytes).
 PDF statistics:
- 162 PDF objects out of 1000 (max. 8388607)
- 109 compressed objects within 2 object streams
- 19 named destinations out of 1000 (max. 500000)
+ 170 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
+ 21 named destinations out of 1000 (max. 500000)
  107 words of extra memory for PDF output out of 10000 (max. 10000000)
 

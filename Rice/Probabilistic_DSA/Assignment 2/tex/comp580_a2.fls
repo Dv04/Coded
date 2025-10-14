@@ -203,6 +203,11 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/lm/ts1lmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ts1-lmr10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmbx10.tfm
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmtk10.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
+INPUT ../outputs/a2/run_summary.tex
+INPUT ../outputs/a2/run_summary.tex
+INPUT ../outputs/a2/run_summary.tex
 INPUT /usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc
@@ -263,8 +268,9 @@ INPUT ../outputs/a2/top500_intersection.png
 INPUT ../outputs/a2/top500_intersection.png
 INPUT ../outputs/a2/top500_intersection.png
 INPUT ../outputs/a2/top500_intersection.png
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr8.tfm
-INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/lm/ec-lmr6.tfm
+INPUT ../outputs/a2/median_table.tex
+INPUT ../outputs/a2/median_table.tex
+INPUT ../outputs/a2/median_table.tex
 INPUT ../outputs/a2/intersection_table.tex
 INPUT ../outputs/a2/intersection_table.tex
 INPUT ../outputs/a2/intersection_table.tex

@@ -10,45 +10,49 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 
-\title{Comp 480/580 --- Assignment \#2}
-\author{Dev Sanghvi --- \texttt{ds221}}
+\title{Comp 480/580 - Assignment \#2}
+\author{Dev Sanghvi - \texttt{ds221}}
 \date{Rice University \\ Date: 10/13/2025}
 
 \begin{document}
 \maketitle
 
 \section*{Problem Overview}
-This assignment compares three streaming sketch data structures---Count-Min, Count-Median, and Count-Sketch---on the heavy-hitter problem using the AOL query log (file \texttt{user-ct-test-collection-01.txt}). Words are tokenized from the \texttt{Query} column, inserted with unit weight into each sketch and into an exact dictionary, and then evaluated across multiple accuracy regimes. Building on Assignment~\#1, our MurmurHash-based hash family (with $d=5$ rows and range $R\in\{2^{10},2^{14},2^{18}\}$) feeds each sketch with pairwise-independent locations (and signs for Count-Sketch).
+This assignment compares three streaming sketch data structures, Count-Min, Count-Median, and Count-Sketch, on the heavy-hitter problem using the AOL query log. Words are tokenized from the \texttt{Query} column, inserted with unit weight into each sketch and into an exact dictionary, and then evaluated across multiple accuracy regimes. Building on Assignment~\#1, our MurmurHash-based hash family (with $d=5$ rows and range $R\in\{2^{10},2^{14},2^{18}\}$) feeds each sketch with pairwise-independent locations (and signs for Count-Sketch).
 
 \section{Implementation Summary}
 \begin{itemize}
-  \item \textbf{Driver (\texttt{main\_a2.py})}: streams tokens from disk, updates sketches, and maintains an exact \texttt{Counter}. It logs progress (configurable \texttt{--log-level} and \texttt{--log-interval}) and writes plots/\texttt{summary.json} to \texttt{outputs/a2/}.
+  \item \textbf{Driver (\texttt{main\_a2.py})}: streams tokens from disk, updates all sketches, and maintains an exact dictionary for evaluation.
   \item \textbf{Sketches (\texttt{assignment2/sketches.py})}: implements Count-Min, Count-Median, and Count-Sketch using a shared hash family defined in \texttt{assignment2/hashing.py}. Each sketch supports \texttt{update()} and \texttt{estimate()}; Count-Sketch uses $\pm1$ signs when updating.
-  \item \textbf{Top-$k$ tracker}: a small heap-backed structure keeps the best 500 frequent tokens per sketch, enabling the intersection analysis required by the assignment.
-  \item \textbf{Outputs}: for each $R$, the script emits (i) error curves for the 100 most frequent, 100 random, and 100 least frequent tokens and (ii) a plot summarizing top-$500$ vs.\ true top-$100$ intersections across sketches.
+  \item \textbf{Top-$k$ tracker}: a small heap-backed structure keeps the best 500 frequent tokens per sketch; we feed Count-Median with its median estimate on every update, so the heap logic mirrors Count-Min and Count-Sketch exactly.
+  \item \textbf{Outputs}: for each $R$, we produce error curves on three buckets (Frequent-100, Random-100, Infrequent-100) and a plot of the intersection size $|\text{Top-500}_\text{sketch}\cap\text{Top-100}_\text{truth}|$ versus $R$.
 \end{itemize}
 
-\section{Experimental Setup}
-All runs fix the random seed to \texttt{20251013} for reproducibility. The dataset is read sequentially; the CLI accepts \texttt{--limit} to ease debugging without consuming the full log (over 10 million rows). I first smoke-tested the pipeline with a 1{,}000-row slice, then executed
-\begin{center}
-\verb|python main_a2.py --limit 10000 --skip-plots|
-\end{center}
-which streamed $26{,}196$ tokens drawn from $4{,}158$ distinct words (dictionary footprint $\approx 0.40$~MiB). The metrics below reflect this larger sample. Remove \texttt{--skip-plots} to generate the required PNG visualisations when ready for the full run; the Agg backend supports headless execution.
-
-\section{Error Statistics (Sample Run)}
-Table~\ref{tab:error} reports relative-error aggregates for $R=2^{10}$ on the 100 most frequent, random, and least frequent tokens drawn from the \texttt{--limit 10000} run. Increasing $R$ sharply reduces error for the rarer categories (see \texttt{summary.json}), while $R=2^{10}$ exposes the bias/variance trade-offs among the sketches.
+\section{Run Configuration}
+All runs fix the random seed to \texttt{20251013} for reproducibility. The dataset is streamed sequentially and may be supplied explicitly.  Table~\ref{tab:run-summary} is auto-generated after each execution and records specifics corresponding to the last run which produced the current plots.
 
 \begin{table}[H]
   \centering
-  \caption{Relative-error summary for $R=2^{10}$ (values auto-generated from \texttt{outputs/a2/summary.json}).}
-  \label{tab:error}
+  \caption{Run summary from latest execution}
+  \label{tab:run-summary}
+  \input{../outputs/a2/run_summary.tex}
+\end{table}
+The table above will then report the full dataset scale (roughly $10^7$ tokens, $4.5\times 10^5$ unique terms, and a $\sim$50~MiB dictionary footprint).
+
+\section{Error Statistics}
+Table~\ref{tab:error} reports relative-error aggregates for $R=2^{10}$ on the 100 most frequent, random, and least frequent tokens, directly reflecting the latest metrics captured in \texttt{summary.json}. Increasing $R$ sharply reduces error for the rarer categories, while $R=2^{10}$ exposes the bias/variance trade-offs among the sketches.
+
+\begin{table}[H]
+  \centering
   \input{../outputs/a2/error_table.tex}
+  \caption{Relative-error summary for $R=2^{10}$}
+  \label{tab:error}
 \end{table}
 
-We observe the familiar bias of Count-Min (no underestimation, but sizeable overestimation on thin bins when $R$ is small) and the elevated variance of Count-Median on low-frequency tokens. Count-Sketch tempers both effects, delivering lower maxima than Count-Median while mitigating the overestimation seen in Count-Min (Table~\ref{tab:error}).
-
 \section{Plots}
-Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-error profiles for each sketch and $R$ setting, while Figure~\ref{fig:top500} reports the top-500 intersection curve used in the grading rubric. All images were generated from the \texttt{--limit 10000} run.
+Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-error profiles for each sketch and $R$ setting. Figure~\ref{fig:top500} reports the top-500 intersection curve used in the grading rubric. Each figure is regenerated automatically from the latest execution.
+
+\noindent\textbf{Observations for $R=2^{10}$.}
 
 \begin{figure}[H]
   \centering
@@ -73,6 +77,17 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
   \label{fig:error-r1024}
 \end{figure}
 
+
+
+\begin{itemize}
+  \item Frequent tokens already show a clear separation: Count-Min retains the smallest median error, Count-Median overshoots most often, and Count-Sketch sits between them (Table~\ref{tab:error}).
+  \item Random and infrequent tokens expose large positive bias in the sketches with unsigned counters, with Count-Median showing the steepest tails and Count-Sketch attenuating many of those errors via signed updates (Figures~\ref{fig:error-r1024}a--c).
+\end{itemize}
+
+\newpage
+
+\noindent\textbf{Observations for $R=2^{14}$.}
+
 \begin{figure}[H]
   \centering
   \begin{subfigure}[t]{0.32\linewidth}
@@ -95,6 +110,15 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
   \caption{Relative-error curves for $R=2^{14}$.}
   \label{fig:error-r16384}
 \end{figure}
+
+
+
+\begin{itemize}
+  \item Median errors for all sketches collapse toward zero on Frequent-100 and Random-100 tokens (Table~\ref{tab:median-trends}, middle block), and even the infrequent bucket tightens considerably compared with $R=2^{10}$.
+  \item The visual traces in Figure~\ref{fig:error-r16384} confirm that widening the sketch curbs most overestimation events for Count-Min and Count-Sketch; Count-Median still exhibits occasional spikes on rare tokens because its unsigned counters cannot cancel collisions.
+\end{itemize}
+
+\noindent\textbf{Observations for $R=2^{18}$.}
 
 \begin{figure}[H]
   \centering
@@ -119,32 +143,51 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
   \label{fig:error-r262144}
 \end{figure}
 
+
+\begin{itemize}
+  \item With the widest sketches, all medians drop to zero and the error curves flatten, indicating the structures now recover the true counts on almost every probe (Table~\ref{tab:median-trends}, bottom block).
+  \item Residual deviations (Figure~\ref{fig:error-r262144}) stem from the few tokens that still hash-collide; the signed nature of Count-Sketch keeps its spikes smallest whenever they appear.
+\end{itemize}
+
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.55\linewidth]{../outputs/a2/top500_intersection.png}
   \caption{Intersection size of sketch top-500 with true top-100 across $R$.}
-  \label{fig:top500}
+ \label{fig:top500}
 \end{figure}
+
+
+\begin{table}[H]
+  \centering
+  \input{../outputs/a2/median_table.tex}
+  \caption{Median relative errors across sketch families and $R$.}
+  \label{tab:median-trends}
+\end{table}
+
+
+
+
+
 
 \section{Top-500 Intersection}
 The heap-based tracker yields the set intersection sizes summarised in Table~\ref{tab:intersection}. Small values of $R$ drop many true heavy hitters, while widening to $R=2^{14}$ markedly improves overlap for every sketch in this sample.
 
 \begin{table}[H]
   \centering
-  \caption{Size of $\text{Top-500}_{\text{sketch}} \cap \text{Top-100}_{\text{truth}}$ (auto-generated from \texttt{outputs/a2/summary.json}).}
-  \label{tab:intersection}
   \input{../outputs/a2/intersection_table.tex}
+  \caption{Size of $\text{Top-500}_{\text{sketch}} \cap \text{Top-100}_{\text{truth}}$.}
+  \label{tab:intersection}
 \end{table}
 
 \section{Reproducibility Checklist}
 \begin{itemize}
-  \item \textbf{Generate outputs}: \verb|python main_a2.py --output outputs/a2|\ (optionally set \texttt{--limit} during testing).
-  \item \textbf{Artifacts}: Plots land in \texttt{outputs/a2/} with filenames \texttt{errors\_R\{R\}\_\{category\}.png} and \texttt{top500\_intersection.png}; metrics appear in \texttt{outputs/a2/summary.json}. Each run also writes \texttt{error\_table.tex} and \texttt{intersection\_table.tex} so the report tables stay in sync with the most recent metrics-no manual edits required.
-  \item \textbf{Dependencies}: Only the Python standard library plus \texttt{matplotlib} are required; a headless backend (\texttt{Agg}) is selected automatically.
-  \item \textbf{Report build}: Run \verb|pdflatex tex/comp580_a2.tex| after generating plots to embed the figures.
+  \item \textbf{Generate outputs}: \verb|python main_a2.py|\ 
+  \item \textbf{Artifacts}: Plots land in \texttt{outputs/a2/} with filenames \texttt{errors\_R\{R\}\_\{category\}.png} and \texttt{top500\_intersection.png}; metrics appear in \texttt{outputs/a2/summary.json}. Each run also writes \texttt{error\_table.tex}, \texttt{median\_table.tex}, and \texttt{run\_summary.tex} so the report stays numerically consistent with the latest metrics—no manual edits required.
 \end{itemize}
 
 \section{Conclusions}
-The combined pipeline satisfies all deliverables: it streams the AOL log once, maintains exact frequencies for evaluation, compares three sketches at multiple width settings, quantifies relative errors for representative token buckets, and evaluates top-k recovery. The Count-Min sketch offers deterministic upper bounds but requires larger widths to suppress overestimation on sparse items, Count-Median provides unbiased point estimates at the cost of higher variance (especially with small $R$), and Count-Sketch trades reduced bias for manageable variance through signed updates. The logging instrumentation in \texttt{main\_a2.py} offers visibility into long-running jobs, making it practical to monitor the full-data execution required for the final submission.
+The combined pipeline is as structured as: it streams the AOL log once, maintains exact frequencies for evaluation, compares three sketches at multiple width settings, quantifies relative errors for representative token buckets, and evaluates top-k recovery. The Count-Min sketch offers deterministic upper bounds but requires larger widths to suppress overestimation on sparse items, Count-Median provides unbiased point estimates at the cost of higher variance (especially with small $R$), and Count-Sketch trades reduced bias for manageable variance through signed updates. 
+
 
 \end{document}
