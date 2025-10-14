@@ -48,7 +48,7 @@ test_batch_size = 1000
 epochs = 10
 lr = 0.01
 try_cuda = True
-seed = 1000
+seed = 4824
 logging_interval = 10 # how many batches to wait before logging
 logging_dir = None
 

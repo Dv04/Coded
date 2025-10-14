@@ -1,4 +1,4 @@
-__author__ = 'tan_nguyen'
+__author__ = 'Dev Sanghvi'
 import numpy as np
 from sklearn import datasets, linear_model
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ def generate_data():
     generate data
     :return: X: input data, y: given labels
     '''
-    np.random.seed(0)
+    np.random.seed(4824)
     X, y = datasets.make_moons(200, noise=0.20)
     return X, y
 
@@ -44,7 +44,7 @@ class NeuralNetwork(object):
     """
     This class builds and trains a neural network
     """
-    def __init__(self, nn_input_dim, nn_hidden_dim , nn_output_dim, actFun_type='tanh', reg_lambda=0.01, seed=0):
+    def __init__(self, nn_input_dim, nn_hidden_dim , nn_output_dim, actFun_type='tanh', reg_lambda=0.01, seed=4824):
         '''
         :param nn_input_dim: input dimension
         :param nn_hidden_dim: the number of hidden units
