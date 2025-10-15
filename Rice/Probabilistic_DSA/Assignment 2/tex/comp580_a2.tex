@@ -74,8 +74,6 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
   \item Random and infrequent tokens expose large positive bias in the sketches with unsigned counters, with Count-Median showing the steepest tails and Count-Sketch attenuating many of those errors via signed updates (Figures~\ref{fig:error-r1024}a--c).
 \end{itemize}
 
-\newpage
-
 \noindent\textbf{Observations for $R=2^{14}$.}
 
 \begin{figure}[H]
@@ -107,6 +105,8 @@ Figures~\ref{fig:error-r1024}--\ref{fig:error-r262144} visualise the relative-er
   \item Median errors for all sketches collapse toward zero on Frequent-100 and Random-100 tokens (Table~\ref{tab:median-trends}, middle block), and even the infrequent bucket tightens considerably compared with $R=2^{10}$.
   \item The visual traces in Figure~\ref{fig:error-r16384} confirm that widening the sketch curbs most overestimation events for Count-Min and Count-Sketch; Count-Median still exhibits occasional spikes on rare tokens because its unsigned counters cannot cancel collisions.
 \end{itemize}
+
+\newpage
 
 \noindent\textbf{Observations for $R=2^{18}$.}
 
@@ -176,7 +176,7 @@ The heap-based tracker yields the set intersection sizes summarised in Table~\re
   \item \textbf{Artifacts}: Plots land in \texttt{outputs/a2/} with filenames \texttt{errors\_R\{R\}\_\{category\}.png} and \texttt{top500\_intersection.png}; metrics appear in \texttt{outputs/a2/summary.json}. Each run also writes \texttt{error\_table.tex}, \texttt{median\_table.tex}, and \texttt{run\_summary.tex} so the report stays numerically consistent with the latest metrics—no manual edits required.
 \end{itemize}
 
-\section{Conclusions}
+\section{Conclusion}
 The combined pipeline is structured to stream the AOL log once, maintain exact frequencies for evaluation, compare three sketches at multiple width settings, quantify relative errors for representative token buckets, and evaluate top-$k$ recovery. Count-Min offers deterministic upper bounds but needs wider tables to suppress overestimation on sparse items. Count-Median remains positively biased because it averages unsigned counters, yet its variance shrinks quickly as $R$ grows. Count-Sketch leverages signed updates to curb both bias and variance, delivering the tightest estimates once the width is large enough.
 
 
