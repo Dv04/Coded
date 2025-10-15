@@ -23,7 +23,7 @@ This assignment compares three streaming sketch data structures, Count-Min, Coun
 \section{Implementation Summary}
 \begin{itemize}
   \item \textbf{Driver (\texttt{main\_a2.py})}: streams tokens from disk, updates all sketches, and maintains an exact dictionary for evaluation.
-  \item \textbf{Sketches (\texttt{assignment2/sketches.py})}: implements Count-Min, Count-Median, and Count-Sketch using a shared hash family defined in \texttt{assignment2/hashing.py}. Each sketch supports \texttt{update()} and \texttt{estimate()}; Count-Sketch uses $\pm1$ signs when updating.
+  \item \textbf{Sketches (\texttt{sketches.py})}: implements Count-Min, Count-Median, and Count-Sketch using a shared hash family defined in \texttt{hashing.py}. Each sketch supports \texttt{update()} and \texttt{estimate()}; Count-Sketch uses $\pm1$ signs when updating.
   \item \textbf{Top-$k$ tracker}: a small heap-backed structure keeps the best 500 frequent tokens per sketch; we feed Count-Median with its median estimate on every update, so the heap logic mirrors Count-Min and Count-Sketch exactly.
   \item \textbf{Outputs}: for each $R$, we produce error curves on three buckets (Frequent-100, Random-100, Infrequent-100) and a plot of the intersection size $|\text{Top-500}_\text{sketch}\cap\text{Top-100}_\text{truth}|$ versus $R$.
 \end{itemize}

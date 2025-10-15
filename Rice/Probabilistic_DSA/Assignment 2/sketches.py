@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from statistics import median
 from typing import Iterable, List
 
-from assignment2.hashing import murmurhash3_32
+from hashing import murmurhash3_32
 
 
 def _ensure_power_of_two(value: int) -> bool:

@@ -12,7 +12,7 @@ from pathlib import Path
 from statistics import mean, median
 from typing import Dict, Iterable, List, Tuple
 
-from assignment2.sketches import CountMedianSketch, CountMinSketch, CountSketch
+from sketches import CountMedianSketch, CountMinSketch, CountSketch
 
 DEFAULT_DATASET = "user-ct-test-collection-01.txt"
 R_VALUES = [2**10, 2**14, 2**18]
@@ -200,9 +200,7 @@ def write_latex_tables(summary: Dict, out_dir: Path) -> None:
             for s_idx, sketch in enumerate(sketches):
                 for r_idx, r_key in enumerate(r_keys):
                     stats = (
-                        error_summary.get(r_key, {})
-                        .get(sketch, {})
-                        .get(category, {})
+                        error_summary.get(r_key, {}).get(sketch, {}).get(category, {})
                     )
                     mean_val = _format_value(stats.get("mean", float("nan")))
                     median_val = _format_value(stats.get("median", float("nan")))
