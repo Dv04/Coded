@@ -172,7 +172,7 @@ The heap-based tracker yields the set intersection sizes summarised in Table~\re
 
 \section{Reproducibility Checklist}
 \begin{itemize}
-  \item \textbf{Generate outputs}: \verb|python main_a2.py|\ 
+  \item \textbf{Generate outputs}: \verb|pip install -r requirements.txt && python main_a2.py|\ 
   \item \textbf{Artifacts}: Plots land in \texttt{outputs/a2/} with filenames \texttt{errors\_R\{R\}\_\{category\}.png} and \texttt{top500\_intersection.png}; metrics appear in \texttt{outputs/a2/summary.json}. Each run also writes \texttt{error\_table.tex}, \texttt{median\_table.tex}, and \texttt{run\_summary.tex} so the report stays numerically consistent with the latest metrics—no manual edits required.
 \end{itemize}
 

@@ -1,0 +1,5 @@
+P=1048573, a=716663, b=625113, c=32912, d=480811
+2univ_linear: mean=0.5352, AAD_from_0.5=0.2231, min=0.0612, max=0.9692
+3univ_quadratic: mean=0.4997, AAD_from_0.5=0.0056, min=0.4804, max=0.5224
+4univ_cubic: mean=0.5000, AAD_from_0.5=0.0055, min=0.4776, max=0.5170
+murmurhash3: mean=0.5001, AAD_from_0.5=0.0060, min=0.4772, max=0.5204

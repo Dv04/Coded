@@ -1,0 +1,286 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype} % nicer spacing/kerning
+\usepackage{tabularx}
+
+
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  keepspaces=true
+}
+
+% --- figure path shortcuts ---
+\newcommand{\repA}{../outputs/rep_sgd001/figures}   % SGD lr=0.01 tanh
+\newcommand{\repB}{../outputs/rep_sgd002/figures}   % SGD lr=0.02 tanh
+\newcommand{\repC}{../outputs/rep_adam0001/figures} % Adam lr=0.001 tanh
+
+
+\captionsetup{font=small,labelfont=bf} % bolder labels, smaller text
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{0pt}
+
+
+\title{ELEC 576 / COMP 576 --- Fall 2025\\ Assignment 2}
+\author{Dev Sanghvi (ds221)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\section{CNN on CIFAR-10 (LeNet-5)}
+
+\textbf{Dataset and preprocessing.} Following the updated guidance, CIFAR-10 images remain as \textbf{RGB 32$\times$32} tensors and are channel-wise normalized; labels are encoded as \textbf{one-hot} vectors. The model is using a strengthened LeNet-style topology with \texttt{tanh} activations following this structure: conv(3$\times$3,32)$\rightarrow$pool(2)$\rightarrow$conv(3$\times$3,64)$\rightarrow$pool(2)$\rightarrow$conv(3$\times$3,128)$\rightarrow$pool(2)$\rightarrow$FC 256$\rightarrow$FC 84$\rightarrow$FC 10, trained with cross-entropy loss.
+
+\subsection*{Training curves}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.33\textwidth]{../outputs/figures/cnn_lenet_loss.png}
+  \hspace{0.1\linewidth}
+  \includegraphics[width=.33\textwidth]{../outputs/figures/cnn_lenet_acc.png}
+  \caption{LeNet-5 training loss (left) and train/test accuracy (right).}
+\end{figure}
+Figure~1 shows the familiar pattern for SGD on CIFAR-10: losses fall rapidly during the first few epochs, then plateau once the learning-rate schedule decays. Subsequent sections explore how alternate hyper-parameters shift those curves.
+
+\begin{figure}[H]
+  \centering
+
+  % Row 1 — LOSSES
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repA/cnn_lenet_loss.png}
+    \caption{SGD 0.01 — loss}
+    
+  \end{subfigure}
+  \hspace{0.02\linewidth}
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repB/cnn_lenet_loss.png}
+    \caption{SGD 0.02 — loss}
+  \end{subfigure}
+  \hspace{0.02\linewidth}
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repC/cnn_lenet_loss.png}
+    \caption{Adam 0.001 — loss}
+  \end{subfigure}
+
+  \vspace{0.5em}
+
+  % Row 2 — ACCURACIES
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repA/cnn_lenet_acc.png}
+    \caption{SGD 0.01 — acc}
+  \end{subfigure}
+  \hspace{0.02\linewidth}
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repB/cnn_lenet_acc.png}
+    \caption{SGD 0.02 — acc}
+  \end{subfigure}
+  \hspace{0.02\linewidth}
+  \begin{subfigure}[t]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{\repC/cnn_lenet_acc.png}
+    \caption{Adam 0.001 — acc}
+  \end{subfigure}
+
+  \caption{Three representative hyper-parameter configurations over 30 epochs. \textbf{Row 1}: training loss. \textbf{Row 2}: test accuracy. \textbf{Columns}: SGD 0.01, SGD 0.02, Adam 0.001.}
+  \label{fig:cnn-2x3}
+\end{figure}
+
+
+These comparisons show how higher learning rates accelerate initial drops in loss yet plateau lower, while Adam (lr$=$0.001) converges steadily and achieves the strongest test accuracy after five epochs on the 20k/5k subset.
+
+\newpage
+\subsection*{Hyper-parameter search}
+A small, budget-aware search varied optimizer, learning rate, batch size, and activation for 15 epochs per configuration; see Table\,\ref{tab:cnn-hp} for a summary and see \url{outputs/csv/search_results_cnn.csv} for raw results.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccccc}
+\toprule
+Optimizer & LR & Batch & Activation & Momentum & Test Acc. \\
+\midrule
+\input{cnn_hp_table.tex}\\
+\bottomrule
+\end{tabular}
+\caption{CNN hyper-parameter search (15 epochs per configuration), including the SGD momentum that differentiates otherwise similar settings.}
+\label{tab:cnn-hp}
+\end{table}
+The additional momentum column makes it clear why ostensibly identical rows differ: higher momentum (0.95) slightly boosts some ReLU runs, whereas 0.90 is optimal for most tanh settings.
+
+\subsection*{Visualization}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.32\textwidth]{../outputs/figures/cnn_boxplot_conv1.png}\hfill
+  \includegraphics[width=.32\textwidth]{../outputs/figures/cnn_boxplot_conv2.png}\hfill
+  \includegraphics[width=.32\textwidth]{../outputs/figures/cnn_boxplot_conv3.png}
+  \caption{Per-filter activation boxplots for conv1 (left), conv2 (middle), and conv3 (right). Each subplot shows filter index vs.\ activation distribution.}
+\end{figure}
+These distributions illustrate that early filters fire with tighter ranges (edge detectors) while deeper filters respond more variably to higher-level motifs, satisfying—and extending—the rubric requirement for per-filter statistics.
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.5\textwidth]{../outputs/figures/cnn_lenet_filters.png}
+  \caption{First conv layer filters (often edge/Gabor-like).}
+\end{figure}
+These kernels reveal edge/texture detectors (e.g., oriented gradients), matching the expectation that early convolutional layers learn low-level primitives before deeper layers assemble them into motifs.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.6\textwidth]{../outputs/figures/cnn_lenet_confusion.png}
+  \caption{Confusion matrix on the test set.}
+\end{figure}
+Together, the learned filters and confusion matrix highlight where the network performs best (vehicles/animals) and where it struggles (fine-grained animal classes), providing qualitative insight beyond raw accuracy.
+
+\newpage
+\section{Paper Summary: Zeiler \& Fergus (2014)}
+
+\textbf{Key ideas.} Zeiler and Fergus introduce a systematic framework to \emph{visualize} and interpret convolutional networks by projecting intermediate feature activations back to pixel space. Core contributions include: (i) a deconvolutional network (``deconvnet'') used as an analysis tool to identify which input structures maximally activate particular filters; (ii) an occlusion-based approach that slides a gray patch across an image to measure the sensitivity of class scores; (iii) layer-wise analysis revealing that early filters behave as edge/color detectors, mid-level units capture motifs and parts, and deeper layers respond to object-level configurations; and (iv) empirical evidence that visualization can guide better architecture choices (e.g., performance vs.\ stride/pooling) and expose failure modes.
+
+\textbf{Method.} The deconvnet attaches to a trained CNN and, given a chosen activation map, inverts through unpooling and transposed convolutions while using \emph{switches} stored during the forward max-pooling to reconstruct approximate input patterns responsible for that activation. This differs from simple gradient backprop by using rectified linearities in a one-sided manner and guided unpooling. Occlusion maps complement deconvnet visualizations by quantifying locality of evidence for a prediction.
+
+\textbf{Findings and reflections.} Visualizations show progressive abstraction across layers and highlight dataset biases (e.g., classifiers focusing on backgrounds). Importantly, the authors demonstrate that design decisions (stride, filter sizes) qualitatively change feature selectivity, and that visual tools can help debug misclassifications. In my experiments, I reproduced a simple occlusion sensitivity map over CIFAR-10 test images using the trained LeNet-5 (see optional Figure in outputs), which qualitatively localizes object-support regions even for a small model.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.15\linewidth]{../outputs/figures/cnn_occlusion_grid.png}
+  \caption{Replicating Zeiler \& Fergus’ sliding-occlusion analysis: masking high-saliency regions (hot colors) sharply reduces the target-class logit, revealing the evidence LeNet relies on.}
+\end{figure}
+
+Occlusion heatmaps confirm that the classifier attends to object-centric pixels (e.g., airplane fuselages, ship decks) rather than background clutter—doubling as the paper-inspired bonus visualization.
+
+\newpage
+
+\section{RNN on MNIST (sequence modeling)}
+
+\textbf{Setup.} Each 28$\times$28 MNIST image is treated as a sequence of 28 time steps with 28 features per step (rows). We compare vanilla RNN, GRU, and LSTM models trained with softmax cross-entropy on class logits.
+
+\subsection*{Training curves and model comparison}
+\captionsetup[subfigure]{justification=centering}
+\begin{figure}[H]
+  \centering
+
+  % -------- Row 1: LOSSES (RNN, GRU, LSTM) --------
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_rnn_loss.png}
+    \caption{RNN — loss}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_gru_loss.png}
+    \caption{GRU — loss}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_lstm_loss.png}
+    \caption{LSTM — loss}
+  \end{subfigure}
+
+  \vspace{0.6em} % vertical gap between rows
+
+  % -------- Row 2: ACCURACIES (RNN, GRU, LSTM) --------
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_rnn_acc.png}
+    \caption{RNN — accuracy}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_gru_acc.png}
+    \caption{GRU — accuracy}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{../outputs/figures/mnist_lstm_acc.png}
+    \caption{LSTM — accuracy}
+  \end{subfigure}
+
+  \caption{MNIST sequence models. \textbf{Row 1}: training loss. \textbf{Row 2}: accuracy. \textbf{Columns}: RNN, GRU, LSTM.}
+  \label{fig:mnist-seq-3x2}
+\end{figure}
+
+Figure~3 highlights the expected ordering: gated models converge faster and achieve higher accuracy than the vanilla RNN, while the deeper GRU/LSTM configurations benefit most from bidirectionality.
+
+\newpage
+\subsection*{Hyper-parameter effects}
+\textbf{Effect of hidden units.} We sweep hidden sizes (e.g., 128/256) in the small search harness and summarize results in Table\,\ref{tab:mnist-hp}. Consistent with expectations, GRU/LSTM typically outperform vanilla RNN due to better gradient flow through gating.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Model & Hidden Size & Layers & Bi? & Test Acc. \\
+\midrule
+\input{mnist_hp_table.tex}\\
+\bottomrule
+\end{tabular}
+\caption{MNIST sequence model comparison (top 10 runs) showing how depth and bidirectionality impact accuracy.}
+\label{tab:mnist-hp}
+\end{table}
+
+GRU/LSTM lines maintain their hidden-state magnitudes via update/forget gates, so gradients do not vanish across the 28 time steps. The vanilla RNN lacks those gates and consequently trains more slowly and plateaus around 97\% accuracy, whereas GRU/LSTM exceed 98.5\% once depth or bidirectionality is added (Table\,\ref{tab:mnist-hp}).
+
+\subsection*{Brief comparison vs.\ CNN}
+CNNs directly exploit spatial locality via convolution and pooling, typically achieving higher accuracy and faster convergence on images than sequence models that linearize the data. RNN-family models process rows sequentially and thus struggle to capture two-dimensional patterns without architectural augmentations; however, they remain a useful didactic baseline.
+
+\newpage
+
+\appendix
+\section{Reproducibility Appendix}
+Environment and commands:
+\begin{lstlisting}[language=bash]
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+
+# CNN
+python src/cnn_cifar10_lenet.py --epochs 15 --batch_size 128 --lr 0.02 --optimizer sgd --activation relu --momentum 0.9 --data_root ./data --outdir ./outputs
+# RNNs
+python src/rnn_mnist.py --rnn_type rnn  --epochs 10 --hidden_size 128 --lr 0.001 --num_workers 4 --data_root ./data --outdir ./outputs
+python src/rnn_mnist.py --rnn_type gru  --epochs 10 --hidden_size 256 --lr 0.001 --num_workers 4 --data_root ./data --outdir ./outputs
+python src/rnn_mnist.py --rnn_type lstm --epochs 10 --hidden_size 256 --lr 0.001 --num_workers 4 --data_root ./data --outdir ./outputs
+# HP search
+python src/search.py --task cnn --budget_epochs 15 --num_workers 4 --data_root ./data
+python src/search.py --task mnist-rnn --budget_epochs 15 --num_workers 4 --data_root ./data
+# Generate report tables
+python src/gen_report_tables.py
+\end{lstlisting}
+
+\section{Random Seeds}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\linewidth}{l c >{\raggedright\arraybackslash}X}
+\toprule
+Location / File & Interface & Default / Behavior \\
+\midrule
+\texttt{src/cnn\_cifar10\_lenet.py} & \texttt{--seed} (argparse) & Default 576; passed to \texttt{utils.set\_seed}. \\
+\texttt{src/rnn\_mnist.py}          & \texttt{--seed} (argparse) & Default 576; passed to \texttt{utils.set\_seed}. \\
+\texttt{src/search.py}              & \texttt{--seed} (argparse) & Default 576 (or per-trial base); forwarded to components. \\
+\texttt{src/utils.py}               & \texttt{set\_seed(seed)}   & Uses caller seed; in this repo the effective default is 576. \\
+\bottomrule
+\end{tabularx}
+\caption{Seed plumbing across the codebase.}
+\end{table}
+
+\phantomsection
+\section*{AI assistant declaration}
+I used AI tools (ChatGPT 5) only for language editing, grammar, phrasing, formatting, and document structuring. AI tools were not used to write, debug, or generate any code, nor to design experiments, implement algorithms, train models. All code and experimentation are my own work.
+
+\end{document}
