@@ -1,0 +1,225 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{paralist}
+
+\usepackage[noend, ruled]{algorithm2e}
+\LinesNumbered
+\DontPrintSemicolon
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\kplus}{^+}
+
+\newcommand{\StdDev}{\textsc{StdDev}}
+\newcommand{\Median}{\textsc{Median}}
+
+\newcommand{\vMean}{\mathit{mean}}
+
+\begin{document}
+
+\title{COMP 418/518: Homework 1 \\[1ex] \large [Weight of homework: 15\% of the final grade]}
+\author{Authors (fill in your names and NetIDs here)}
+\date{released on January 22, 2025}
+\date{Due on February 4, 2026 \\ \small (released on January 21, 2026)}
+
+\maketitle
+
+\paragraph{Instructions:}
+
+For this homework, you should work in groups of 3--4 people (i.e., the groups that have been declared and accepted).
+%
+Only one member of the group should submit on Gradescope.
+%
+All group members must be included in the submission on the Gradescope system (otherwise no credit will be given).
+%
+Also specify in your submission file all the members of your group (name and NetID) using the \texttt{\textbackslash authors} macro.
+%
+The submission must be typed in LaTeX using the provided template.
+%
+The use of AI systems (including, but not limited to, ChatGPT, Gemini, Copilot, and Claude) is entirely prohibited.
+%
+No discussion or collaboration is allowed outside of the group.
+%
+Late submissions are not accepted.
+
+\paragraph{Note:}
+
+We will probably request that you upload the LaTeX source for your submission. More information regarding how to make the source submission will be made available in a few days.
+
+\paragraph{Grading:}
+
+The homework will be graded based on correctness, completeness, and the quality of the provided solutions.
+
+\newpage
+\section*{Problem 1 [20 points]}
+
+The code shown below describes the offline computation of the standard deviation over the data values (floating-point numbers) placed in an array $X[0..n-1]$:
+\begin{center}
+\begin{minipage}{0.55\textwidth}
+\SetAlgoLined
+
+\SetKwFunction{StdDevOffline}{StdDev\_Offline}
+\SetKwProg{Fn}{Function}{:}{end}
+\Fn{\StdDevOffline{$X[0..n-1]$}}{
+
+	\LinesNumbered
+
+	$s \gets 0$
+	
+	\lFor{$i = 0, \ldots, n - 1$}{
+		$s \gets s + X[i]$
+	}
+	
+	$\vMean \gets s / n$
+	
+	$s \gets 0$
+
+	\lFor{$i = 0, \ldots, n - 1$}{
+		$s \gets s + (X[i] - \vMean)^2$
+	}
+
+	\Return $\sqrt{s / n}$
+}
+\end{minipage}
+\end{center}
+Consider the streaming problem $\StdDev$ for calculating the running standard deviation over a stream of floating-point numbers. Describe an efficient streaming algorithm for $\StdDev$. Provide pseudocode for your streaming algorithm. Explain why it is correct and discuss its space and time-per-item complexity.
+
+\emph{Note}: You can assume that each floating-point number fits in one memory location and that arithmetic operations on them take $O(1)$ time.
+
+\subsection*{Solution}
+
+Fill me in.
+
+\newpage
+\section*{Problem 2 [20 points]}
+
+The code shown below describes an offline (non-streaming) aggregation over the data values (natural numbers) placed in an array $X[0..n-1]$:
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\SetAlgoLined
+
+\SetKwFunction{UnknownOffline}{Unknown\_Offline}
+\SetKwProg{Fn}{Function}{:}{end}
+\Fn{\UnknownOffline{$X[0..n-1]$}}{
+
+	\LinesNumbered
+
+	$y \gets 0$
+	
+	\For{$i = 0, \ldots, n - 1$}{
+		\lIf{$X[i] > y$}{
+			$y \gets X[i]$
+		}
+	}
+	
+	$z \gets 0$
+
+	\For{$i = 0, \ldots, n - 1$}{
+		\lIf{$X[i] \neq y$ and $X[i] > z$}{
+			$z \gets X[i]$
+		}
+	}
+
+	\Return $z$
+}
+\end{minipage}
+\end{center}
+The algorithm $\UnknownOffline$ computes an aggregation function $f: \N\kplus \to \N$, where $\N = \{ 0, 1, 2, \ldots \}$ is the set of natural numbers.
+\begin{enumerate}
+\item
+Given an informal explanation in English of what $\UnknownOffline$ computes.
+\item
+Give pseudocode for a streaming algorithm that performs the running aggregation $f$. That is, if the current input history is $x_1 x_2 \ldots x_n$, then the current output item should be $f(x_1 x_2 \ldots x_n)$. What is the space and time-per-item complexity of your algorithm?
+\end{enumerate}
+
+\subsection*{Solution}
+
+Fill me in.
+
+\pagebreak
+\section*{Problem 3 [30 points]}
+
+The code shown below describes an offline (non-streaming) aggregation over the data values (natural numbers) placed in an array $X[0..n-1]$ of size $n \geq 1$:
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\SetAlgoLined
+
+\SetKwFunction{ChooseOffline}{Choose\_Offline}
+\SetKwProg{Fn}{Function}{:}{end}
+\Fn{\ChooseOffline{$X[0..n-1]$}}{
+
+	\LinesNumbered
+
+	$(y, z) \gets (X[0], 0)$
+	
+	\For{$j = 0, \ldots, n - 1$}{
+		\lIf{$X[j] = X[0]$}{
+			$z \gets z + 1$
+		}
+	}
+
+	\For{$i = 1, \ldots, n - 1$}{
+		$w \gets 0$
+		
+		\For{$j = 0, \ldots, n - 1$}{
+			\lIf{$X[j] = X[i]$}{
+				$w \gets w + 1$
+			}
+		}
+		
+		\If{$w > z$}{
+			$(y, z) \gets (X[i], w)$
+		}\ElseIf{$w = z$ and $X[i] > y$}{
+			$y \gets X[i]$
+		}
+	}
+
+	\Return $y$
+}
+\end{minipage}
+\end{center}
+The algorithm $\ChooseOffline$ computes an aggregation function $g: \N\kplus \to \N$, where $\N = \{ 0, 1, 2, \ldots \}$ is the set of natural numbers.
+\begin{enumerate}
+\item
+Given an informal explanation in English of what $\ChooseOffline$ computes.
+\item
+\textbf{\em Assumption}: We assume that the input values are drawn from a finite subset $[R] = \{ 0, 1, \ldots, R - 1 \} \subseteq \N$, where $R \geq 2$ is a small \textbf{\em constant}.
+
+Give pseudocode for a streaming algorithm that performs the running aggregation $g$ (under the aforementioned assumption). That is, if the current input history is $x_1 x_2 \ldots x_n \in [R]\kplus$, then the current output item should be $g(x_1 x_2 \ldots x_n) \in [R]$. What is the space and time-per-item complexity of your algorithm?
+\end{enumerate}
+
+\subsection*{Solution}
+
+Fill me in.
+
+\pagebreak
+\section*{Problem 4 [25 points]}
+
+Consider the streaming problem $\Median(R)$ for calculating the running median over a stream of integers from the set $[R] = \{ 0, 1, \ldots, R - 1 \}$, where $R \geq 2$ is a constant. Describe a streaming algorithm for $\Median(R)$ that uses $O(\log n)$ space (in bits), where $n$ is the length of the stream. You should provide pseudocode for your streaming algorithm.
+
+\subsection*{Solution}
+
+Fill me in.
+
+\pagebreak
+\section*{Problem 5 [40 points]}
+
+Let $R \geq 2$ be an integer (constant). Show that the space complexity of every algorithm that solves $\Median(R)$ is $\Omega(\log n)$, where space is measured in bits.
+
+\subsection*{Solution}
+
+Fill me in.
+
+\pagebreak
+\section*{Problem 6 [15 points]}
+
+What is the space complexity of the algorithm you gave for Problem 4, as a function of both $n$ and $R$? How much time does the algorithm need for every step? What data structure would you use to improve the time-per-item requirement of the algorithm? In order to answer this last question, think of the case where $R$ is very large.
+
+\subsection*{Solution}
+
+Fill me in.
+
+\bibliographystyle{plain}
+
+\end{document}
