@@ -115,7 +115,76 @@ Prove a space lower bound (for the problem) that matches the upper bound for you
 
 \subsection*{Solution}
 
-Fill me in.
+\subsubsection*{(1) Space-Optimal Algorithm}
+
+\textbf{Key observation.}
+In the standard monotone-deque algorithm for sliding max, the deque stores entries in \emph{strictly decreasing} order of value. Since the values come from $\{0, 1, \ldots, R-1\}$, the deque contains \textbf{at most $R$ entries} (at most one per distinct value). Each entry stores a timestamp, requiring $\lceil \log_2 W \rceil$ bits. Thus the total space is $O(R \log W)$ bits. Since $R$ is a constant, this is $O(\log W)$ bits.
+
+\textbf{Algorithm: Bounded Monotone Deque.}
+Maintain a deque $Q$ of pairs $(v_i, t_i)$, where $v_i \in \{0,\ldots,R-1\}$ is a value and $t_i$ is a timestamp (stored modulo $W$). The pairs are in strictly decreasing order of value from front to back. A global timestamp counter $\tau$ is maintained.
+
+\bigskip
+\noindent\textbf{Pseudocode:}
+
+\noindent\texttt{INIT():}
+\begin{compactitem}
+\item $Q \leftarrow$ empty deque
+\item $\tau \leftarrow 0$
+\end{compactitem}
+
+\noindent\texttt{NEXT($x$):} \quad \textit{// Process new item $x \in \{0,\ldots,R-1\}$}
+\begin{compactenum}
+\item $\tau \leftarrow \tau + 1$
+\item \textbf{Expire:} While $Q$ is non-empty and the front entry $(v_f, t_f)$ satisfies $\tau - t_f \geq W$, remove the front of $Q$.
+\item \textbf{Insert:} While $Q$ is non-empty and the back entry $(v_b, t_b)$ satisfies $v_b \leq x$, remove the back of $Q$. Then push $(x, \tau)$ to the back of $Q$.
+\item \textbf{Output:} Return the front entry's value $v_f$. (This is the maximum over the current window.)
+\end{compactenum}
+
+\textbf{Correctness.}
+The deque maintains the invariant: entries are in strictly decreasing value order (since step~3 removes all entries $\leq x$ before inserting $x$), and strictly increasing timestamp order. The front entry is always the maximum value in the window. Expired entries are removed in step~2. Since values are from $\{0,\ldots,R-1\}$ and the deque is \emph{strictly decreasing}, $|Q| \leq R$.
+
+\textbf{Space analysis.}
+\begin{itemize}
+\item The deque stores at most $R$ entries. Each entry needs $\lceil \log_2 R \rceil$ bits for the value and $\lceil \log_2 W \rceil$ bits for the timestamp.
+\item Total: $R \cdot (\lceil \log_2 R \rceil + \lceil \log_2 W \rceil)$ bits for the entries, plus $O(\log R)$ bits for the deque size counter, plus $\lceil \log_2 W \rceil$ bits for $\tau$ (stored mod $W$).
+\item Since $R$ is a constant, the terms $R \cdot \lceil \log_2 R \rceil$ and $O(\log R)$ are $O(1)$.
+\item \textbf{Total space: $R \cdot \lceil \log_2 W \rceil + O(1)$ bits $= \Theta(R \log W)$ bits.}
+\end{itemize}
+
+\textbf{Time analysis.}
+\begin{itemize}
+\item \textbf{Worst-case time per item:} $O(R)$, since at most $R$ entries can be removed in step~3.
+\item \textbf{Amortized time per item:} $O(1)$, since each entry is inserted and removed at most once.
+\end{itemize}
+
+\subsubsection*{(2) Matching Space Lower Bound}
+
+\textbf{Claim.} Any correct streaming algorithm for the sliding max problem over $\{0,\ldots,R-1\}$ with window size $W$ requires $\Omega(R \log W)$ bits of space.
+
+\textbf{Proof.}
+We exhibit a family of input streams that produce distinct future outputs, and therefore require distinct internal states.
+
+Fix $R \geq 2$. Consider streams of length $W$ defined as follows. Choose positions $0 \leq p_1 < p_2 < \cdots < p_{R-1} \leq W - 1$. Define the stream $S(p_1, \ldots, p_{R-1})$ where the item that arrived $p_v$ steps ago has value $v$ for each $v \in \{1, \ldots, R-1\}$, and all other items are $0$.
+
+After processing $S(p_1, \ldots, p_{R-1})$, the current window max is $R - 1$. Now feed $0$'s into the stream:
+\begin{itemize}
+\item After $W - p_{R-1}$ zeros, value $R-1$ exits the window. The max drops to $R-2$.
+\item After $W - p_{R-2}$ zeros (from the original time), value $R-2$ exits. The max drops to $R-3$.
+\item In general, after $W - p_v$ zeros, value $v$ exits the window.
+\end{itemize}
+The sequence of \emph{transition times} $\{W - p_v\}_{v=1}^{R-1}$ uniquely determines the tuple $(p_1, \ldots, p_{R-1})$, because different tuples produce different output sequences.
+
+The number of valid tuples is:
+\[
+  \binom{W}{R-1} \geq \left(\frac{W}{R-1}\right)^{\!R-1}
+\]
+Since each tuple requires a distinct internal state, the number of bits of memory is at least:
+\[
+  \log_2 \binom{W}{R-1} \geq (R-1) \log_2 \!\left(\frac{W}{R-1}\right) = (R-1)\log_2 W - (R-1)\log_2(R-1)
+\]
+Since $R$ is a constant, this is $(R-1) \log_2 W - O(1) = \Theta(R \log W)$ bits.
+
+\textbf{Conclusion.} The upper bound from (1) is $R \cdot \lceil \log_2 W \rceil + O(1)$ bits and the lower bound is $(R-1) \cdot \log_2 W - O(1)$ bits. Both are $\Theta(R \log W)$, so the algorithm is \textbf{space-optimal} (asymptotically). \qed
 
 \newpage
 \section*{Problem 5 [20 points]}
