@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-uint64_t N_MERGES = 0; // keep track of how many bucket merges occur
+static uint64_t N_MERGES = 0; // keep track of how many bucket merges occur
 
 /*
     DGIM approximation algorithm for counting 1's over a sliding window.
@@ -25,10 +25,8 @@ uint64_t N_MERGES = 0; // keep track of how many bucket merges occur
     All rings are allocated from a single contiguous block of memory.
 */
 
-#define MAX_POWER_LEVELS 34 // covers window sizes up to 2^32
-
 typedef struct {
-  uint32_t *timestamps; // pointer into pooled allocation
+  uint64_t *timestamps; // pointer into pooled allocation
   uint32_t capacity;    // r + 2
   uint32_t head;        // index of newest entry
   uint32_t tail;        // index of oldest entry
@@ -39,15 +37,15 @@ typedef struct {
   uint32_t wnd_size;
   uint32_t k;
   uint32_t r;
-  uint32_t timestamp;
-  uint32_t total_sum;
+  uint64_t timestamp;
+  uint64_t total_sum;
   uint32_t num_power_levels;
   int32_t highest_power; // highest power level with any bucket (-1 if none)
-  Ring rings[MAX_POWER_LEVELS];
-  uint32_t *pool; // single malloc for all ring buffers
+  Ring *rings;           // pointer into pooled allocation
+  void *pool;            // single malloc for all ring buffers and rings array
 } StateApx;
 
-static inline void ring_init(Ring *ring, uint32_t *buf, uint32_t cap) {
+static inline void ring_init(Ring *ring, uint64_t *buf, uint32_t cap) {
   ring->timestamps = buf;
   ring->capacity = cap;
   ring->head = 0;
@@ -55,7 +53,7 @@ static inline void ring_init(Ring *ring, uint32_t *buf, uint32_t cap) {
   ring->count = 0;
 }
 
-static inline void ring_push(Ring *ring, uint32_t ts) {
+static inline void ring_push(Ring *ring, uint64_t ts) {
   assert(ring->count < ring->capacity);
   if (ring->count == 0) {
     ring->head = 0;
@@ -67,9 +65,9 @@ static inline void ring_push(Ring *ring, uint32_t ts) {
   ring->count++;
 }
 
-static inline uint32_t ring_pop_tail(Ring *ring) {
+static inline uint64_t ring_pop_tail(Ring *ring) {
   assert(ring->count > 0);
-  uint32_t ts = ring->timestamps[ring->tail];
+  uint64_t ts = ring->timestamps[ring->tail];
   ring->count--;
   if (ring->count > 0) {
     ring->tail = (ring->tail + 1) % ring->capacity;
@@ -77,13 +75,14 @@ static inline uint32_t ring_pop_tail(Ring *ring) {
   return ts;
 }
 
-static inline uint32_t ring_peek_tail(Ring *ring) {
+static inline uint64_t ring_peek_tail(Ring *ring) {
   assert(ring->count > 0);
   return ring->timestamps[ring->tail];
 }
 
 // k = 1/eps
-uint64_t wnd_bit_count_apx_new(StateApx *self, uint32_t wnd_size, uint32_t k) {
+static inline uint64_t wnd_bit_count_apx_new(StateApx *self, uint32_t wnd_size,
+                                             uint32_t k) {
   assert(wnd_size >= 1);
   assert(k >= 1);
 
@@ -104,37 +103,43 @@ uint64_t wnd_bit_count_apx_new(StateApx *self, uint32_t wnd_size, uint32_t k) {
     }
   }
   self->num_power_levels = max_p + 3; // safety margin
-  if (self->num_power_levels > MAX_POWER_LEVELS) {
-    self->num_power_levels = MAX_POWER_LEVELS;
-  }
 
   // Each ring has capacity r+2
   uint32_t ring_cap = self->r + 2;
+  uint64_t ring_array_size = self->num_power_levels * sizeof(Ring);
+  uint64_t offset =
+      (ring_array_size + 7) & ~7ULL; // Ensure 8-byte alignment for uint64_t
   uint64_t total_slots = (uint64_t)ring_cap * self->num_power_levels;
-  uint64_t memory = total_slots * sizeof(uint32_t);
+  uint64_t memory = offset + total_slots * sizeof(uint64_t);
 
-  self->pool = (uint32_t *)malloc(memory);
+  self->pool = malloc(memory);
   assert(self->pool != NULL);
 
+  self->rings = (Ring *)self->pool;
+  uint64_t *ts_buf = (uint64_t *)((char *)self->pool + offset);
+
   for (uint32_t p = 0; p < self->num_power_levels; p++) {
-    ring_init(&self->rings[p], self->pool + (uint64_t)p * ring_cap, ring_cap);
+    ring_init(&self->rings[p], ts_buf + (uint64_t)p * ring_cap, ring_cap);
   }
 
   return memory;
 }
 
-void wnd_bit_count_apx_destruct(StateApx *self) { free(self->pool); }
+static inline void wnd_bit_count_apx_destruct(StateApx *self) {
+  free(self->pool);
+}
 
-void wnd_bit_count_apx_print(StateApx *self) {
-  printf("DGIM State: timestamp=%u, r=%u, total_sum=%u, highest_power=%d\n",
-         self->timestamp, self->r, self->total_sum, self->highest_power);
+static inline void wnd_bit_count_apx_print(StateApx *self) {
+  printf("DGIM State: timestamp=%llu, r=%u, total_sum=%llu, highest_power=%d\n",
+         (unsigned long long)self->timestamp, self->r,
+         (unsigned long long)self->total_sum, self->highest_power);
   for (uint32_t p = 0; p < self->num_power_levels; p++) {
     if (self->rings[p].count > 0) {
       printf("  Power %u (%u buckets): ", p, self->rings[p].count);
       Ring *ring = &self->rings[p];
       uint32_t idx = ring->tail;
       for (uint32_t i = 0; i < ring->count; i++) {
-        printf("t=%u ", ring->timestamps[idx]);
+        printf("t=%llu ", (unsigned long long)ring->timestamps[idx]);
         idx = (idx + 1) % ring->capacity;
       }
       printf("\n");
@@ -142,7 +147,7 @@ void wnd_bit_count_apx_print(StateApx *self) {
   }
 }
 
-uint32_t wnd_bit_count_apx_next(StateApx *self, bool item) {
+static inline uint64_t wnd_bit_count_apx_next(StateApx *self, bool item) {
   self->timestamp++;
 
   // 1. Remove expired buckets.
@@ -153,9 +158,9 @@ uint32_t wnd_bit_count_apx_next(StateApx *self, bool item) {
       self->highest_power--;
       continue;
     }
-    uint32_t age = self->timestamp - ring_peek_tail(ring);
+    uint64_t age = self->timestamp - ring_peek_tail(ring);
     if (age >= self->wnd_size) {
-      uint32_t sz = (1u << self->highest_power);
+      uint64_t sz = (1ULL << self->highest_power);
       self->total_sum -= sz;
       ring_pop_tail(ring);
       if (ring->count == 0) {
@@ -183,7 +188,7 @@ uint32_t wnd_bit_count_apx_next(StateApx *self, bool item) {
       // Pop two oldest from power p, push one merged onto power p+1
       N_MERGES++;
       ring_pop_tail(ring);               // discard oldest
-      uint32_t ts = ring_pop_tail(ring); // keep 2nd oldest's timestamp
+      uint64_t ts = ring_pop_tail(ring); // keep 2nd oldest's timestamp
       // total_sum unchanged: removed 2*2^p, will add 2^(p+1) = 2*2^p
 
       // Push merged bucket onto power p+1
@@ -209,8 +214,8 @@ uint32_t wnd_bit_count_apx_next(StateApx *self, bool item) {
     return 0;
   }
 
-  uint32_t oldest_size = (1u << self->highest_power);
-  uint32_t estimate = self->total_sum - oldest_size + 1;
+  uint64_t oldest_size = (1ULL << self->highest_power);
+  uint64_t estimate = self->total_sum - oldest_size + 1;
 
   return estimate;
 }

@@ -8,9 +8,9 @@
 #include "../window-bit-count-apx/window-bit-count-apx.h"
 #include "../window-bit-count/window-bit-count.h"
 
-#define T 5 // number of trials per experiment
+#define T 3 // number of trials per experiment
 #define P 3 // pause in seconds
-#define NUM_W 8
+#define NUM_W 6
 #define NUM_K 3
 
 typedef struct {
@@ -20,9 +20,9 @@ typedef struct {
   uint64_t memory;
 } Record;
 
-const uint32_t N = 150 * 1000 * 1000L; // stream length
-const uint32_t W_OPTIONS[NUM_W] = {    // window sizes
-    10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
+const uint32_t N = 50 * 1000 * 1000L; // stream length
+const uint32_t W_OPTIONS[NUM_W] = {   // window sizes
+    10, 100, 1000, 10000, 100000, 1000000};
 const uint32_t K_OPTIONS[NUM_K] = {
     // choices for k parameter (approximation algorithm)
     10, 100, 1000};
