@@ -1,13 +1,16 @@
+.DS_Store
 .tmp.driveupload
 .tmp.drivedownload
 MongoDB/myExpressApp/node_modules/*
 MongoDB/node_modules/*
-*/env/*
+**/env/
+**/.venv/
 Rice/Intro_to_DL/Assignments/Assignment_1/checkpoints/
 Rice/Intro_to_DL/Assignments/Assignment_1/ds221-assignment1/checkpoints/
 .gitignore
 Rice/Intro_to_DL/Assignments/Assignment_1/data/
 Rice/Intro_to_DL/Assignments/Assignment_1/ds221-assignment1/data/
+Rice/Intro_to_DL/Assignments/Assignment_2/ds221-assignment2/data/
 Rice/Probabilistic_DSA/Assignment 1/user-ct-test-collection-01.txt
 Rice/Probabilistic_DSA/Assignment 2/user-ct-test-collection-01.txt
 Rice/Probabilistic_DSA/Assignment 4/user-ct-test-collection-01.txt
