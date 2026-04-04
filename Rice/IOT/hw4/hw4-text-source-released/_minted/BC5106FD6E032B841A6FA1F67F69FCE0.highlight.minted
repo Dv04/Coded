@@ -1,0 +1,38 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kd}{class} \PYG{n+nc}{Zip3}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{B}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{C}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{k+kd}{implements}\PYG{+w}{ }\PYG{n}{Operator}\PYG{o}{\PYGZlt{}}\PYG{n}{Or3}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{B}\PYG{p}{,}\PYG{n}{C}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+
+\PYG{+w}{	}\PYG{k+kd}{private}\PYG{+w}{ }\PYG{k+kd}{final}\PYG{+w}{ }\PYG{n}{Func3}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{B}\PYG{p}{,}\PYG{n}{C}\PYG{p}{,}\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{op}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kd}{private}\PYG{+w}{ }\PYG{n}{Queue}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{bufA}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kd}{private}\PYG{+w}{ }\PYG{n}{Queue}\PYG{o}{\PYGZlt{}}\PYG{n}{B}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{bufB}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kd}{private}\PYG{+w}{ }\PYG{n}{Queue}\PYG{o}{\PYGZlt{}}\PYG{n}{C}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{bufC}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{k+kd}{public}\PYG{+w}{ }\PYG{n+nf}{Zip3}\PYG{p}{(}\PYG{n}{Func3}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{B}\PYG{p}{,}\PYG{n}{C}\PYG{p}{,}\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{op}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{this}\PYG{p}{.}\PYG{n+na}{op}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{op}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{bufA}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{LinkedList}\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{bufB}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{LinkedList}\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{bufC}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{LinkedList}\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{n+nd}{@Override}
+\PYG{+w}{	}\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{start}\PYG{p}{(}\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// no output on start}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{n+nd}{@Override}
+\PYG{+w}{	}\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{next}\PYG{p}{(}\PYG{n}{Or3}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{B}\PYG{p}{,}\PYG{n}{C}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{item}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{D}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{isLeft}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{bufA}\PYG{p}{.}\PYG{n+na}{add}\PYG{p}{(}\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{getLeft}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{isMid}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{bufB}\PYG{p}{.}\PYG{n+na}{add}\PYG{p}{(}\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{getMid}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{bufC}\PYG{p}{.}\PYG{n+na}{add}\PYG{p}{(}\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{getRight}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{		}\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{bufA}\PYG{p}{.}\PYG{n+na}{isEmpty}\PYG{p}{(}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n}{bufB}\PYG{p}{.}\PYG{n+na}{isEmpty}\PYG{p}{(}\PYG{p}{)}
+\PYG{+w}{		       }\PYG{o}{\PYGZam{}}\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{o}{!}\PYG{n}{bufC}\PYG{p}{.}\PYG{n+na}{isEmpty}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{			}\PYG{n}{D}\PYG{+w}{ }\PYG{n}{d}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{op}\PYG{p}{.}\PYG{n+na}{apply}\PYG{p}{(}\PYG{n}{bufA}\PYG{p}{.}\PYG{n+na}{poll}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}
+\PYG{+w}{			               }\PYG{n}{bufB}\PYG{p}{.}\PYG{n+na}{poll}\PYG{p}{(}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{bufC}\PYG{p}{.}\PYG{n+na}{poll}\PYG{p}{(}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{			}\PYG{n}{sink}\PYG{p}{.}\PYG{n+na}{next}\PYG{p}{(}\PYG{n}{d}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

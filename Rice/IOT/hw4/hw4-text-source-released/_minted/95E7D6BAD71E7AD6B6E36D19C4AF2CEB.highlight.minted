@@ -1,0 +1,16 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kd}{class} \PYG{n+nc}{Count2}\PYG{+w}{ }\PYG{k+kd}{implements}\PYG{+w}{ }\PYG{n}{Operator}\PYG{o}{\PYGZlt{}}\PYG{n}{Or}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{A}\PYG{o}{\PYGZgt{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Nat}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+
+\PYG{+w}{	}\PYG{k+kd}{private}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{count}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}
+
+\PYG{+w}{	}\PYG{n+nd}{@Override}
+\PYG{+w}{	}\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{start}\PYG{p}{(}\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{Nat}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+cm}{/* do nothing */}\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{	}\PYG{n+nd}{@Override}
+\PYG{+w}{	}\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{next}\PYG{p}{(}\PYG{n}{Or}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{A}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{item}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{Nat}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{n}{A}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{item}\PYG{p}{.}\PYG{n+na}{map}\PYG{p}{(}\PYG{n}{x}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{x}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{x}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{count}\PYG{+w}{ }\PYG{o}{+}\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{sink}\PYG{p}{.}\PYG{n+na}{next}\PYG{p}{(}\PYG{n}{count}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

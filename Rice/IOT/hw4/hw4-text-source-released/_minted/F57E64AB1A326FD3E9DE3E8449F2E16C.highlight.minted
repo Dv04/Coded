@@ -1,0 +1,47 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{class} \PYG{n+nc}{TumblingWindowAvg}
+\PYG{+w}{    }\PYG{k+kd}{implements}\PYG{+w}{ }\PYG{n}{Operator}\PYG{o}{\PYGZlt{}}\PYG{p}{(}\PYG{n}{Nat}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Real}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Nat}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{Real}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Nat}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Nat}\PYG{p}{)}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+
+\PYG{+w}{  }\PYG{k+kd}{final}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{W}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// window size (msec)}
+\PYG{+w}{  }\PYG{k+kd}{final}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{T}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// max lateness (msec)}
+
+\PYG{+w}{  }\PYG{c+c1}{// State}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{watermark}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{  }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nextToClose}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// smallest window id not yet closed}
+\PYG{+w}{  }\PYG{n}{HashMap}\PYG{o}{\PYGZlt{}}\PYG{n}{Integer}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Double}\PYG{o}{\PYGZgt{}}\PYG{+w}{  }\PYG{n}{sumMap}\PYG{+w}{   }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{HashMap}\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{  }\PYG{n}{HashMap}\PYG{o}{\PYGZlt{}}\PYG{n}{Integer}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Integer}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{countMap}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{k}{new}\PYG{+w}{ }\PYG{n}{HashMap}\PYG{o}{\PYGZlt{}}\PYG{o}{\PYGZgt{}}\PYG{p}{(}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{  }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{start}\PYG{p}{(}\PYG{n}{Sink}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+cm}{/* no output on start */}\PYG{+w}{ }\PYG{p}{\PYGZcb{}}
+
+\PYG{+w}{  }\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{next}\PYG{p}{(}\PYG{p}{(}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{sensorId}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{val}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{ts}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Sink}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{    }\PYG{c+c1}{// 1. Update watermark}
+\PYG{+w}{    }\PYG{n}{watermark}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max}\PYG{p}{(}\PYG{n}{watermark}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ts}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 2. Assign item to its tumbling window}
+\PYG{+w}{    }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{wid}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ts}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{W}\PYG{p}{;}\PYG{+w}{ }\PYG{c+c1}{// floor division = window id}
+
+\PYG{+w}{    }\PYG{c+c1}{// 3. Update the window\PYGZsq{}s running sum and count}
+\PYG{+w}{    }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{containsKey}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{)}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{put}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mf}{0.0}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{      }\PYG{n}{countMap}\PYG{p}{.}\PYG{n+na}{put}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{    }\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{put}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{get}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{val}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{    }\PYG{n}{countMap}\PYG{p}{.}\PYG{n+na}{put}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{countMap}\PYG{p}{.}\PYG{n+na}{get}\PYG{p}{(}\PYG{n}{wid}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{p}{;}
+
+\PYG{+w}{    }\PYG{c+c1}{// 4. Emit all closeable windows in chronological order}
+\PYG{+w}{    }\PYG{k}{while}\PYG{+w}{ }\PYG{p}{(}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{W}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{T}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{o}{=}\PYG{+w}{ }\PYG{n}{watermark}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{      }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{containsKey}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{p}{)}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{avg}\PYG{+w}{   }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{get}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{p}{)}
+\PYG{+w}{                     }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{countMap}\PYG{p}{.}\PYG{n+na}{get}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{wndStart}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{nextToClose}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{W}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{wndEnd}\PYG{+w}{   }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{nextToClose}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{W}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{sink}\PYG{p}{.}\PYG{n+na}{next}\PYG{p}{(}\PYG{p}{(}\PYG{n}{avg}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{wndStart}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{wndEnd}\PYG{p}{)}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{sumMap}\PYG{p}{.}\PYG{n+na}{remove}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{        }\PYG{n}{countMap}\PYG{p}{.}\PYG{n+na}{remove}\PYG{p}{(}\PYG{n}{nextToClose}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{      }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{      }\PYG{c+c1}{// Skip empty windows (no items fell in this interval)}
+\PYG{+w}{      }\PYG{n}{nextToClose}\PYG{o}{+}\PYG{o}{+}\PYG{p}{;}
+\PYG{+w}{    }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{  }\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

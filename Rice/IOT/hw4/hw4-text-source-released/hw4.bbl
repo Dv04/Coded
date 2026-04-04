@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{Kahn1974KPN}
+Gilles Kahn.
+\newblock The semantics of a simple language for parallel programming.
+\newblock {\em Information Processing}, 74:471--475, 1974.
+
+\bibitem{KahnMacQ1977}
+Gilles Kahn and David~B. MacQueen.
+\newblock Coroutines and networks of parallel processes.
+\newblock {\em Information Processing}, 77:993--998, 1977.
+
+\bibitem{Lee2011MoCs}
+Edward~A. Lee.
+\newblock {\em Concurrent Models of Computation: An Actor-Oriented Approach}.
+\newblock 2011.
+
+\bibitem{MacQueen2009Kahn}
+David~B. MacQueen.
+\newblock {K}ahn networks at the dawn of functional programming.
+\newblock In Yves Bertot, G{\'{e}}rard Huet, Jean-Jacques L{\'{e}}vy, and Gordon Plotkin, editors, {\em From Semantics to Computer Science: Essays in Honour of Gilles Kahn}, pages 95--137. Cambridge University Press, 2009.
+
+\end{thebibliography}

@@ -1,0 +1,10 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kd}{interface} \PYG{n+nc}{Operator}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{p}{,}\PYG{n}{B}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{start}\PYG{p}{(}\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{B}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{next}\PYG{p}{(}\PYG{n}{A}\PYG{+w}{ }\PYG{n}{item}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{B}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{sink}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kd}{public}\PYG{+w}{ }\PYG{k+kd}{interface} \PYG{n+nc}{Sink}\PYG{o}{\PYGZlt{}}\PYG{n}{A}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{next}\PYG{p}{(}\PYG{n}{A}\PYG{+w}{ }\PYG{n}{item}\PYG{p}{)}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}
